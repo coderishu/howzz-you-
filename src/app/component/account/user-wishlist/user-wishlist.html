@@ -1,0 +1,151 @@
+		<!--Content Section Start-->
+<ng-progress [color]="color" ></ng-progress>
+
+					<div class="cols--group">
+						<div class="panel__body">
+							<div class="box box--white box--space">
+								<div class="box__head box__head--large" *ngIf="!isWishDataNotAvailable">
+									<div class="ordr_page_head_wrap">
+
+										<div class="row odr-head whlist-head clearfix">
+											<div class="col-md-4 col-xs-12 col-sm-3" >
+												<h5>{{'userdashboard.mywishlist'| translate}}</h5>
+											</div>
+											<div class="col-md-8 col-xs-12 col-sm-9">
+												<div class="input-group">
+													<!--<form #searchForm = "ngForm" (ngSubmit) = "sortwishList()">-->
+													<input type="text" class="form-control" placeholder="Search all orders" name = "search" #search = "ngModel" [(ngModel)] = "sortWishlistModel" aria-describedby="basic-addon2">
+													<span  class="input-group-addon" (click) = "sortwishList()">{{'siteLabels.search' | translate}}</span>
+													<!--</form>-->
+												</div>
+											</div>
+										</div>
+
+										<div class="ordr-wrp row">
+											<div class="col-md-12 wislst-wrp" >
+												<div class="row dtl-wrp">
+
+													<div class="odr-dtl-head">
+														<!-- <input type="checkbox" class="chck" id="chck1" > -->
+														<label for="chck1" class="chck-label"></label>
+														<strong class="prdt-count"> {{wishlistData.length}} {{wishlistData.length > 1?('siteLabels.products' | translate):('siteLabels.product' | translate)}}</strong>
+													</div>
+												</div>
+												<div class="row mid-row clearfix" *ngFor="let wish of wishlistData">
+													<div class="col-md-2 col-sm-3">
+														<!-- <input type="checkbox" class="chck2" id="chck2" > -->
+														<label for="chck2" class="chck-label2"></label>
+														<figure>
+												    		<a class="prdct-imge" href="javascript:void(0)" title="{{wish.product_id.name.name}}" [routerLink]="wish.url_data.urlData">
+													 			<img  *ngIf="wish.product_id.default_image" [src]="image_path+wish.product_id.default_image"  title="{{wish.product_id.name.name}}"  alt="{{wish.product_id.name.name}}" onerror="this.src = 'assets/images/estimate.png';">
+												  	 		</a>
+														</figure>
+													</div>
+													<div class="col-md-7 col-sm-5 wishlist-prdct">
+														<a href="javascript:void(0)" title="{{wish.product_id.name.name}}" [routerLink]="wish.url_data.urlData"><h4>{{wish.product_id.name.name}}</h4></a>
+														<strong *ngIf="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price && currencyconvertservice.currentCurrencyData['position']=='left'" class="prdt-price"> {{currencyconvertservice.currentCurrencyData['sign']}}{{wish.product_id.special_price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}} </strong>
+														<strong  *ngIf="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price && currencyconvertservice.currentCurrencyData['position']=='right'" class="prdt-price">{{wish.product_id.special_price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}} </strong>
+																																										
+														<span class="actual-price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'" [class.shopping-cart-discount]="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price" [class.prdt-price]="!wish.product_id.special_price">{{currencyconvertservice.currentCurrencyData['sign']}}{{wish.product_id.price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}}</span>
+														<span class="actual-price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'" [class.shopping-cart-discount]="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price" [class.prdt-price]="!wish.product_id.special_price">{{wish.product_id.price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</span>
+														<!-- <span class="discount-amt">flat 50% off</span> -->
+														<span class="discount-amt">{{'siteLabels.flat' | translate}} {{wish.product_id.discount_percentage|round}} % off</span>
+														<p class="prdt-clr" *ngFor = "let variantItem of wish.url_data.associate_data">
+																<span>{{variantItem.key}}: </span> 
+																<span>{{variantItem.value}} </span>
+															</p>
+													
+													</div>
+													<div class="col-md-3 col-sm-4 clearfix">
+
+														<div class="fedbck-wrp">
+															<!-- <a href="#" class="btn add-cart-btn">Add to Cart</a> -->
+															
+															<a class="btn add-cart-btn" href="javascript:void(0);" (click)="addToCart(wish.sku,wish.product_id.associate,$event,wish.product_id.id,wish.product_id.vendor_id,currencyconvertservice.currentcurrencycode,1,wish.url_data)">{{'btns.addTocart'|translate}}</a>
+															<div class="slt-wrp">
+																	<select title="" (change)="navigateToOptionChange($event,wish)">
+																			<option value="">I'd like to--</option>
+																			<option value="viewdetail">View Detail</option>
+																			<!-- <option value="3">Contact seller</option> -->
+																	</select>
+																<!-- <select title="" (change)="navigateToOptionChange($event,product,each.odid)" id='order'>
+																	<option *ngFor="let option of 'accountSectionSelectionArr' | translate,let i = index;" [value]="option.value">{{option.key}}</option>
+																</select> -->
+																<i class="drop-arrow" ><img src="assets/images/select-arrow.png" /> </i>
+															</div>
+
+														</div>
+														<div class="rmv-btn">
+															<a href="javascript:void(0);" (click) = "removeWishListData(wish.sku,wish.product_id.id)">{{'cart.remove'|translate}}</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<ngx-flash-messages></ngx-flash-messages> 
+								<div *ngIf="isWishDataNotAvailable" style="text-align:center"><h4>{{'userdashboard.no_product'| translate}}</h4></div>
+							</div>
+						</div>
+
+					</div>
+		
+		
+			<!--Content Section End-->
+
+		<!--Page Wrapper End-->
+		
+
+
+
+
+
+
+<!--Content Area Start-->
+		<!-- <div id="Content">
+				<div class="ds__container">
+					<app-user-header></app-user-header>	
+					<div class="ds__tab" id="ds__tabs">
+						<div class="ds__tab__tab-content ds__tab__tab-content--wishlist-wrap">
+							<div class="ds__tab__tab-content__order-list" *ngIf="wishlistData.length>0">
+								<div *ngFor="let wish of wishlistData" class="ds__tab__tab-content__description ds__tab__tab-content__description--wishlist clearfix">
+									<div class="ds__tab__tab-content__description__info  clearfix">
+										<div class="ds__tab__tab-content__order-list-content ds__tab__tab-content__order-list-content--wishlist clearfix">
+											<figure>
+												    <a href="javascript:void(0)" (click) = "makeURL(wish.url_data.urlData,wish.url_data.queryParams)">
+													 	<img  *ngIf="wish.product_id.default_image" [src]="image_path+wish.product_id.default_image"  alt="Nature" onerror="this.src = 'assets/images/estimate.png';">
+												   </a>
+												</figure>
+											<div class="ds__tab-content__order-description ds__tab-content__order-description--wishlist">
+											    <a href="javascript:void(0)" (click) = "makeURL(wish.url_data.urlData,wish.url_data.queryParams)" >
+											    	<h3>{{wish.product_id.name.name}}</h3></a>
+												<ul class="clearfix">
+														<custum-bar-rating [isEdit] = "true" [ratingCount] = "3" [max] = "globaldata['maxRating']"> </custum-bar-rating>
+												</ul>
+													<span  *ngIf="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price && currencyconvertservice.currentCurrencyData['position']=='left'" class="ds__tab__tab-content__delivery-wrap__price w-price"> {{currencyconvertservice.currentCurrencyData['sign']}} {{wish.product_id.special_price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}} </span>
+													<span  *ngIf="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price && currencyconvertservice.currentCurrencyData['position']=='right'" class="ds__tab__tab-content__delivery-wrap__price">{{wish.product_id.special_price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}} {{currencyconvertservice.currentCurrencyData['sign']}} </span>
+													<span *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'" [class.shopping-cart-discount]="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price" [class.ds__tab__tab-content__delivery-wrap__price]="!wish.product_id.special_price">{{currencyconvertservice.currentCurrencyData['sign']}} {{wish.product_id.price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}}</span>
+													<span *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'" [class.shopping-cart-discount]="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price" [class.ds__tab__tab-content__delivery-wrap__price]="!wish.product_id.special_price">{{wish.product_id.price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}} {{currencyconvertservice.currentCurrencyData['sign']}}</span>
+											</div>
+										</div>
+										<div class="ds__tab__tab-content__delivery-wrap ds__tab__tab-content__delivery-wrap--wishlist">
+											<div class="ds__tab__tab-content__delivery-wrap__cart">
+												<a href="javascript:void(0);" (click)="addToCart(wish.sku,wish.product_id.associate,$event,wish.product_id.id,wish.product_id.vendor_id,currencyconvertservice.currentcurrencycode,1,wish.url_data)" class="ds__addcart">{{'btns.addTocart'|translate}}</a>
+												<a href="javascript:void(0);" (click) = "removeWishListData(wish.sku,wish.product_id.id)" class="ds__removecart"><i class="ds__icon-delete"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+						  </div>
+						  <div *ngIf="wishlistData.length==0" class="no-avlbl"><p>{{'userdashboard.no_product'| translate}}</p></div>
+					  </div>
+					</div>
+					
+				</div>
+			  
+			</div> -->
+			<!--Content Area End-->
+
+
+

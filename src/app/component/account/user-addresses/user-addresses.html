@@ -1,0 +1,56 @@
+<ng-progress [color]="color" ></ng-progress>
+
+				<div  id="listing">
+					<div class="cols--group">
+
+						<div class="panel__body">
+							<div class="box box--white box--space">
+								<div class="box__head">
+									<h5>{{'useraddress.myaddress'| translate}}</h5>
+								</div>
+								<div class="addrs_book_wrap">
+									<div class="col-md-4 add-nw_adr" *ngIf="addressDetail" >
+										 <a href="javascript:void(0);" title="estimateimage" [routerLink]="['/account/newaddress']">
+										<div class="nw-adr-wrap">
+											<i class="fa fa-plus"></i>
+											<strong>{{'useraddress.addnewaddress'|translate}}</strong>
+										</div></a>
+
+									</div>
+
+									<div class="col-md-4" *ngFor="let add of addressDetail">
+										<div class="store_address" >
+											<strong class="nme">{{add.fname}}</strong>
+											<strong *ngIf="add.is_default" class="nme">Default</strong>
+											<div class="address">
+												<span>{{add.flatno}} {{add.street}}</span>
+												<span>{{add.city}}</span>
+												<span>{{add.state}} {{add.postcode}}</span>
+												<span>{{add.country}}</span>
+												<span class="ph_no">{{add.phone}}</span>
+											</div>
+
+											<ul class="str_adr_nav clearfix">
+
+												<li>
+													<a href="javascript:void(0);" [routerLink]="['/account/editaddress',add.id]">{{'siteLabels.edit' | translate}}</a>
+												</li>
+												<li>
+													<a href="javascript:void(0);" (click)="removeAddress(add.id)">{{'siteLabels.remove' | translate}}</a>
+												</li>
+												<li>
+													<a href="javascript:void(0);" (click)="setAsDefaultAddress(add.id)">{{'siteLabels.setdefault' | translate}}</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<ngx-flash-messages></ngx-flash-messages> 
+		
+	

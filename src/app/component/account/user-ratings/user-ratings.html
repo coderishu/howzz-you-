@@ -1,0 +1,74 @@
+   <div class="cols--group">
+						<div class="panel__body">
+							<div class="box box--white box--space">
+								<div class="box__head clearfix reviw-head-wrp">
+									<h5>{{'userrating.rating' | translate}}</h5>
+									<div class="review-head clearfix" *ngIf="productInfo">
+										<figure>
+											<a href="javascript:void(0)" title="{{productInfo.name.name}}" (click) = "makeURL(url_data.urlData,url_data.queryParams)"> <img  *ngIf="productInfo.default_image" [src]="image_url+productInfo.default_image" alt="{{productInfo.name.name}}" title="{{productInfo.name.name}}" onerror="this.src = 'assets/images/estimate.png';"> </a>
+										</figure>
+										<div class="review-prdt-name">
+											<a href="javascript:void(0)" title="{{productInfo.name.name}}" (click) = "makeURL(url_data.urlData,url_data.queryParams)"> <h3>{{productInfo.name.name}}</h3> </a>
+										</div>
+									</div>
+								</div>
+								<div class="box__body">
+									<form  class="" #reviewForm = "ngForm">
+										<div class="row">
+											<div class="col-md-5 rtng-wrp col-md-push-2 clearfix">
+												<div class="" *ngFor="let rate of ratingData; let i = index;">
+													<ul class="rating-star-wrp">
+														<li>
+															<span class="rating-nme">{{rate.name}}</span>
+															<custum-bar-rating [id] = "rate._id" (rateProduct) = "rateProduct($event)" [isEdit] = "true" [ratingCount] = "0" [max] = "5"></custum-bar-rating>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+											<div class="row">
+												<div class="col-md-12 revw-wrp">
+													<div class="row rvw-inpt-wrp">
+														<label class="col-md-2 reviw-lbl">{{'userrating.title'|translate}}</label>
+														<div class="col-md-6">
+															<input type="text" name ="title" #title="ngModel" [(ngModel)]="review.title" required>
+															<div class="field-error" *ngIf = "title.errors">
+																<p class="field-error" *ngIf = "title['errors']['required'] && isFormSubmit">
+																	{{'error.title.required' | translate}}
+																</p>
+															</div>
+														</div>
+													</div>
+
+													<div class="row rvw-inpt-wrp">
+														<label class="col-md-2 reviw-lbl">{{'userrating.review'|translate}}</label>
+														<div class="col-md-6">
+															<textarea class="rvew-text" name="review_data" [(ngModel)] = "review.review_data" #review_data = "ngModel" required style="min-height:100px;"></textarea>
+															<div class="field-error" *ngIf = "review_data.errors">
+																<p class="field-error" *ngIf = "review_data['errors']['required'] && isFormSubmit">
+																	{{'error.review_data.required' | translate}}
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="reviw-btn-wrp">
+														<button type="button"  class="" (click) = "add_review(reviewForm.valid)">
+															{{'btns.submit'|translate}}
+														</button>
+													</div>
+												</div>
+
+											</div>
+
+
+										<ngx-flash-messages></ngx-flash-messages>
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>

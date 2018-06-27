@@ -1,0 +1,34 @@
+	<!--Content Area Start-->
+			<div class="content">
+					<div class="banner-sec">
+							<div class="flexslider" *ngIf="bannerData.length>0" >
+								<ul class="slides">
+									<li *ngFor="let singleData of bannerData[0]['imageData']">
+										<img [src]="basicpath+singleData['img_name']" />
+								<li>
+									<!-- <li>
+										<img src="assets/images/banner-img.jpg" />
+									</li>
+									<li>
+										<img src="assets/images/banner-img.jpg" />
+									</li>
+									<li>
+										<img src="assets/images/banner-img.jpg" />
+									</li> -->
+								</ul>
+							</div>
+								<a href="javascript:void(0);" class="btn blue-btn hvr-wobble-horizontal mb-n">Shop Now </a>
+						</div>
+	        <div  class="product-sec" *ngFor = "let homeBlockData of homeCategory; let innnerIndex = index;">
+							<div class="container">
+								<static-block  *ngIf = "homeBlockData.block_name == 'static_block' && innnerIndex !=0" (addNewBlock)="addNewBlock($event)"  [blockSettingData] = "homeBlockData" [currentLanguageData] = "currentLanguageData" [indexNumber] = "innnerIndex" ></static-block>
+								<category-types-product   *ngIf = "homeBlockData.block_name != 'static_block'" (addNewBlock)="addNewBlock($event)" [indexNumber] = "innnerIndex" [blockSettingData] = "homeBlockData"  [currentLanguageData] = "currentLanguageData" [currencyConvertService] = "currencyConvertService" [storeSetting] = "storeSetting" [isRtl] = "isRtl" [perPageCount]="homeBlockData.product_count"></category-types-product>
+							</div>
+					</div>
+					<div class="loader-cat" style="text-align: center;" *ngIf = "isLoader">
+		<span class="cat-loader"> </span>
+		
+	</div>		
+
+</div>
+<!--Content Area End-->

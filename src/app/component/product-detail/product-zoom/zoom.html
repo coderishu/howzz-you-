@@ -1,0 +1,79 @@
+<!--<div class="zoom-section">
+	<a class="plus-more" href="javascript:void(0)"><img src="assets/images/plus.png" alt="plus"></a>
+	<figure class="zoom-fig"><img class="xzoom" [src]="productDetail.large_path+productDetail.brand_data.product_image[0]"  alt="image" />
+	</figure>
+
+</div>
+<div class="xzoom-thumbs" *ngIf = "productDetail">
+	<ul><li *ngFor = "let imageItem of productDetail.brand_data.product_image">
+		<a href="{{productDetail.large_path+imageItem}}" [title]="productDetail['brand_data']['translation_data'][0]['name']?productDetail['brand_data']['translation_data'][0]['name']:productDetail.brand_data['name']"  >
+		<img class="xzoom-gallery" width="50"  src="{{productDetail.large_path+imageItem}}" [title]="productDetail['brand_data']['translation_data'][0]['name']?productDetail['brand_data']['translation_data'][0]['name']:productDetail.brand_data['name']" alt="{{productDetail['brand_data']['translation_data'][0]['name']?productDetail['brand_data']['translation_data'][0]['name']:productDetail.brand_data['name']}}"  >		
+	
+	</a></li></ul>
+	
+</div>-->
+
+ <!-- <div class="simpleLens-gallery-container" id="product_zoom">
+        <div class="simpleLens-container zoom-section">
+            <div class="simpleLens-big-image-container">
+                <a class="simpleLens-lens-image"  [attr.data-lens-image]="productDetail.original_path+productDetail.brand_data.product_image[0]">
+                    <img [src]="productDetail.large_path+productDetail.brand_data.product_image[0]" class="simpleLens-big-image">
+                </a>
+            </div>
+        </div>
+
+        <div class="simpleLens-thumbnails-container xzoom-thumbs">
+            <a  *ngFor = "let imageItem of productDetail.brand_data.product_image;let index = index" (mouseover) = "addClass($event)" [class.active] = "index == 0" (click) = "addClass($event)" href="javascript:void(0)" class="simpleLens-thumbnail-wrapper"
+               [attr.data-lens-image]="productDetail.original_path+imageItem"
+               [attr.data-big-image]="productDetail.large_path+imageItem">
+                <img [src]="productDetail.thumb_path+imageItem">
+            </a>
+
+            
+
+           
+        </div>
+    </div> -->
+
+    <!--<div class="simpleLens-gallery-container views clearfix simpleLens-thumbnails-container" dir="rtl">
+            <div class="large-veiw simpleLens-container zoom-section">
+                    <div class="simpleLens-big-image-container">
+                        <a class="simpleLens-lens-image"  [attr.data-lens-image]="productDetail.original_path+productDetail.brand_data.product_image[0]">
+                            <img [src]="productDetail.large_path+productDetail.brand_data.product_image[0]" class="simpleLens-big-image">
+                        </a>
+                    </div>
+                </div>
+            
+
+            <ul>
+                <li *ngFor = "let imageItem of productDetail.brand_data.product_image;let index = index">
+                    <a  (mouseover) = "addClass($event)" [class.active] = "index == 0" (click) = "addClass($event)" href="javascript:void(0)" class="simpleLens-thumbnail-wrapper"
+                [attr.data-lens-image]="productDetail.original_path+imageItem"
+               [attr.data-big-image]="productDetail.large_path+imageItem"><img [src]="productDetail.thumb_path+imageItem" alt="" /></a>
+                    
+                    </li>
+               
+            </ul>
+        </div>-->
+
+        <div class="simpleLens-gallery-container views clearfix" id="product_zoom">
+        <div class="simpleLens-container zoom-section large-veiw">
+            <div class="simpleLens-big-image-container">
+                <a class="simpleLens-lens-image"  [attr.data-lens-image]="productDetail.original_path+productDetail.brand_data.product_image[0]">
+                    <img [src]="productDetail.large_path+productDetail.brand_data.product_image[0]" class="simpleLens-big-image">
+                </a>
+            </div>
+        </div>
+
+        <div class="simpleLens-thumbnails-container xzoom-thumbs small-view">
+            <a  *ngFor = "let imageItem of productDetail.brand_data.product_image;let index = index" (mouseover) = "addClass($event)" [class.active] = "index == 0" (click) = "addClass($event)" href="javascript:void(0)" class="simpleLens-thumbnail-wrapper"
+               [attr.data-lens-image]="productDetail.original_path+imageItem"
+               [attr.data-big-image]="productDetail.large_path+imageItem">
+                <img [src]="productDetail.thumb_path+imageItem">
+            </a>
+
+            
+
+           
+        </div>
+    </div>

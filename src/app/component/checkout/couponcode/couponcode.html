@@ -1,0 +1,14 @@
+<div class="apply-coupon">
+	<form #couponCodeForm="ngForm">
+	<h5>{{'userorderdetails.applycouponcode'|translate}}</h5>
+	<input class="coupon-code" type="text" name="couponcode" #couponcode="ngModel" [(ngModel)]="coupon.couponcode" required>
+	<div class="field-error" *ngIf = "userExist && couponcode.errors">
+		<p class="field-error" *ngIf = "couponcode['errors']['required'] && isApplyClicked">{{'error.couponcode.required' | translate}} </p>
+	 </div>
+	 <div *ngIf="coupon.couponcode && couponCodeError" class="field-error" ><p>{{couponcodemsg}}</p></div>
+	 <button id="apply_coupon" class="save-btn btn" (click)=applyCouponCode(couponCodeForm.valid)>
+			{{'userorderdetails.apply'|translate}}
+	</button>
+	<div *ngIf="coupon.couponcode && couponCodeSuccess" class="alert-success cpn-tru" ><p>{{couponcodemsg}}</p></div>
+  </form>
+</div>

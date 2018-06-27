@@ -1,0 +1,79 @@
+<div class="modal fade cancel-wrap">
+<div  class="cancel-wrap" >
+
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<a href="javascript:void(0);" (click)="hideCancelPopup()" class="close cancel-close" data-dismiss="modal">
+					&times;
+				</a>
+				<h4 class="modal-title">{{'userdashboard.cancellation'| translate}}</h4>
+			</div>
+			<div class="popup-body">
+				<table>
+					<tr>
+						<th>{{'userdashboard.product_detail'| translate}}</th>
+						<th>{{'userdashboard.qty'| translate}}</th>
+						<th>{{'userdashboard.subtotal'| translate}}</th>
+					</tr>
+					<tr>
+						<td>
+							<div class="cancel-img-wrap clearfix">
+								<figure>
+									<img  *ngIf="productData.image" [src]="imagepath+productData.image"  alt="Nature" title="nature" onerror="this.src = 'assets/images/estimate.png';">
+								</figure>
+								<div class="cancel-prdct-nme">
+									<h3>{{productData.name}}</h3>
+								</div>
+							</div>
+						</td>
+						<td>{{productData.quantity}}</td>
+						<td class="cancel-price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">{{currencyconvertservice.currentCurrencyData['sign']}}{{productData.special_price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}}</td>
+						<td class="cancel-price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{productData.special_price*currencyconvertservice.currentCurrencyData['value']}}{{currencyconvertservice.currentCurrencyData['sign']}}</td>
+					</tr>
+				</table>
+				
+				<form class="cancel-form" #CancelProductForm = "ngForm">
+					<ul class="clearfix">
+						<li class="clearfix">
+							<label>{{'userdashboard.reason'| translate}} <span>*</span></label>							
+							<div *ngIf="all_reason" class="cancel-reson-wrap">
+								<i class="fa fa-angle-down"></i>
+								<select #reason_id="ngModel" name="reason_id" [(ngModel)]="cancelProduct.reason_id" required>
+									<option value="">{{'userdashboard.selectReason'| translate}}</option>
+									<option  *ngFor="let r of all_reason" [value]="r.id">{{r.title}}</option>
+								</select>
+								<div class="field-error" *ngIf = "!cancelProduct.reason_id">
+								<p class="field-error" *ngIf = "!cancelProduct.reason_id && isFormSubmit">{{'error.reason.required' | translate}} </p>
+							 </div>								
+							</div>
+						</li>
+						<li class=" clearfix">
+							<label >{{'userdashboard.comment'| translate}}</label>
+							<div class="cancel-reson-wrap">
+								<textarea name="reason_desc" [(ngModel)] = "cancelProduct.reason_desc" #reason_desc = "ngModel"></textarea>								
+							</div>
+						</li>
+					</ul>
+					<div class="cancel-popup-btn clearfix">
+
+						<button  type="button" (click) = "cancelOrder(CancelProductForm.valid)">
+							{{'userdashboard.cancelorder'| translate}}
+						</button>
+					</div>
+				</form>
+				
+				
+				
+			</div>
+			<!-- <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Cancel item
+				</button>
+			</div> -->
+		</div>
+
+	</div>
+</div></div>

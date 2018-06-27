@@ -1,0 +1,54 @@
+<ng-progress [color]="color" ></ng-progress>
+  
+                    <div *ngIf="data.length>0 && recentlyDataAvailable">
+                        
+                        <div class="cols--group">
+                            <div class="panel__body">
+                                <div class="box box--white box--space">
+                                    <div class="product-sec prod-category">
+                        <div class="product-head box__head clearfix">
+                            <h5 class="m-b-0">{{'dashBoard.menuItem.recently_view'|translate}}</h5>
+                            <ul class="filter-nav">
+                                <li>{{'siteLabels.sortby' | translate}}</li>
+                                <li *ngFor="let k of 'recentlyviewArr' | translate" (click)="recently_sort($event,k.value)"><a href="javascript:void(0);">{{k.key}}</a></li>
+                            </ul>
+                        </div>
+                        <div class="product-slide clearfix">
+                            <div class="pro-item" *ngFor="let productItem of productInfo.data  | paginate: { itemsPerPage: perPage, currentPage: pageNo ,totalItems: total } |recentFilter:recentOrder">
+                                    
+                                <a href="javascript:void(0)" title="estimateimage" [routerLink]="productItem.urldata.urlData">
+                                <figure>
+                                        <img  [src]="productInfo['large_path']+productItem['default_image']" alt="defaultimage" title="defaultimage">
+                                </figure>
+                                <div class="product-dtails">
+                                  <div class="price">
+                                     <span class="prdt-price"> {{currencyconvertservice.currentCurrencyData['position']=='left' ? currencyconvertservice.currentCurrencyData['sign'] : ''}}{{productItem['product_data']['special_price']*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right' ? currencyconvertservice.currentCurrencyData['sign'] : '' }}</span>
+                                 </div>
+                                  <div class="reduce-price">
+                                      <del><span class="actual-price"> {{currencyconvertservice.currentCurrencyData['position']=='left' ? currencyconvertservice.currentCurrencyData['sign']:''}}{{productItem['price']*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right' ? currencyconvertservice.currentCurrencyData['sign']:''}}</span></del> 
+                                 	  <span class="discount clr-green" *ngIf = "productItem['product_data']['price']>productItem['product_data']['special_price']">{{((productItem['product_data']['special_price'] -productItem['product_data']['price'])/productItem['product_data']['price']*100) | round}} % </span>
+                                 </div>
+                                    <div class="product">{{(productItem['translation_data'][0]['name']!=''?productItem['translation_data'][0]['name']:productItem['name']['name']) | stringsort}}</div>
+                                </div>
+                                </a>
+                            </div>                            
+                        </div>
+                         <div class="pagination-sec">
+                        <div class="pagination-wrap clearfix"  *ngIf="paging>0 && total>0 && total>perPage">
+								<span class="pagination-title">{{'cart.items'|translate}} {{itemstart}} {{'cart.to' | translate}} {{itemend}} {{'detail.attribute_name.of' | translate}} {{total}} {{'siteLabels.total'|translate}}</span>
+							   <div class="pagination-controls ">
+								  <pagination-controls (pageChange)="showListPageWise($event)"
+								   directionLinks="true"
+								   previousLabel=""
+								   nextLabel="" ></pagination-controls>
+							   </div>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="data.length==0 && recentlyDataAvailable" style="text-align:center"><h4>{{'recentlyviewed.nodata'| translate}}</h4></div>
+         
+    

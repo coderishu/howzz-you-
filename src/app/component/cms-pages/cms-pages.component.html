@@ -1,0 +1,5 @@
+<div class="Content">
+        <div class="container">
+                        <div *ngIf="cmsPageDetail" [innerHtml] = "cmsPageDetail.page_data[0].short_desc?cmsPageDetail.page_data[0].short_desc:cmsPageDetail.short_desc"></div>
+        </div>
+</div>

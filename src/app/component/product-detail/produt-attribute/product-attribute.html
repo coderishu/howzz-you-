@@ -1,0 +1,52 @@
+                          
+							<!-- <div *ngIf = "productDetail.brand_data" >
+							<div class="size-chart clearfix" *ngFor = "let itemAttribute of productDetail.brand_data.default_attr;let itemIndex = index">
+									<div class="size">
+											
+										<h5>{{itemAttribute.attribute_label}}</h5>
+										
+											<select   *ngIf="itemIndex < 1" class="select-dropdwn" (change) = "changeVariant($event,itemAttribute,optionItem,itemIndex,true)"  name="selectedVal">
+												<option value=''>{{'detail.attribute_name.selectSize' | translate}}</option>
+												<option *ngFor = "let optionItem of itemAttribute.value" [value] = "optionItem.code" [selected]="itemAttribute.attribute_val == optionItem.code" [disabled]="optionItem.isAvail == false">{{optionItem.value}}</option>
+											</select>
+											<a href="#" class="chart">{{'detail.attribute_name.sizechart' | translate}}</a>
+									
+									</div>
+									<div class="color" *ngIf="itemIndex >= 1">
+									
+										<div class="color-list">
+											<span *ngFor = "let optionItem of itemAttribute.value">
+												<input type="radio" id="rd1" name="rds" />
+												<label [style.background]="optionItem.colorcode" for="rd1">{{optionItem.value}}</label>
+											</span>
+										
+										</div>
+									</div>
+								
+							</div>
+						</div> -->
+					<div class="size-chart clearfix" *ngIf = "productDetail.brand_data" >
+						<div  *ngFor = "let itemAttribute of productDetail.brand_data.default_attr;let itemIndex = index">
+						    <div class="size" *ngIf="itemAttribute.attribute_code == 'Size'">
+								<h5>{{itemAttribute.attribute_label}} :</h5>
+								<div class="size_sele" [class.size_sele] = "itemAttribute.attribute_code == 'Size'">
+									<span id="" class="selectboxit-arrow-container" unselectable="on"><i id="" class="selectboxit-arrow selectboxit-default-arrow" unselectable="on"></i></span>
+									<select class="select-dropdwn" [(ngModel)] = "itemAttribute.attribute_val" (change) = "changeVariant($event,itemAttribute,optionItem,itemIndex,true)"  name="selectedVal">
+										<!--<option value=''>{{'detail.attribute_name.selectSize' | translate}}</option>-->
+										<option *ngFor = "let optionItem of itemAttribute.value" [value] = "optionItem.code"  [disabled]="optionItem.isAvail == false">{{optionItem.value}}</option>
+									</select>
+									<a href="javascript:void(0);" class="chart">{{'detail.attribute_name.sizechart' | translate}}</a>
+								</div>
+							</div>
+							<div class="color" *ngIf="itemAttribute.attribute_code == 'Color'">
+								<h5>{{itemAttribute.attribute_label}}  <span class="clr-type"></span></h5>
+								<div class="color-list">
+									<span *ngFor = "let optionItem of itemAttribute.value; let innerIndex = index">
+										
+										<input type="radio" id="rd{{innerIndex}}"  name="rds" (change) = "changeVariant(optionItem.code,itemAttribute,optionItem,itemIndex,true)" [checked]="optionItem.code == itemAttribute.attribute_val" />
+										<label [style.background]="optionItem.colorcode" for="rd{{innerIndex}}" [style.opacity]="optionItem.isAvail == false?0.3:''"></label>
+									</span>
+								</div>
+							</div>
+						 </div>
+					</div>

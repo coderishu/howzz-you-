@@ -1,0 +1,103 @@
+.overlay {
+       background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0,0,0,.1);
+    background-image: none;
+    background-origin: padding-box;
+    background-position: 0 0;
+    background-repeat: repeat;
+    background-size: auto auto;
+    height: 1000px;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    position: absolute;
+    right: 0;
+    
+}
+.overlay.model-share{
+    display: none;
+}
+.model-popup-block {
+    width: 280px;
+    position: relative;
+    background-color: #fff;
+    z-index: 999;
+    padding: 10px;
+    margin: 150px auto;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+    box-shadow: 0 3px 9px rgba(0,0,0,.5);
+    animation: showPopup .5s ease;
+    -webkit-animation: showPopup .5s ease;
+}
+.close-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 30px;
+    display: inline-block;
+    height: 30px;
+}
+.social-share {
+    float: left;
+    overflow: hidden;
+}
+.model-share .social-share {
+    float: none;
+}
+.model-share .social-share > li {
+    float: none;
+    padding-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.model-share .social-share > li a {
+    float: left;
+}
+.social-share .fb a {
+    background: url('../../../assets/images/share-images/fb-share.png') no-repeat;
+}
+.social-share li a {
+    height: 42px;
+    width: 42px;
+    display: block;
+}
+.model-share .social-share .social-text {
+    float: left;
+    font-size: 16px;
+    line-height: 39px;
+    margin-left: 12px;
+}
+.model-share .social-share .social-text.whatsup-text,.model-share .social-share .social-text.mail{
+        margin-left: 52px;
+    color: #000;
+}
+.social-share .twitter-share a {
+    background: url('../../../assets/images/share-images/twitter-share.png') no-repeat;
+}
+.social-share .mail a {
+    background: url('../../../assets/images/share-images/mail.png') no-repeat;
+}
+.social-share .gplus a {
+    background: url('../../../assets/images/share-images/gplus.png') no-repeat;
+}
+.social-share .in a {
+    background: url('../../../assets/images/share-images/in.png') no-repeat;
+}
+.social-share .p a {
+    background: url('../../../assets/images/share-images/p.png') no-repeat;
+}
+.social-share .whatsup a {
+    background: green;
+    position: relative;
+}
+
+.social-share .whatsup a i {
+        font-size: 27px;
+    color: #fff;
+    position: absolute;
+    top: 8px;
+    right: 7px;
+}
+

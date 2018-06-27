@@ -1,0 +1,140 @@
+<!--Content Area Start-->
+			<div class="content">
+				<div class="container">
+						
+					<div class="col-md-12 conf-msg">
+						<span class="conf-sign"></span>
+						<!-- <div [innerHTML] = "'orderconfirmation.thanksmsg'|translate"></div> -->
+						<div *ngIf = "'orderconfirmation.failed'|translate">
+							<div [innerHTML] = "'orderconfirmation.failed'|translate"> </div>
+						</div>	
+
+				</div>
+				<div class="row">
+					<div class="col-md-12 conf-detail">
+						<div class="col-md-5 conf-odr-dtl">
+							<div class="conf-dtl-head">
+								<strong>{{'orderconfirmation.orderdetails'|translate}}</strong>
+							</div>
+							
+							<div class="odr-dtl-wrp">
+								<div class="ordr-id">
+									<strong>{{'orderconfirmation.orderid'|translate}}:</strong>
+									<span *ngIf="orderDetailInfo.order_data"><a href="javascript:void(0);" title="estimateimage" [routerLink]="['/user-orders']">{{orderDetailInfo.odid}}</a> ({{orderDetailInfo.order_data.length}} {{orderDetailInfo.order_data.length>1?('cart.items'|translate):('orderconfirmation.item'|translate)}})</span>
+								</div>
+								
+								<div class="ordr-dte">
+									<strong>{{'orderconfirmation.orderdate'|translate}}:</strong>
+									<span>{{orderDetailInfo.order_date|dateFilter}}</span>
+								</div>
+								
+								<div class="ordr-amt">
+									<!--orderDetailInfo.total_special_price*currencyconvertservice.currentCurrencyData['value'] == {{currencyconvertservice.currentCurrencyData['value']}}
+									orderDetailInfo.total_special_price == {{orderDetailInfo.total_special_price}}-->
+									<strong>{{'siteLabels.total' | translate}}:</strong>
+									<span *ngIf="orderDetailInfo.total_special_price!=0">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{orderDetailInfo.total_special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}} </span>
+									<span *ngIf="orderDetailInfo.total_special_price==0">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{orderDetailInfo.grand_total_special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}} </span>
+								</div>
+							
+							</div>
+							
+						</div>
+						
+						<div class="col-md-5 conf-odr-addrs" *ngIf="orderDetailInfo.address_detail">
+							<div class="conf-dtl-head">
+								<strong >{{'orderconfirmation.address'|translate}}</strong>									
+							</div>
+							<div class="adr-wrp">
+								<div class="odr-name">
+								<strong>{{orderDetailInfo.address_detail.fname}} {{orderDetailInfo.address_detail.lname}}</strong>
+								</div>
+								<div class="odr-adrs">
+									<p>{{orderDetailInfo.address_detail.flatno}} {{orderDetailInfo.address_detail.city}}<br />{{orderDetailInfo.address_detail.state}},{{orderDetailInfo.address_detail.country}},{{orderDetailInfo.address_detail.postcode}}</p>
+								</div>
+								
+								<div class="ph-no">
+									<strong>{{'userdashboard.phone'|translate}}:</strong>
+									<span>{{orderDetailInfo.address_detail.phone}}</span>
+								</div>
+							</div>
+						</div>							
+										
+					</div>	
+				</div>	
+			<div *ngIf="orderDetailInfo.order_data">	
+			<div class="row second-bx" *ngFor="let item of orderDetailInfo.order_data">
+			  <div class="col-md-5 conf-prdt-detail clearfix">
+					<!--<figure>
+						<img src="assets/images/audio1.png" alt="product image" />
+					</figure>-->
+					<figure>
+							<a href="javascript:void(0)" (click) = "makeURL(item.urldata.urlData,item.urldata.queryParams)">
+							<img  *ngIf="item.image" [src]="imagepath+item.image"  alt="Nature" title="nature" onerror="this.src = 'assets/images/estimate.png';">
+							</a>
+					</figure>						
+					<div class="odrr-info">
+						<strong>{{item.name}}</strong>
+						<div *ngIf="item.urldata.associate_data">
+							<p *ngFor = "let productAtrr of item.urldata.associate_data">
+								<span>{{productAtrr.key}}: {{productAtrr.value}}</span>									
+							</p>
+						</div>							
+						
+					</div>																																															
+				</div>					
+				<div class="col-md-7">
+					<!-- <div class="conf-del">
+						<p>{{'orderconfirmation.deliveryexpectedby'|translate}} {{item.order_date|convertEstimateDate :item.delivery_date_to}}</p>
+					</div> -->
+					<div>
+					<span>{{'siteLabels.total' | translate}}:</span>
+					<!-- <strong>$145.73</strong> -->
+					<strong *ngIf="item.special_price!=0">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{item.special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</strong>
+					<strong *ngIf="item.special_price==0">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{item.price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</strong>
+				</div>
+				</div>					
+			  </div>	
+			</div>	
+			<div class="col-md-12 conf-total-amt clearfix">
+				<div class="conf-ttal-amt">
+					<span>{{'siteLabels.total' | translate}}:</span>
+					<!-- <strong>$145.73</strong> -->
+					<strong *ngIf="orderDetailInfo.total_special_price!=0">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{orderDetailInfo.total_special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</strong>
+					<strong *ngIf="orderDetailInfo.total_special_price==0">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{orderDetailInfo.grand_total_special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</strong>
+				</div>
+			</div>
+		</div>
+			<!--	upper section end -->					
+				<!--	lower section Strat -->				
+			<div class="product-sec cash-back deals">
+					<div class="container" *ngIf = "mostPopularProducts.length > 0">
+						<div class="product-head clearfix">
+							<h4>{{'orderconfirmation.mostpopular'|translate}}</h4>
+							<!--<a href="#!" class="btn blue-btn">View All</a>-->
+						</div>
+						<!-- <div class="product-slide owl-carousel owl-loaded owl-drag" *ngIf = "mostPopularProducts.length > 0">								 -->
+							<div class="product-slide row owl-carousel" #mostPopularViewChild *ngIf="mostPopularProducts">
+							<!-- <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 3057px;"> -->
+							<div *ngFor="let eachprod of mostPopularProducts" (click) = "showProductDetail(eachprod)">
+								<div class="item">
+									
+									<div class="discount" *ngIf = "eachprod.price > eachprod.special_price">-{{((eachprod.price - eachprod.special_price)/eachprod.price*100) | round}}% </div>																																																																																																																								
+						                 <span class="new-pro" *ngIf="eachprod.product_data.new_from_date|shownewtag:eachprod.product_data.new_to_date">{{'globalText.new' | translate}} </span>
+								<a href="javascript:void(0)" title="estimateimage" [routerLink] = "eachprod.urlParamsData">
+								  <figure>
+									<img  *ngIf="eachprod.default_image" [src]="image_path+eachprod.default_image"  alt="Nature" title="nature" onerror="this.src = 'assets/images/estimate.png';">
+								  </figure>
+								</a>									
+								<div class="product-dtails">
+								  <div class="price" *ngIf="eachprod.special_price" ><a href="#!">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{eachprod.special_price}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</a></div>
+								  <!--<div class="reduce-price" > <del>{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{eachprod.price}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</del> <span class="discount clr-green">({{((eachprod.price-eachprod.special_price)*100/eachprod.price) | round}}% OFF)</span></div>-->
+								  <div class="product">{{eachprod.translation_data[0].name?eachprod.translation_data[0].name:eachprod.name.name}}</div>
+								</div>
+							</div>
+						</div>
+						
+						
+					</div>
+				
+</div>
+			</div>

@@ -1,0 +1,34 @@
+
+		<div class="shipping-dtail chkout-frm-wrp" *ngIf="isCartDataAvailable && cartdata.cart_data.length>0">
+			<div class="ship-product clearfix" *ngFor="let item of cartdata.cart_data; let indx = index">
+				<div class="product">
+					<ul>
+						<li>
+							<figure>
+						      <img  [src]="imagepath+item.image"   alt="estimate" title="esimateimage" onerror="this.src = 'assets/images/gift.jpg';"/>
+						    </figure>
+						</li>
+					</ul>
+					<div class="seller-info"><span>{{'cart.seller'|translate}}: </span> <strong>{{item.vendor_name}}</strong></div>
+				</div>
+				<div class="arrive-sec" *ngIf="item.other_shiping_data.length>0">
+					<span class="arrive-txt">{{'checkout.arriveby'|translate}}</span>
+					<span class="date-sec">
+					<span class="wraps clearfix" *ngFor="let shipping of item.other_shiping_data; let itemIndex = index">
+							<span class="dates">
+								<input type="radio" id="rd_{{indx}}_{{itemIndex}}" name="rd_{{indx}}" [checked]="item.courier_id==shipping.courier_id && item.courier_service_id==shipping.courier_service_id" value="{{item.courier_service_id}}_{{shipping.courier_service_id}}" (change)="selectShipping($event,item.cart_id,shipping)" />
+								<label for="rd_{{indx}}_{{itemIndex}}">{{shipping.courier_name}} {{shipping.courier_service_name}}</label>
+							</span>
+							<span class="status" *ngIf="shipping.rule_data[0].rules_attributes[0].shiping_price==0">{{'cart.free'|translate}}</span>
+							<span class="status" *ngIf="shipping.rule_data[0].rules_attributes[0].shiping_price>0">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{shipping.rule_data[0].rules_attributes[0].shiping_price*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</span>
+							<span>{{'cart.dilveryin' | translate}} {{shipping.min_day}} {{'cart.to' | translate}} {{shipping.max_day}} {{'cart.days'|translate}}</span>
+						</span>
+					</span>
+				</div>
+			</div>
+	
+			<continue-button [nextSection]="nextSection" [continueButtonStatus]="continueButtonStatus" [isAddressAvailable]="isAddressAvailable"></continue-button>
+		</div>
+
+		
+ 

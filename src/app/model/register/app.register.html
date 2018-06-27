@@ -1,0 +1,82 @@
+ <div class="content">     
+				<div class="sign-wrap login">
+					<div class="container">
+						<h1>{{'register.createAccountMsg'| translate}}</h1>
+						<div class="alert" [class.alert-success]="msgStatus" [class.alert-danger]="msgStatus==false" *ngIf="title">
+							<strong>{{title}}</strong>
+						</div>
+						<div class="signup-form">
+							<form #registerForm = "ngForm">
+								<div class="signup-wrap">
+									<div class="">
+										<label> {{'siteLabels.firstName' | translate}} <sup>*</sup></label>
+										<input type="text" name="fname" #fname = "ngModel" [(ngModel)] = "registerUser.fname" pattern = "^[a-zA-Z]+$" required/>
+										<div class="field-error" *ngIf="fname.errors">
+											<p class="field-error" *ngIf="fname['errors']['required'] && isFormSubmit">{{'error.firstName.required' | translate}} </p>
+											<p class="field-error" *ngIf="fname['errors']['pattern'] && isFormSubmit">{{'error.firstName.invalidName' | translate}} </p>
+										</div>
+									</div>
+									
+									<div class="">
+										<label> {{'siteLabels.lastName' | translate}} <sup>*</sup></label>
+										<input type="text" name="lname" #lname = "ngModel" [(ngModel)] = "registerUser.lname" required/>
+										<div class="field-error" *ngIf="lname.errors">
+											<p class="field-error" *ngIf="lname['errors']['required'] && isFormSubmit">{{'error.lastName.required' | translate}} </p>
+											<p class="field-error" *ngIf="lname['errors']['pattern'] && isFormSubmit">{{'error.lastName.invalidName' | translate}} </p>
+										</div>
+									</div>
+									<div class="">
+										<label>{{'siteLabels.emailad' | translate}}</label>
+										<input type="text" name="email" required #email="ngModel" [(ngModel)]="registerUser.email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" />
+										<div class="field-error" *ngIf="email.errors">
+											<p class="field-error" *ngIf="email['errors']['required'] && isFormSubmit">{{'error.email.required' | translate}} </p>
+											<p class="field-error" *ngIf="email['errors']['pattern'] && isFormSubmit">{{'error.email.invalid' | translate}} </p>
+										</div>
+									</div>
+									<div class="">
+										<label> {{'siteLabels.password' | translate}} <sup>*</sup></label>
+										<div class="pass-wrap">
+											<input type="password" name="password" #password = "ngModel" required [(ngModel)]="registerUser.password" minlength="8" maxlength="12" />
+											<!-- <small>show</small> -->
+											<div class="field-error" *ngIf="password.errors">
+												<p class="field-error" *ngIf="password['errors']['required'] && isFormSubmit">{{'error.password.required' | translate}} </p>
+												<p class="field-error" *ngIf="password['errors']['minlength'] && isFormSubmit">{{'error.password.minLength' | translate}} </p>
+												<p class="field-error" *ngIf="password['errors']['maxlength'] && isFormSubmit">{{'error.password.maxLength' | translate}} </p>
+											</div>
+											<span>{{'login.forgetPassword' | translate}}</span>
+										</div>
+										
+									</div >
+									 <div class=""  [innerHTML]= "'login.loginPageMsg' | translate">
+									   </div>
+									<div class="mb-10 apply-now">
+										<a href="javascript:void(0);" class="btn blue-txt" (click) = "register(registerForm.valid)"> {{'register.signUpBtn' | translate}} </a>
+									</div>
+									<div class="apply-now">				
+										<span class="">{{'register.registerMsg' | translate}}</span>
+									</div>
+									<div class="">
+										<div class="dont-ac">
+											<span> {{'register.allreadyAcoount' | translate}}?</span>
+											<i>&nbsp;</i>
+										</div>
+									</div>   
+									<div class="apply-now">
+										<a href="javascript:void(0);" [routerLink]="['/login']" class="btn blank-btn"> {{'login.loginBtn' | translate}} </a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+

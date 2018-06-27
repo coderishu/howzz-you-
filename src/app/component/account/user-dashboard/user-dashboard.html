@@ -1,0 +1,216 @@
+<!--cancel-popup Start-->
+<order-cancel-popup  *ngIf = "isCancelPopupOpen" [currentLanguageData]="currentLanguageData" [odid] = "odid" (hideCancelPopup) = "hideCancelPopup($event)" [imagepath] = "imagepath" [allReasons] = "all_reason" [productData] = "productData"></order-cancel-popup>
+<!--cancel-popup End-->
+
+<!-- refund popup start-->
+<order-refund-popup *ngIf = "isRefundPopupOpen" [orderId] = "refundOrderSubmitData['oid']" [orderDetailId] = "refundOrderSubmitData['order_detail_id']" [cancelReasonData] = "cancelReasonData" [refundQuantity] = "refundQuantity"  (hideRefundPopup) = "hideRefundPopup($event)"></order-refund-popup>
+<!-- refund popup end -->
+<ng-progress [color]="color" ></ng-progress>
+
+					<div class="cols--group">
+						<div class="panel__body">
+							<div class="box box--white box--space" *ngIf="orderDetailInfo['data'].length>0 && orderExist">
+								<div class="box__head">
+									<h5>{{'userdashboard.recentOrder' | translate}}</h5>
+									<a class="link--arrow" href="javascript:void(0);" *ngIf="orderDetailInfo.total_record>limittoshowdataondashboard" [routerLink]="orderDetailInfo.data.length>0?['/account/orders']:[]">{{'siteLabels.viewall'| translate}}</a>
+								</div>
+								<div class="box__head box__head--large" *ngIf="orderDetailInfo.data.length>0 && orderExist">
+									<!-- Row start -->
+									<div class="ordr-wrp row" *ngIf="orderDetailInfo.data.length>0 && orderExist">
+
+										<div class="col-md-12" *ngFor="let each of orderDetailInfo.data;let k = index;" >
+
+											<!-- head Start -->
+											<!-- <div  *ngIf="k<limittoshowdataondashboard"> -->
+												<div class="row dtl-wrp" *ngIf="each.length>0">
+													<div class="odr-dtl-head">
+														<table class="ordr-table">
+															<tr>
+																<th>{{'userdashboard.orderedon' | translate}}</th>
+																<th>{{'siteLabels.total'| translate}}</th>
+																<th>{{'siteLabels.dispatchto'| translate}}</th>
+																<th *ngIf = "each.gift_card == 0">{{'siteLabels.estdelivery'| translate}}</th>
+																<th>{{each.odid}}</th>
+															</tr>
+															<tr>
+																<td>{{each.order_date|dateFilter}}</td>
+																<td>{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{each.grand_total_special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</td>
+																<td class="tooltip_adress" *ngIf="each.address_detail"> {{each.address_detail.fname}} <span class="tooltip_text">{{each.address_detail.flatno}} {{each.address_detail.street}} {{each.address_detail.city}} {{each.address_detail.state}} {{each.address_detail.country}} {{each.address_detail.postcode}}</span><i class="drop-arrow" ><img src="assets/images/select-arrow.png" alt="select-arrow" title="arrow" /> </i></td>
+																<td *ngIf = "each.gift_card == 0">5 December 2015</td>
+																<td class="invce-wrp tooltip_adress"> {{'siteLabels.invoice' | translate}}
+																	<ul class="tooltip_text">
+																		<li>
+																			<a href="javascript:void(0)" (click) = "getInvoice(each.order_id)" *ngIf = "each.gift_card == 0">{{'siteLabels.requestinvoice' | translate}}</a>
+																		</li>
+																		<li>
+																			<a href="javascript:void(0)">{{'siteLabels.printableinvoice' | translate}}</a>
+																		</li>
+																	</ul><i class="drop-arrow" ><img src="assets/images/select-arrow.png" alt="select-arrow" title="arrow" /> </i></td>
+															</tr>
+														</table>
+													</div>
+												</div>
+												<!-- head End -->
+												<!-- product Row Start -->
+												<div class="product-row clearfix" *ngFor="let product of each.order_data; let i = index;" >
+													<div class="row mid-row">
+														<div class="col-md-2 col-sm-3">
+															<figure class="prdct-imge">
+																<a href="javascript:void(0)" title="{{product.name}}" [routerLink]="product.urldata.urlData"> <img   [src]="each.gift_card == 1?'assets/images/gift.jpg':imagepath+product.image"  alt="{{product.name}}" title="{{product.name}}" onerror="this.src = 'assets/images/estimate.png';"> </a>
+															</figure>
+														</div>
+														<div class="col-md-7 col-sm-5">
+															<a href="javascript:void(0)" title="{{product.name}}" [routerLink]="product.urldata.urlData"><h4>{{product.name}}</h4></a>
+															<strong class="prdt-price">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{product.special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}} </strong>
+
+															<p class="prdt-clr" *ngFor = "let variantItem of product.urldata.associate_data">
+																<span>{{variantItem.key}}: </span>
+																<span>{{variantItem.value}} </span>
+															</p>
+														</div>
+														<div class="col-md-3 col-sm-4" *ngIf = "each.gift_card == 0">
+															<div class="fedbck-wrp">
+																<a href="javascript:void(0)" [routerLink] = "['/account/ratings',product.product_id]" *ngIf=" storeSettingData.STORE.REVIEW.enable == 1 && product.order_status_code=='delivered' &&  product.refund_detail.refund_status=='0' && product.cancel_status=='0'" (click)="rateProduct(product.product_id,product.urldata)" class="btn lve-btn">{{'siteLabels.leaveFeedback' | translate}}</a>
+																<div class="slt-wrp">
+
+																	<select title="" (change)="navigateToOptionChange($event,product,each.odid)" id='order'>
+																			<option   [disabled]="(product.cancel_status && option.value!='cancel' && option.value!='vieworder' && option.value !='')||(product.order_status_code!='ordered' && product.order_status_code!='ONHOLd' && product.order_status_code!='PAID' && option.value=='cancel') || (!product.delivered && option.value=='refund')" [selected]="(product.cancel_status && !product.delivered && option.value=='cancel') || (product.refund_detail.refund_status && option.value=='refund') "  *ngFor="let option of 'accountSectionSelectionArr' | translate,let i = index;" [value]="option.value">{{option.key}}</option>
+
+
+																	</select>
+																	<i class="drop-arrow" ><img src="assets/images/select-arrow.png" alt="arrow" title="arrow" /> </i>
+																</div>
+															</div>
+														</div>
+															<div class="col-md-3 col-sm-4" *ngIf = "each.gift_card == 1">
+
+															<div class="fedbck-wrp">
+																<div class="slt-wrp">
+																	<select title="" (change)="navigateToOptionChange($event,product,each.odid)" id='order'>
+																			<option   [disabled]="option.value != 'vieworder' && option.value != ''"  *ngFor="let option of 'accountSectionSelectionArr' | translate,let i = index;" [value]="option.value">{{option.key}}</option>
+		
+																		</select>
+																	<i class="drop-arrow" ><img src="assets/images/select-arrow.png" /> </i>
+																</div>
+
+															</div>
+
+														</div>
+													</div>
+													<div class="row buy-rw" *ngIf = "each.gift_card == 0">
+														<div class="col-md-3 col-sm-3 col-md-push-2 col-sm-push-3">
+															<a href="javascript:void(0)" class="btn by-btn" *ngIf="product.order_status_code=='delivered' && product.refund_detail.refund_status=='0' " (click)="addToCart(product.urldata.queryParams.sku,product.associate,$event,product.product_id,product.vendor_id,currencyconvertservice.currentcurrencycode,1,product.urldata)">{{'siteLabels.Buyagain' | translate}}</a>
+														</div>
+														<div class="col-md-8 col-sm-5 pull-right fnl-msg">
+																<p [class.failed] = "product.cancel_status>'0' || product.refund_detail.refund_status>'0'" [class.success]="product.delivered && product.cancel_status=='0' && product.refund_detail.refund_status=='0'">
+																		{{(product.cancel_status>'0' || product.refund_detail.refund_status>'0' || product.order_status_code == 'delivered')?product.msg:('userdashboard.deliveryby' | translate)}} :  {{product.cancel_status=='0'&& product.delivered==false?(product.order_date|convertEstimateDate :product.delivery_date_to):product.cancel_status>'0' && product.refund_detail.refund_status == '0'?(product.cancel_date|dateFilter):product.refund_detail.refund_status>'0'?(product.refund_detail.refund_create_date?(product.refund_detail.refund_create_date|dateFilter):('siteLabels.dateisnotmentioned' | translate)):(product.order_status_date|dateFilter)}}
+																		 <!-- {{product.cancel_status=='0'&& product.delivered==false?('userdashboard.deliveryby' | translate):product.cancel_status !='0' && product.refund_detail.refund_status == '0'?('userdashboard.yourordercancell' | translate):product.refund_detail.refund_status>'0'?('siteLabels.refundproceeddate' | translate):('userdashboard.yourorderdeliv' | translate)}}: {{product.cancel_status!='1'&& product.delivered==false?(product.order_date|dateFilter):product.cancel_status=='1' && product.refund_detail.refund_status == '0'?(product.cancel_date|dateFilter):product.refund_detail.refund_status>'0'?(product.refund_detail.refund_create_date|dateFilter):(product.order_status_date|dateFilter)}} -->
+																		 <!-- {{product.cancel_status!='1'&& product.delivered==false?('userdashboard.deliveryby' | translate):product.cancel_status=='1'&& product.delivered==false?('userdashboard.yourordercancell' | translate):('userdashboard.yourorderdeliv' | translate)}}: {{product.cancel_status!='1'&& product.delivered==false?(product.order_date|dateFilter):product.cancel_status=='1'&& product.delivered==false?(product.cancel_date|dateFilter):(product.order_status_date|dateFilter)}} -->
+																	 </p>
+														</div>
+													</div>
+													<div class="row">
+														<!-- refund Status div-->
+														<div class="col-md-12 alrt-msg" *ngIf="product.refund_detail.refund_status">
+															<p>
+																<!-- Amount = {{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{product.special_price?(product.special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal):(product.price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal)}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}} -->
+															</p>
+															<p>
+																{{product.msg}}
+																<span *ngIf="product.refund_detail.refund_status == '2'">{{'siteLabels.amount' | translate}} {{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{product.special_price?(product.special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal):(product.price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal)}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</span>
+															</p>
+														</div>
+													</div>
+												</div>
+												<!-- product Row end -->
+											<!-- </div> -->
+										</div>
+									</div>
+									<!-- Row end   -->
+								</div>
+							</div>
+							<div *ngIf="orderDetailInfo.data.length==0 && orderExist" class="no-avlbl" style="text-align:center">
+								<h4>{{'userdashboard.no_order'| translate}}</h4>
+							</div>
+							<!--- Wishlist Data start****************************************************************-->
+							<div class="box box--white box--space">
+								<div class="box__head box__head--large" *ngIf="wishlistData.data.length>0 && isWishDataAvailable">
+									<div class="ordr_page_head_wrap">
+
+										<div class="row odr-head whlist-head clearfix">
+											<div class="col-md-12 col-xs-12 col-sm-3" >
+												<h5>{{'userdashboard.mywishlist'| translate}}</h5>
+												<a class="link--arrow" href="javascript:void(0);" *ngIf="wishlistData.total_record>limittoshowdataondashboard" title="view" [routerLink]="['/account/wishlist']">{{'userdashboard.viewall'| translate}}</a>
+											</div>
+										</div>
+
+										<div class="ordr-wrp row">
+											<div class="col-md-12 wislst-wrp" >
+												<div class="row dtl-wrp">
+
+													<div class="odr-dtl-head">
+														<!-- <input type="checkbox" class="chck" id="chck1" > -->
+														<label for="chck1" class="chck-label"></label>
+														<strong class="prdt-count"> {{wishlistData.data.length}} {{wishlistData.data.length > 1?('siteLabels.products' | translate):('siteLabels.product' | translate)}}</strong>
+													</div>
+												</div>
+												<div class="row mid-row clearfix" *ngFor="let wish of wishlistData.data let w = index;">
+													<!-- <div *ngIf="w<limittoshowdataondashboard" > -->
+														<div class="col-md-2 col-sm-3">
+															<!-- <input type="checkbox" class="chck2" id="chck2" > -->
+															<label for="chck2" class="chck-label2"></label>
+															<figure>
+																<a class="prdct-imge" href="javascript:void(0)" title="{{wish.product_id.name.name}}" [routerLink]="wish.url_data.urlData" > <img  *ngIf="wish.product_id.default_image" [src]="image_path+wish.product_id.default_image"  alt="{{wish.product_id.name.name}}" title="{{wish.product_id.name.name}}" onerror="this.src = 'assets/images/estimate.png';"> </a>
+															</figure>
+														</div>
+														<div class="col-md-7 col-sm-5 wishlist-prdct">
+															<a href="javascript:void(0)" title="{{wish.product_id.name.name}}" [routerLink]="wish.url_data.urlData" ><h4>{{wish.product_id.name.name}}</h4></a>
+															<strong *ngIf="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price && currencyconvertservice.currentCurrencyData['position']=='left'" class="prdt-price"> {{currencyconvertservice.currentCurrencyData['sign']}}{{wish.product_id.special_price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}} </strong>
+															<strong  *ngIf="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price && currencyconvertservice.currentCurrencyData['position']=='right'" class="prdt-price">{{wish.product_id.special_price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}} </strong>
+
+															<span class="actual-price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'" [class.shopping-cart-discount]="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price" [class.prdt-price]="!wish.product_id.special_price">{{currencyconvertservice.currentCurrencyData['sign']}}{{wish.product_id.price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}}</span>
+															<span class="actual-price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'" [class.shopping-cart-discount]="wish.product_id.special_price && wish.product_id.special_price<wish.product_id.price" [class.prdt-price]="!wish.product_id.special_price">{{wish.product_id.price*currencyconvertservice.currentCurrencyData['value'] |fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</span>
+															<span class="discount-amt">flat {{wish.product_id.discount_percentage|round}} % off</span>
+															<p class="prdt-clr" *ngFor = "let variantItem of wish.url_data.associate_data">
+																<span>{{variantItem.key}}: </span>
+																<span>{{variantItem.value}} </span>
+															</p>
+															<!-- <ul class="rating-str clearfix">
+																<custum-bar-rating [isEdit] = "false" [ratingCount] = "3" [max] = "globaldata['maxRating']"></custum-bar-rating>
+															</ul> -->
+														</div>
+														<div class="col-md-3 col-sm-4 clearfix">
+
+															<div class="fedbck-wrp">
+																<!-- <a href="#" class="btn add-cart-btn">Add to Cart</a> -->
+																<a class="btn add-cart-btn" href="javascript:void(0);" (click)="addToCart(wish.sku,wish.product_id.associate,$event,wish.product_id.id,wish.product_id.vendor_id,currencyconvertservice.currentcurrencycode,1,wish.url_data)">{{'btns.addTocart'|translate}}</a>
+																<div class="slt-wrp">
+																	<select title="" (change)="navigateToOptionChange($event,wish)">
+																			<option value="">I'd like to--</option>
+																			<option value="viewdetail">View Detail</option>
+																			<!-- <option value="3">Contact seller</option> -->
+																		</select>
+																<!-- <select title="" (change)="navigateToOptionChange($event,product,each.odid)" id='order'>
+																	<option *ngFor="let option of 'accountSectionSelectionArr' | translate,let i = index;" [value]="option.value">{{option.key}}</option>
+																</select> -->
+																<i class="drop-arrow" ><img src="assets/images/select-arrow.png" /> </i>
+															</div>
+															</div>
+															<div class="rmv-btn">
+																<a href="javascript:void(0);" (click) = "removeWishListData(wish.sku,wish.product_id.id)">{{'cart.remove'|translate}}</a>
+															</div>
+														</div>
+													<!-- </div> -->
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<ngx-flash-messages></ngx-flash-messages>
+								<div *ngIf="wishlistData.data.length==0 && isWishDataAvailable" style="text-align:center">
+									<h4>{{'userdashboard.no_product'| translate}}</h4>
+								</div>
+							</div>
+							<!--- Wishlist Data End***************************************************************** -->
+						</div>
+					</div>

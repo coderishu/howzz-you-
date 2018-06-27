@@ -1,0 +1,113 @@
+<div>
+	<div class="header">
+		<div class="live-sec">
+			<div class="container">
+				<div class="live-offer clearfix">
+					<a href="javascript:void(0);" class="live-btn">{{'header.livenow' | translate}}</a>
+					<span>{{'header.discountMsg' | translate}}</span>
+					<a href="javascript:void(0);" class="bank-logo"><img src="assets/images/bank-logo.jpg" alt="" /></a>
+					<span>{{'header.creditcards' | translate}}</span>
+				</div>
+			</div>
+		</div> 
+		<div class="header-wrap">
+			<div class="container">
+				<div class="secondry-header clearfix">
+					<div class="logo"><a href="javascript:void(0);" [routerLink] = "['']"><img src="assets/images/logo.png" alt="" /></a></div>
+					<div class="search-sec">
+						<div class="dept-sec">
+							<a class="drop-row" id="show_mobilemode" href="javascript:void(0);"><i class="icon-nav" (mouseover) = "!isMobile ? showCategories($event):false" (click) = "isMobile ? showCategories($event):false" ></i>{{'header.departments' | translate}}</a>
+							<div id="show" class="drop-dwn-sec drop-dwn" (mouseleave)="!isMobile ? hideCategories($event):false" >
+									<!-- (mouseout)="hideCategories($event)" -->
+								<div class="dropdwn-wrapper">
+								<ul>
+									 <li *ngFor="let menuItem of menuCategoriesData;let itemIndex = index" class="inner-menu" [class.active] = "categoryIdActive == menuItem['_id']" >
+											<a href="javascript:void(0)" [class.menu-arrow]="menuItem.Sub_cat.length > 0"  [routerLink] = "menuItem.urlLink" (mouseover)="categoryActive(menuItem['_id'])" (click) = "navigateToCategory(menuItem)">{{menuItem.translation_data[0]['name'] ? menuItem['translation_data'][0]['name']:menuItem['name']}}</a>
+										    <div class="sub-menu clearfix" *ngIf="menuItem.Sub_cat.length > 0">
+													<div class="list-wrap" *ngFor="let innerItem of menuItem.Sub_cat; let innerIndex = index" >
+														<ul>
+															<li><a class="head" href="javascript:void(0)" [routerLink]="innerItem.urlLink" title="{{innerItem.translation_data[0].name ? innerItem.translation_data[0].name:innerItem.name}}">{{innerItem.translation_data.length > 0?innerItem.translation_data[0].name:innerItem.name}}</a></li>
+															<div *ngIf="innerItem.Sub_cat.length > 0"> 
+															<li *ngFor = "let innerToinnerItem of innerItem.Sub_cat;"><a href="javascript:void(0)" [routerLink]="innerToinnerItem.urlLink" title="{{innerToinnerItem.translation_data[0].name ? innerToinnerItem.translation_data[0].name:innerToinnerItem.name}}">{{innerToinnerItem.translation_data[0].name ? innerToinnerItem.translation_data[0].name:innerToinnerItem.name}}</a></li>
+														    </div>
+														</ul>
+													</div>
+											 </div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="autocomplete-container search-bar"> -->
+								<form class="search-frm" [class.active] = "animateSearchField" (click) = "animateSearchField = true">
+								<input type="text" class="search-query form-control" placeholder="What are you looking for?" autocomplete="off" [value]="searchVal" id = "searchProduct" ngxDawaAutocomplete (items$)="onItems($event)" (highlighted$)="onItemHighlighted($event)"
+								  (keydown) = "searchOnKeyPress($event)" />
+								  <button><i class="icon-search"></i></button>
+								</form>
+								<ul class="autocomplete-items" *ngIf="searcItems.length > 0">
+									<li class="autocomplete-item" *ngFor="let item of searcItems; let i = index;" [class.highlighted]="i === highlightedIndex" (click)="onItemSelected(item)"  on-mouseenter ="mouseEnter(i)">
+										{{item.name.name}}
+									</li>
+								</ul>
+							<!-- </div> -->
+						<!-- <form class="search-frm" action="" method="post">
+							<input type="text" name="search" placeholder="What are you looking for?" />
+							<button><i class="icon-search"></i></button>
+						</form> -->
+					</div>
+					<div class="cart">
+						<ul>
+								<!-- (mouseout)="hideLoginSignUp($event)" -->
+							<li>
+								<a *ngIf="!cartdetailservice.userExist" href="javascript:void(0);" class="sign-in drop-row" (mouseover)="showLoginSignUp($event)" ><i class="icon-signIn"></i><span>{{'login.loginBtn' | translate}}</span></a>
+								<a *ngIf="cartdetailservice.userExist" href="javascript:void(0);" class="sign-in drop-row"  (mouseover)="showLoginSignUp($event)" ><i class="icon-signIn"></i><span>{{user.fname}}</span></a>
+								<div id="show_login_signup" class="user-login drop-dwn"  (mouseleave)="hideLoginSignUp($event)" >
+									<a  *ngIf="!cartdetailservice.userExist" href="javascript:void(0)" [routerLink]="['/login']"><i class="icon-signIn"></i>{{'login.loginBtn' | translate}}</a>
+									<a  *ngIf="!cartdetailservice.userExist" href="javascript:void(0)" [routerLink]="['/sign-up']"><i class="icon-signUp"></i>{{'register.signUpBtn' | translate}}</a>
+									<a  *ngIf="cartdetailservice.userExist" href="javascript:void(0)" [routerLink]="['/account/profile']"><i class="icon-signUp"></i>{{'header.my_account' | translate}}</a>
+									<a  *ngIf="cartdetailservice.userExist" href="javascript:void(0)" (click)="doLogout()" ><i class="icon-signUp"></i>{{'header.logout' | translate}}</a>
+								</div>
+                            </li>
+							<li [routerLink] = "['/cart']"><a class="cart-item" href="javascript:void(0)" title="Cart"><i class="cart-icn"><img src="assets/images/cart-icon.png" alt="" /></i> <span class="baz">{{cartdetailservice.cartdatacount}}</span><span class="txt">{{'header.cart' | translate}}</span></a></li>
+							<li>
+									<a href="javascript:void(0)" class="track-order drop-row" (mouseover)="showTrackOrder($event)">...</a>
+									<div id="show_trackorder" class="track-info drop-dwn" (mouseleave)="hideTrackOrder($event)">
+										<a href="javascript:void(0)"><i class="icon-track"></i>{{'header.trackorder' | translate}}</a>
+									</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="services-nav">
+			<div class="container">
+				<div class="service-wrp">
+					<ul>
+						<li><a href="">Trending</a></li>
+						<li><a href="">Fashion</a></li>
+						<li><a href="">SuperKlick Smart Buy</a></li>
+						<li><a href="">Mobiles</a></li>
+						<li><a href="">TV</a></li>
+						<li><a href="">ACs</a></li>
+						<li><a href="">Refrigerators</a></li>
+						<li><a href="">Cameras</a></li>
+						<li><a href="">Nutrition</a></li>
+						<li><a href="">Furniture</a></li>
+						<li><a href="">Washing</a></li>
+						<li><a href="">Machine</a></li>
+						<li><a href="">Laptops</a></li>
+						<li><a href="">Sports</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="breadcrumbs container" *ngIf="breadCrumData['data'] && isBreadCrumEnabled">
+		<a href="javascript:void(0);" title="estimateimage" [routerLink]="['/']" class="home"></a>
+		<a href="javascript:void(0);" *ngFor="let menuItem of breadCrumMenuItem;let itemIndex = index" (click)="itemIndex == 0?navigateToCategory(breadCrumMenuItem[0]):itemIndex == 1?navigateToSubCategory(breadCrumMenuItem[0],breadCrumMenuItem[1]):itemIndex == 2?navigateToInnerCategory(breadCrumMenuItem[0],breadCrumMenuItem[1],breadCrumMenuItem[2]):navigateOnOther()"
+		 class="category selected">{{menuItem.translation_data.length > 0?menuItem['translation_data'][0]['name']:menuItem['name']}} </a>
+		
+	</div>
+	<loader></loader>
+</div>

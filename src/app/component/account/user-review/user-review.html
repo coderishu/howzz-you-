@@ -1,0 +1,58 @@
+<ng-progress [color]="color" ></ng-progress>
+
+					<div class="cols--group">
+
+						<div class="panel__body">
+							<div class="box box--white box--space">
+								<div class="box__head clearfix reviw-head-wrp">
+									<h5>{{'userreview.productreview' | translate}} &amp; {{'userreview.ratings'|translate}}</h5>
+								</div>
+								<div class="box__body" *ngIf="reviewData.length>0 && reviewrecd">
+									<div class="user-rview-wrap" *ngFor="let review of reviewData">
+										<div class="row" >
+											<div class="store-revw-wrp clearfix">
+												<div class="col-md-2">
+													<figure class="">
+														<a href="javascript:void(0)" [routerLink]= "review.url_data"> <img  *ngIf="review.product_id.default_image" [src]="image_path+review.product_id.default_image"  alt="Nature" title="nature" onerror="this.src = 'assets/images/estimate.png';"> </a>
+													</figure>
+												</div>
+												<div class="col-md-10">
+													<a href="javascript:void(0)" [routerLink]= "review.url_data"><h3>{{review.product_id.name.name}}</h3></a>
+													<ul class="clearfix">
+														<custum-bar-rating [isEdit] = "false" [ratingCount] = "review.summary_rating" [max] = "starcount"></custum-bar-rating>
+													</ul>
+													<div class="rev-write" id="ds__feedback-edit">
+														<label class="revw-title" *ngIf="review.title"> {{review.title}} </label>
+														<textarea *ngIf="review.review" class="" disabled>{{review.review}}</textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row clearfix">
+											<div class="col-md-10 col-md-push-2 post_date_wrp">
+												<div class="row clearfix">
+													<div class="col-md-6 rev-date">
+														<span>{{review.nick_name}},  </span>
+														<span>{{'userreview.postedon'|translate}} {{review.createdAt|dateFilter}}</span>
+													</div>
+													<div class="col-md-3 pull-right like-wrap">
+														<i class="fa fa-thumbs-o-up"><span class="like-count">{{review.like}}</span></i>
+														<i class="fa fa-thumbs-o-down"><span class="like-count">{{review.dislike}}</span></i>
+													</div>
+												</div>
+													<div class="row">
+														<div class="col-md-6 rev-edit">
+															<a href="javascript:void(0)" [routerLink]="['/account/edit-rating',review.id]" class="ds__edit">{{'userreview.edit'|translate}}</a>
+															<a href="javascript:void(0)" (click)="removeReviewData(review.id)">{{'userreview.remove'|translate}}</a>
+															<a href="javascript:void(0)">{{'siteLabels.share' | translate}}</a>
+														</div>
+													</div>
+												</div>
+										</div>
+									</div>
+								</div>
+								<div *ngIf="reviewData.length==0 && reviewrecd"><h4 style = "text-align:center">{{'userreview.noreviewdata' | translate}}</h4></div>
+							</div>
+						</div>
+					</div>
+					<ngx-flash-messages></ngx-flash-messages>

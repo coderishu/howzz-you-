@@ -1,0 +1,301 @@
+  <div class="chkout-shipping clearfix">
+	<div class="">
+		<div class="chkout-form chkout-payment chkout-frm-wrp">
+			
+			<!--<h5>{{'payment.paymentMethod'|translate}}</h5>-->
+			<div class="gift-card-btn" *ngIf = "typeOfCart==undefined" (click) = "openGiftCodeForm()">Apply Gift </div>
+             <div  class="gift-card-wrap">
+						<!--<div class="checkbox checkbox-circle">
+							<input id="gift-card" type="checkbox"  (click) = "toggleGiftForm()" name="gift-card">
+							<label for="gift-card"> {{'payment.gift_card'|translate}}</label>
+						</div>-->
+						
+						<div class="gift_coupon_inner_content" *ngIf = "isGiftVoucher">
+							<form  #couponForm = "ngForm" (ngSubmit) = "giftCoupon(couponForm.valid)">
+								<div class="wrf">
+									<div  class="row clearfix">
+										<div class="col-md-12">
+											<div class="field-set row" >
+												<div class="form-group">
+													<div class="caption-wraper col-md-4 col-xs-12">
+														<label class="field_label" for="cardNumber" >{{'payment.gift_card_number'|translate}} *</label>
+													</div>
+													<div class="field-wraper col-md-8 col-xs-12">
+														<input type="text" name="giftCode" [class.error] = "giftCode.invalid && isFormSubmit" required  #giftCode = "ngModel" [(ngModel)]="couponCredentionalData['gift_code']"/>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-md-12">
+											<div class="field-set row">
+												<div class="form-group">
+													<div class="caption-wraper col-md-4 col-xs-12">
+														<label class="field_label"for="pin" >{{'payment.pin'|translate}} *</label>
+													</div>
+													<div class="field-wraper col-md-8 col-xs-12">
+														<input type="text" [class.error] = "pin.invalid && isFormSubmit" name="pin" required #pin = "ngModel" [(ngModel)]="couponCredentionalData['pin']" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-md-12">
+											<div class="field-set row">
+												<div class="form-group">
+													<div class="col-md-2 pull-right" style="text-align: right;">
+														<button class="submit_gift btn" tabindex="3">
+															{{'payment.submit'|translate}}
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+                     
+						<div class="gift-apply clearfix" *ngIf="isGiftVoucherAmount">
+
+							<form>
+								<div class="row">
+									<div class="col-md-4 pull-right">
+										<span *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">{{currencyconvertservice.currentCurrencyData['sign']}}{{cardamount*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}</span>
+										<span *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{cardamount*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<label>{{'payment.apply_amount'|translate}}</label>
+									</div>
+									<div class="col-md-4">
+										<input type="text" name="amount" [class.error] = "amount.invalid && isFormSubmit" required #amount = "ngModel" [(ngModel)] = "applyAmount" onkeypress='return (event.which > 47 && event.which <= 57) || event.which == 8 || event.which == 46' />
+									</div>
+								</div>
+								<p class="error" *ngIf ="cardamount < applyAmount && isApplyAmountSubmit">
+									{{'payment.amount_card_amount'|translate}}
+								</p>
+								<p class="error" *ngIf ="cardamount >= applyAmount && cartDetailData.grand_total < applyAmount && isApplyAmountSubmit">
+									{{'payment.giftAmountErrorMsg'|translate}}
+								</p>
+								<div class="apply-btn-wrp pull-right" (click) = "applyGiftAmount(amount.valid)">
+									<button>
+										{{'payment.apply'|translate}}
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+			<div class="payment-info" *ngIf="paymentMethod.length>0">
+				<div class="chckout-btn-wrap pay-btn">
+
+				<button *ngFor="let paymthd of paymentMethod;let i = index;" type="button" class="btn credit" [class.active] = "paymentType == paymthd.code" (click) = "payment_mode(paymthd.code)">
+						{{paymthd.method}}
+				</button>
+			
+			</div>
+				<div>
+					<!--<div *ngIf="paymthd.method=='cod'" class="checkbox checkbox-circle" (click) = "payment_mode(paymthd.code)">
+						<input id="cash" type="radio" name="paymentType" [checked] = "paymentType == paymthd.code">
+						<label for="cash"> {{paymthd.method}} </label>
+					</div>-->
+					<div class="clearfix" *ngIf = "paymentType=='PAYPAL'">
+						<!--<div class="checkbox checkbox-circle" id="paypal-option" (click) = "payment_mode(paymthd.code)">
+							<input id="paypal" type="radio" name="paymentType" [checked] = "paymentType == paymthd.code">
+							<label for="paypal"> {{paymthd.method}} </label>
+						</div>-->
+						<!--<a href = "javascript:void(0)" class="paypal-card"><img alt="paypal" title="papalimage" src="assets/images/paypal.png"/></a>-->
+
+						<paypal-form  style="display: none"  [paymentMethod] = "paymentMethodData"  [cartData] = "cartdata" [palceOrderData] = 'palceOrderData' [currencyConvertService] = "currencyconvertservice"></paypal-form>
+					</div>
+                    
+					<stripe-payment [paymentMethod] = "paymentMethodData" (getStripeToken) = "getStripeToken($event)"  *ngIf = "paymentType == 'STRIPE'"> </stripe-payment>
+					
+					
+                    
+				  <!--*******	for credit card  ******** -->
+
+			
+
+				</div>
+				<div *ngIf ="paymentType == 'CREDITCARD' || paymentType == 'DEBITCARD'">
+			<h5>Card information</h5>
+			<div class="chkout-required">
+				* required field
+			</div>
+			<div class="clearfix">
+				<ul class="card-info clearfix">
+					<li>
+						<label>First name on card*</label>
+						<input type="text" placeholder="Jonathan" />
+					</li>
+					<li>
+						<label>Last name on card*</label>
+						<input type="text" placeholder="Doe" />
+					</li>
+
+					<li >
+
+						<a href="#"><img src="assets/images/card1.png"  alt="master-card" /></a>
+						<a href="#"><img src="assets/images/card2.png"  alt="master-card" /></a>
+						<a href="#"><img src="assets/images/card3.png"  alt="master-card" /></a>
+						<a href="#"><img src="assets/images/card4.png"  alt="master-card" /></a>
+						<a href="#"><img src="assets/images/card5.png"  alt="master-card" /></a>
+						<a href="#"><img src="assets/images/card6.png"  alt="master-card" /></a>
+						<div class="clearfix">
+							<div class="date-select">
+								<label>Expiration Date*</label>
+								<select class="select-dropdwn" id="amount_min">
+
+									<option value='01'>01</option>
+									<option value='02'>02</option>
+									<option value='03'>03</option>
+									<option value='04'>04</option>
+									<option value='05'>05</option>
+									<option value='06'>06</option>
+
+								</select>
+								<span class="divider">/</span>
+
+								<select class="select-dropdwn" id="amount_max">
+
+									<option value='YY'>YY</option>
+									<option value='99'>99</option>
+									<option value='98'>98</option>
+									<option value='97'>97</option>
+									<option value='96'>96</option>
+									<option value='95'>95</option>
+
+								</select>
+							</div>
+							<div class="security">
+								<label>Security code* <a href="#" class="ques">?</a></label>
+								<input type="text" />
+							</div>
+						</div>
+					</li>
+					<li>
+						<label>Card number*</label>
+						<input type="text" placeholder="Santa Rosita 99" />
+					</li>
+					<li>
+						<label>Phone number* (Ex: (202) 555-0115)</label>
+						<input type="text" placeholder="92075 Solana Beach" />
+					</li>
+				</ul>
+			</div>
+		</div>
+			</div>
+
+			<ngx-flash-messages></ngx-flash-messages>
+			<div class="chckout-btn-wrap" >
+				<button type="submit" class="chckout-sbmt-btn" (click) = "placeOrder()">
+					{{'userorderdetails.placeorder'|translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+			<div class="loader-cat" style="text-align: center;" *ngIf = "isLoader">
+		<span class="cat-loader"> </span>
+		
+	</div>	
+</div>  
+
+
+
+
+
+ <!--<div class="chkout-shipping clearfix">
+	<div class="" *ngIf="paymentMethod.length>0">
+		
+		<div class="chkout-form chkout-payment chkout-frm-wrp">
+			<div class="chckout-btn-wrap pay-btn">
+
+				<button *ngFor="let paymthd of paymentMethod;let i = index;" type="button" class="btn credit" [class.active] = "paymentType == paymthd.code" (click) = "payment_mode(paymthd.code)">
+						{{paymthd.method}}
+				</button>
+				
+			</div>
+         <div *ngIf="paymentType=='CREDITCARD'">
+			<h5>Card information</h5>
+			<div class="chkout-required">
+				* required field
+			</div>
+			<div class="clearfix">
+				<ul class="card-info clearfix">
+					<li>
+						<label>First name on card*</label>
+						<input type="text" placeholder="Jonathan" />
+					</li>
+					<li>
+						<label>Last name on card*</label>
+						<input type="text" placeholder="Doe" />
+					</li>
+
+					<li >
+
+						<a href="#"><img src="assets/images/card1.png"  alt="master-card" /></a>
+						<a href="#"><img src="assets/images/card2.png"  alt="master-card" /></a>
+						<a href="#"><img src="assets/images/card3.png"  alt="master-card" /></a>
+						<a href="#"><img src="assets/images/card4.png"  alt="master-card" /></a>
+						<a href="#"><img src="assets/images/card5.png"  alt="master-card" /></a>
+						<a href="#"><img src="assets/images/card6.png"  alt="master-card" /></a>
+						<div class="clearfix">
+							<div class="date-select">
+								<label>Expiration Date*</label>
+								<select class="select-dropdwn" id="amount_min">
+
+									<option value='01'>01</option>
+									<option value='02'>02</option>
+									<option value='03'>03</option>
+									<option value='04'>04</option>
+									<option value='05'>05</option>
+									<option value='06'>06</option>
+
+								</select>
+								<span class="divider">/</span>
+
+								<select class="select-dropdwn" id="amount_max">
+
+									<option value='YY'>YY</option>
+									<option value='99'>99</option>
+									<option value='98'>98</option>
+									<option value='97'>97</option>
+									<option value='96'>96</option>
+									<option value='95'>95</option>
+
+								</select>
+							</div>
+							<div class="security">
+								<label>Security code* <a href="#" class="ques">?</a></label>
+								<input type="text" />
+							</div>
+						</div>
+					</li>
+					<li>
+						<label>Card number*</label>
+						<input type="text" placeholder="Santa Rosita 99" />
+					</li>
+					<li>
+						<label>Phone number* (Ex: (202) 555-0115)</label>
+						<input type="text" placeholder="92075 Solana Beach" />
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<ngx-flash-messages></ngx-flash-messages>
+			<div class="chckout-btn-wrap" >
+				<button type="submit" class="chckout-sbmt-btn" (click) = "placeOrder()">
+						{{'userorderdetails.placeorder'|translate}}
+				</button>
+			</div>
+		</div>
+
+		
+	</div>
+
+</div> -->

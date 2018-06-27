@@ -1,0 +1,258 @@
+<!--Content Area Start-->
+<ng-progress [color]="color" ></ng-progress>
+
+					<div class="cols--group">
+						<div class="panel__body add-gift-wrp">
+							<div class="box box--white box--space">
+								<!-- <div class="box__head">
+								<h5>Add a Gift Card</h5>
+								</div>-->
+								<div class="gift-wrp pt15 mb-20">
+									<form  #couponForm = "ngForm">
+										<div class="row clearfix">
+											<div class="col-md-12">
+												<div class="field-set">
+													<div class="form-group clearfix">
+														<div class="col-md-3 pull-left" >
+															<button class="submit_gift" data-toggle="collapse" data-target=".wrf" type="submit" tabindex="3" (click) = "showGiftCardForm = !showGiftCardForm" >
+															{{'gift_card.add_gift_card'|translate}}
+															</button>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="collapse wrf" *ngIf = "showGiftCardForm">
+											<div  class="row clearfix">
+												<div class="col-md-12">
+													<div class="field-set" >
+														<div class="form-group">
+															<div class="caption-wraper col-md-4 col-xs-12">
+																<label class="field_label"  for="cardNumber" name="giftcode" >{{'gift_card.gift_card_number'|translate}} *</label>
+															</div>
+															<div class="field-wraper col-md-8 col-xs-12">
+																<input type="text" #giftCode = "ngModel" [(ngModel)]="couponCredentionalData['gift_code']" name="giftCode" required>
+																<div class="field-error" *ngIf = "giftCode.errors">
+																    <p class="field-error" *ngIf = "giftCode['errors']['required'] && isCouponFormSubmit">{{'error.giftCode.required' | translate}} </p>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row clearfix">
+												<div class="col-md-12">
+													<div class="field-set">
+														<div class="form-group">
+															<div class="caption-wraper col-md-4 col-xs-12">
+																<label class="field_label" name="pin" for="pin" >{{'payment.pin'|translate}} *</label>
+															</div>
+															<div class="field-wraper col-md-8 col-xs-12">
+																<input type="text" #pin = "ngModel" [(ngModel)]="couponCredentionalData['pin']" name="pin" required>
+																<div class="field-error" *ngIf = "pin.errors">
+																		<p class="field-error" *ngIf = "pin['errors']['required'] && isCouponFormSubmit">{{'error.pin.required' | translate}} </p>
+																	</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row clearfix">
+											<div class="col-md-12">
+												<div class="field-set">
+													<div class="form-group">
+														<div class="col-md-2 pull-right" style="text-align: right;">
+															<button class="submit_gift" (click)="applyCoupon(couponForm.valid)">
+																{{'payment.submit'|translate}}
+															</button>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+										</div>
+									</form>
+									<div class="gift_his_bl" *ngFor="let gifting of showtable">
+                                        <div class="gift_head_des row">
+                                            <div class="gift_image col-sm-1"><img src="assets/images/gift.jpg" />
+                                            </div>
+                                            <strong class="gift_rece_name col-sm-4">{{gifting.receiver_email}}</strong>
+											<strong class="gift_amont col-sm-3">{{'siteLabels.totalamount'|translate}}:-<span *ngIf="currencyConvertService.currentCurrencyData['position']=='left'">{{currencyConvertService.currentCurrencyData['sign']}}</span>{{gifting.card_amount*currencyConvertService.currentCurrencyData['value'] | fixedDecimal}}<span *ngIf="currencyConvertService.currentCurrencyData['position']=='right'">currencyConvertService.currentCurrencyData['sign']</span></strong>
+                                            <span class="gift_expiryDate col-sm-4">Expire: {{gifting.expiry_date | dateFilter}} </span>
+                                        </div>
+                                        <div class="table-responsive" *ngIf="!gifting.is_order">
+                                            <table class="table gift-card-table" *ngIf="gifting.use_record.length > 0">
+                                                <tr>
+                                                    <th>{{'gift_card.sn'|translate}}</th>
+													<th>{{'gift_card.reciever'|translate}}</th>
+													<th>{{'gift_card.order_id'|translate}}</th>
+													<th>{{'gift_card.used_amount'|translate}}</th>
+													<th>{{'gift_card.date'|translate}}</th>
+                                                </tr>
+                                                <tr  *ngFor="let gift of gifting.use_record ;let index = index">
+                                                    <td>{{index+1}}</td>
+                                                    <td>{{gift.gift_card_detail.receiver_name}}</td>
+                                                    <td>{{gift.odid}}</td>
+                                                    <td><strong class="gift_amont col-sm-3"><span *ngIf="currencyConvertService.currentCurrencyData['position']=='left'">{{currencyConvertService.currentCurrencyData['sign']}}</span>{{gift.used_amount*currencyConvertService.currentCurrencyData['value'] | fixedDecimal}}<span *ngIf="currencyConvertService.currentCurrencyData['position']=='right'">currencyConvertService.currentCurrencyData['sign']</span></strong></td>
+                                                    <td>{{gift.createdAt | dateFilter}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div *ngIf="gifting.is_order" class="no-avlbl" style="text-align:center">
+                                            <h4>{{'userdashboard.no_order'|translate}}!</h4>
+                                        </div>
+                                    </div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="cols--group">
+						<div class="panel__body">
+							<div class="box box--white box--space">
+								<div class="box__head">
+									<h5>{{'gift_card.buy_gift_card'|translate}}</h5>
+								</div>
+								<div class="container--addresses">
+									<form class="form-wrap" #giftForm="ngForm">
+											<div class="row clearfix">
+													<div class="col-md-12">
+														<div class="field-set">
+															<div class="form-group">
+																<div class="caption-wraper col-md-4 col-xs-12">
+																	<label for="to" class="field_label">{{'gift_card.gifters_name'|translate}}</label>
+																</div>
+																<div class="field-wraper col-md-8 col-xs-12">
+																	<input class="form-control" name="receiver_name" id="to" type="text" #receiver_name = "ngModel" [(ngModel)]="formData.receiver_name" >
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+										<div class="row clearfix">
+											<div class="col-md-12">
+												<div class="field-set">
+													<div class="form-group">
+														<div class="caption-wraper col-md-4 col-xs-12">
+															<label for="recipient-email" class="field_label">{{'gift_card.recepient_mail'|translate}}*</label>
+														</div>
+														<div class="field-wraper col-md-8 col-xs-12">
+															<input class="form-control" name="email" #email = "ngModel" [(ngModel)]="formData.email" id="recipient-email" type="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" required>
+															<div class="field-error" *ngIf = "email.errors">
+																<span class="field-error" *ngIf = "email['errors']['required'] && isFormSubmit">{{'error.email.required' | translate}} </span>
+																<p class="field-error" *ngIf = "email['errors']['pattern'] && isFormSubmit">
+																	{{'error.email.invalid' | translate}}
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row clearfix">
+											<div class="col-md-12">
+												<div class="field-set">
+													<div class="form-group">
+														<div class="caption-wraper col-md-4 col-xs-12">
+															<label for="confirm-recipicent" class="field_label">Confirm recipient email*</label>
+														</div>
+														<div class="field-wraper col-md-8 col-xs-12">
+															<input class="form-control" id="confirm-recipicent" name="cemail" #cemail = "ngModel" [(ngModel)]="formData.cemail" type="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" required>
+															<div class="field-error" *ngIf = "cemail.errors">
+																<span class="field-error" *ngIf = "cemail['errors']['required'] && isFormSubmit">{{'error.email.required' | translate}} </span>
+																<p class="field-error" *ngIf = "cemail['errors']['pattern'] && isFormSubmit">
+																	{{'error.email.invalid' | translate}}
+																</p>
+															</div>
+															<div class="field-error" *ngIf = "formData.email != formData.cemail && isFormSubmit && (formData.cemail).length > 0">
+																{{'error.email.mismatched'| translate}}
+														</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row clearfix">
+											<div class="col-md-12">
+												<div class="field-set">
+													<div class="form-group">
+														<div class="caption-wraper col-md-4 col-xs-12">
+
+															<label for="amount" class="field_label">{{'gift_card.choose_an_amount'|translate}}*</label>
+														</div>
+														<div class="field-wraper col-md-8 col-xs-12">
+															<div class="slt-wrp">
+																<select [(ngModel)] = "formData['amount']"  name="amount">
+																	<option *ngFor="let amountData of giftAmountsData">
+																   {{amountData.amount}}
+																   </option>
+																 </select>
+																<i class="drop-arrow" ><img src="assets/images/select-arrow.png" alt="select-arrow.png" title="arrow"/> </i>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row clearfix">
+											<div class="col-md-12">
+												<div class="field-set">
+													<div class="form-group">
+														<div class="caption-wraper col-md-4 col-xs-12">
+															<label for="to" class="field_label">{{'gift_card.gift_name'|translate}}</label>
+														</div>
+														<div class="field-wraper col-md-8 col-xs-12">
+															<input class="form-control" name="name" id="to" type="text" #name = "ngModel" [(ngModel)]="formData.name" >
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row clearfix">
+											<div class="col-md-12">
+												<div class="field-set">
+													<div class="form-group">
+														<div class="caption-wraper col-md-4 col-xs-12">
+															<label for="write-message" class="field_label">{{'gift_card.write_message'|translate}}</label>
+														</div>
+														<div class="field-wraper col-md-8 col-xs-12">
+															<textarea class="form-control" name="message" #message = "ngModel" [(ngModel)]="formData.message" style="min-height: 100px; padding: 10px;"></textarea>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2 pull-right">
+												<button class="submit_gift" (click) = "saveGiftCard(giftForm.valid)">
+												{{'payment.submit'|translate}}
+												</button>
+											</div>
+										</div>
+										<div class="row clearfix">
+											<div class="col-md-12">
+												<div class="please-note">
+													<h4>{{'gift_card.please_note'|translate}}</h4>
+													<p>
+														{{'gift_card.gift_cant_return'|translate}}.
+													</p>
+													<p>
+														{{'gift_card.once_purchased'|translate}}.
+													</p>
+													<p>
+														{{'gift_card.credit'|translate}} &amp;{{'gift_card.debitcard_issued'|translate}}.
+													</p>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				<ngx-flash-messages></ngx-flash-messages>

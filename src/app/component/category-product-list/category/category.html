@@ -1,0 +1,42 @@
+
+		 	<!--Content Area Start-->
+			<!-- <div class="content categories-content">
+				<div class="container"> -->
+					<!--<div class="breadcrumbs">
+						<a href="javascript:void(0);" [routerLink] = "['/home']" class="home"></a>
+						<a href="javascript:void(0);" *ngFor = "let item of breadCrumbs;let itemIndex = index" (click)="showCategories(itemIndex,$event)" class="category selected">{{item['cat_name']}}</a>
+					</div>-->
+
+					<div class="electronic-section" *ngIf = "categoryBrandData['Sub_cat'].length>0">
+						
+						<div class="categories categories-laptop" *ngFor = "let productCat of categoryBrandData.Sub_cat;let outerIndex = index">
+							<h2>{{productCat['translation_data'][0].name?productCat['translation_data'][0].name:productCat.name | stringsort}}<span class="line-green"></span></h2>
+							<!--<h2 *ngIf = "productCat['translation_data'].length < 1">{{productCat.name}} <span class="line-green" ></span></h2>-->
+							<div class="row">
+								<div class="col-md-6 col-sm-12 col-xs-12" [style.float] = "outerIndex%2 == 0?'left':'right'" (click) = "showProductList(productCat)">
+									<a href="javascript:void(0);"  title="{{productCat['translation_data'][0].name?productCat['translation_data'][0].name:productCat.name}}" class="product-banner" (click)="removeCatStatus()" [routerLink]="productCat.urlLink" >
+										<img alt="{{productCat['translation_data'][0].name?productCat['translation_data'][0].name:productCat.name}}"  onerror= "this.src = 'assets/images/default.png';" [src] = "categoryData.basic_path+productCat.category_image" title = "{{productCat['translation_data'][0].name?productCat['translation_data'][0].name:productCat.name}}" /></a>
+								</div>
+								<div class="col-md-6 col-sm-12 col-xs-12" [style.float] = "outerIndex%2 == 0?'left':'right'">
+									<div class="row products">
+										<div class="col-md-6 col-sm-6 col-xs-12" (click) = "showProductList(productSubCat)" *ngFor = "let productSubCat of productCat.Sub_cat; let innerIndex = index">
+											<div class="other-item">
+                                                <a href="javascript:void(0);" (click)="removeCatStatus()" title="{{productSubCat['translation_data'][0].name?productSubCat['translation_data'][0].name:productSubCat.name}}" [routerLink]="productSubCat.urlLink">
+												<figure><img alt="{{productSubCat['translation_data'][0].name?productSubCat['translation_data'][0].name:productSubCat.name}}"  title="{{productSubCat['translation_data'][0].name?productSubCat['translation_data'][0].name:productSubCat.name}}" onerror= "this.src = 'assets/images/default.png';" [src] = "categoryData.basic_path+productSubCat.category_image | urlSanatize" />
+												</figure>
+												</a>
+												<h4>{{productSubCat['translation_data'][0].name?productSubCat['translation_data'][0].name:productSubCat.name | stringsort}}</h4>
+												<!--<h4 *ngIf = "productSubCat['translation_data'].length < 1">{{productSubCat.name}}</h4>-->
+												<a href="javascript:void(0)" class="shop-now-blue">shop now</a>
+											</div>
+										</div>									
+									</div>									
+								</div>
+							</div>
+						</div>					
+					</div>
+					<div *ngIf="categoryBrandData['Sub_cat'].length==0" class="no-data-found">
+						<i class="fa fa-exclamation-circle"></i>
+						<h4 style="text-align:center">{{'category.attribute_name.nosubcategory'|translate}}</h4>
+					</div> 
+					

@@ -1,0 +1,156 @@
+
+					<div class="cols--group">
+		
+						<div class="panel__body">
+							<div class="box box--white box--space">
+								<div class="box__head clearfix reviw-head-wrp">
+									<h5>Rating</h5>
+									<div class="review-head clearfix" *ngIf="productInfo">
+										<figure>
+											<a href="javascript:void(0)" (click) = "makeURL(ratingdetail.url_data.urlData,ratingdetail.url_data.queryParams)"> <img  *ngIf="productInfo.default_image" [src]="image_url+productInfo.default_image"  alt="Nature" title="nature" onerror="this.src = 'assets/images/estimate.png';"> </a>
+										</figure>
+										<div class="review-prdt-name">
+											<a href="javascript:void(0)" (click) = "makeURL(ratingdetail.url_data.urlData,ratingdetail.url_data.queryParams)"> <h3>{{productInfo.name.name}}</h3> </a>
+										</div>
+									</div>
+								</div>
+								<div class="box__body">
+									<form  class="" #reviewForm = "ngForm">
+										<div class="row clearfix">
+											<div class="col-md-5 rtng-wrp col-md-push-2 clearfix">
+												<div class="" *ngFor="let rate of ratingdetail.detail_rating;">
+													<ul class="rating-star-wrp clearfix">
+														<li>
+															<span class="rating-nme">{{rate.name}}</span>
+															<custum-bar-rating [id] = "rate._id" (rateProduct) = "rateProduct($event)" [isEdit] = "true" [ratingCount] = "rate.rating" [max] = "5"></custum-bar-rating>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+											<div class="row clearfix">
+												<div class="col-md-12 revw-wrp">
+													<div class="row rvw-inpt-wrp  clearfix">
+														<label class="col-md-2 reviw-lbl">{{'userrating.title'|translate}}</label>
+														<div class="col-md-8">
+															<input type="text" name ="title" #title="ngModel" [(ngModel)]="review.title" required>
+															<div class="field-error" *ngIf = "title.errors">
+																<p class="field-error" *ngIf = "title['errors']['required'] && isFormSubmit">
+																	{{'error.title.required' | translate}}
+																</p>
+															</div>
+														</div>
+													</div>
+												
+													<div class="row rvw-inpt-wrp clearfix">
+														<label class="col-md-2 reviw-lbl">{{'userrating.review'|translate}}</label>
+														<div class="col-md-8">
+															<textarea class="rvew-text" name="review_data" [(ngModel)] = "review.review_data" #review_data = "ngModel" required> </textarea>
+															<div class="field-error" *ngIf = "review_data.errors">
+																<p class="field-error" *ngIf = "review_data['errors']['required'] && isFormSubmit">
+																	{{'error.review_data.required' | translate}}
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										
+										<div class="reviw-btn-wrp">
+											<button type="button"  class="" (click) = "edit_review(reviewForm.valid)">
+												{{'btns.submit'|translate}}
+											</button>
+										</div>
+									</form>
+									<ngx-flash-messages></ngx-flash-messages> 
+								</div>
+							</div>
+						</div>
+					</div>
+		
+
+
+
+
+
+
+
+
+
+
+
+<!--Content Area Start-->
+		<!-- <div id="Content">
+				<div class="ds__container">
+					<app-user-header> </app-user-header>
+					<div *ngIf="productInfo" class="ds__tab__tab-content__description ds__tab__tab-content__description--wishlist clearfix rev-wrp">
+						<div class="ds__tab__tab-content__description__info  clearfix">
+							<div class="ds__tab__tab-content__order-list-content ds__tab__tab-content__order-list-content--wishlist clearfix">
+								<div class="prdt-img">
+								<figure  *ngIf="ratingdetail">
+									<a href="javascript:void(0)" (click) = "makeURL(ratingdetail.url_data.urlData,ratingdetail.url_data.queryParams)">
+										 <img  *ngIf="productInfo.default_image" [src]="image_url+productInfo.default_image"  alt="Nature" onerror="this.src = 'assets/images/estimate.png';">
+								    </a>
+								</figure>
+								</div>
+								
+								<div class="ds__tab-content__order-description ds__tab-content__order-description--wishlist">
+									<a href="javascript:void(0)" (click) = "makeURL(ratingdetail.url_data.urlData,ratingdetail.url_data.queryParams)">
+								    	<h3>{{productInfo.name.name}}</h3>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<form class="ds__cancelPopup-form" #reviewForm = "ngForm">
+							<div class="row">
+								<div class="rat-para col-md-3 clearfix">
+									
+									<div style="height:20px; margin:10px;" class="rate-type" *ngFor="let rate of ratingdetail.detail_rating;">
+											<ul class="product-rating-list rev-rate"  >
+												{{rate.name}}
+												<custum-bar-rating [id] = "rate._id" (rateProduct) = "rateProduct($event)" [isEdit] = "true" [ratingCount] = "rate.rating" [max] = "5"> </custum-bar-rating>
+										     </ul>
+										</div>
+								</div>
+								<div class="rev-comm col-md-9">
+									<div class="clearfix">
+											<label for="ds_comment">Title</label>
+										 <div class="ds__input__wrap inp-title">
+											<input type="text" name ="title" #title="ngModel" [(ngModel)]="review.title" required>
+											<div class="field-error" *ngIf = "title.errors">
+												<p class="field-error" *ngIf = "title['errors']['required'] && isFormSubmit">{{'error.title.required' | translate}} </p>
+											   </div>
+											</div>
+										</div>
+									<div class="clearfix">
+										<label for="ds_comment">Review</label>
+									 <div class="ds__input__wrap">
+										<textarea name="review_data" [(ngModel)] = "review.review_data" #review_data = "ngModel" required></textarea>
+										<div class="field-error" *ngIf = "review_data.errors">
+									    <p class="field-error" *ngIf = "review_data['errors']['required'] && isFormSubmit">{{'error.review_data.required' | translate}} </p>
+								       </div>
+										</div>
+									</div>
+									<div class="ds__cancelPopup-btnWrap clearfix">
+										<button type="button"  class="ds__btn" (click) = "edit_review(reviewForm.valid)">
+											Submit
+										</button>
+							</div>
+								</div>
+								
+								
+								
+							</div>
+							
+						</form>
+
+				</div>
+			</div> -->
+				
+
+
+
+
+				
+			<!--Content Area End-->

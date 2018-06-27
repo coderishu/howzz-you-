@@ -1,0 +1,212 @@
+<ng-progress [color]="color" ></ng-progress>
+
+					<div class="cols--group">
+						<div class="panel__body">
+							<div class="box box--white box--space">
+								<div class="box__head">
+									<h4>Edit Address</h4>
+								</div>
+
+								<form #AddressForm = "ngForm">
+									<div class="container--addresses">
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="field-set row">
+													<div class="caption-wraper col-md-3 col-xs-12">
+														<label class="field_label">{{'siteLabels.fullname'|translate}}<span class="spn_must_field">*</span></label>
+
+													</div>
+													<div class="field-wraper col-md-9 col-xs-12">
+														<div class="field_cover">
+															<input type="text" name="fname"  #fname = "ngModel" id="ds__first_name" [(ngModel)]="addressformData.fname" required/>
+															<div class="field-error" *ngIf = "fname.errors">
+																<p class="field-error" *ngIf = "fname['errors']['required'] && isFormSubmit">{{'error.fname.required' | translate}} </p>
+															 </div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="field-set row">
+													<div class="caption-wraper col-md-3 col-xs-12">
+														<label class="field_label">{{'useraddress.telephone'  | translate}}<span class="spn_must_field">*</span></label>
+													</div>
+													<div class="field-wraper col-md-9 col-xs-12">
+														<div class="field_cover">
+															<input  type="text" name="phone" #phone="ngModel" id="ds__telephone" [(ngModel)]="addressformData.phone" onkeypress='return (event.which > 47 && event.which <= 57) || event.which == 8 || event.which == 46' required/>
+														</div>
+														<div class="field-error" *ngIf = "phone.errors">
+															<p class="field-error" *ngIf = "phone['errors']['required'] && isFormSubmit">{{'error.phone.required' | translate}} </p>
+									 					</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="field-set row">
+													<div class="caption-wraper col-md-3 col-xs-12">
+														<label class="field_label">{{'useraddress.flat_house' | translate }}<span class="spn_must_field">*</span></label>
+													</div>
+													<div class="field-wraper col-md-9 col-xs-12">
+														<div class="field_cover">
+															<input type="text" id="flat" name="flatno" #flatno="ngModel" [(ngModel)]="addressformData.flatno" required>
+														</div>
+														<div class="field-error" *ngIf = "flatno.errors">
+															<p class="field-error" *ngIf = "flatno['errors']['required'] && isFormSubmit">{{'error.flatno.required' | translate}} </p>
+														</div>
+													</div>
+													
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="field-set row">
+													<div class="caption-wraper col-md-3 col-xs-12">
+														<label class="field_label">{{'useraddress.colony' | translate}}</label>
+													</div>
+													<div class="field-wraper col-md-9 col-xs-12">
+														<div class="field_cover">
+															<input type="text" name="street" #street="ngModel" id="ds__street" [(ngModel)] = "addressformData.street" required/>
+														</div>
+														<div class="field-error" *ngIf = "street.errors">
+															<p class="field-error" *ngIf = "street['errors']['required'] && isFormSubmit">{{'error.street.required' | translate}} </p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="field-set row">
+													<div class="caption-wraper col-md-3 col-xs-12">
+														<label class="field_label">{{'useraddress.landmark' | translate}}</label>
+													</div>
+													<div class="field-wraper col-md-9 col-xs-12">
+														<div class="field_cover">
+															<input type="text" id="landmark" name="land_mark" [(ngModel)]="addressformData.land_mark">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="field-set row">
+													<div class="caption-wraper col-md-3 col-xs-12">
+														<label class="field_label">{{'useraddress.country' | translate}}<span class="spn_must_field">*</span></label>
+													</div>
+													<div class="field-wraper col-md-9 col-xs-12">
+														<div class="field_cover">
+															<select *ngIf="countryData.length>0" #country="ngModel" name="country" [(ngModel)]="addressformData.country" id="country" (change) = "getStateList($event)" required>
+																<option value="" [selected]="!country.valid">{{'useraddress.please_select' | translate}}</option>
+																<option *ngFor="let countr of countryData" [value]="countr._id">{{countr.translation_data[0].name?countr.translation_data[0].name:countr.name}}</option>
+															</select>
+															<div class="field-error" *ngIf="addressformData.country==''">
+																<p class="field-error" *ngIf="addressformData.country=='' && isFormSubmit">
+																	{{'error.country.required' | translate}}
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="field-set row">
+													<div class="caption-wraper col-md-3 col-xs-12">
+														<label class="field_label">{{'useraddress.state_province' | translate}}<span class="spn_must_field">*</span></label>
+													</div>
+													<div class="field-wraper col-md-9 col-xs-12">
+														<div class="field_cover">
+															<select #state="ngModel" name="state" [(ngModel)]="addressformData.state" id="state" required>
+																<option value="">{{'useraddress.select_country_first' | translate}}</option>
+																<option *ngFor="let eachstate of stateData" [value]="eachstate._id">{{eachstate.translation_data[0].name?eachstate.translation_data[0].name:eachstate.name}}</option>
+
+															</select>
+															<div class="field-error" *ngIf = "addressformData.state==''">
+																<p class="field-error" *ngIf = "addressformData.state=='' && isFormSubmit">
+																	{{'error.state.required' | translate}}
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="field-set row">
+													<div class="caption-wraper col-md-3 col-xs-12">
+														<label class="field_label">{{'useraddress.city' | translate}}<span class="spn_must_field">*</span></label>
+													</div>
+													<div class="field-wraper col-md-9 col-xs-12">
+														<div class="field_cover">
+															<input type="text" name="city" #city="ngModel" id="ds__city" [(ngModel)] = "addressformData.city" required/>
+														</div>
+														<div class="field-error" *ngIf = "city.errors">
+															<p class="field-error" *ngIf = "city['errors']['required'] && isFormSubmit">
+																{{'error.city.required' | translate}}
+															</p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="field-set row">
+													<div class="caption-wraper col-md-3 col-xs-12">
+														<label class="field_label">{{'useraddress.zip_postal' | translate}}<span class="spn_must_field">*</span></label>
+													</div>
+													<div class="field-wraper col-md-9 col-xs-12">
+														<div class="field_cover">
+															<input type="text" id="ds__zip" name="postcode" #postcode="ngModel" [(ngModel)]="addressformData.postcode" required/>
+														</div>
+														<div class="field-error" *ngIf = "postcode.errors">
+															<p class="field-error" *ngIf = "postcode['errors']['required'] && isFormSubmit">
+																{{'error.pinCode.required' | translate}}
+															</p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12">
+												<div class="field-set row">
+													<div class="caption-wraper col-md-3 col-xs-12">
+														<label class="field_label"></label>
+													</div>
+													<div class="field-wraper col-md-9 col-xs-12">
+														<div class="field_cover">
+															<button type="submit" class="mr15" (click) = "editAddress(AddressForm.valid)">
+																{{'useraddress.save' | translate}}
+															</button>
+															<button type="submit" [routerLink]="['/account/addresses']">
+																{{'useraddress.cancel' | translate}}
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+
+									</div>
+
+								</form>
+							</div>
+							<ngx-flash-messages></ngx-flash-messages> 
+						</div>
+
+					</div>
+
+		

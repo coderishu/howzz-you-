@@ -1,0 +1,112 @@
+<div class="wrapper">
+ <!--Content Area Start-->
+    <div class="content">
+        <div class="checkout-container clearfix">
+            <div class="checkout-wrapper">
+                <form #loginForm="ngForm">
+                    <div  class="chkout-shipping clearfix">
+                        <div class="chkout-login">
+                            <div class="sign-in">
+                                <div class="signin-details">
+                                    <h4>{{'login.loginHeading' | translate}}</h4>
+                                    <div class="input-wrap">
+                                        <label >{{'siteLabels.email' | translate}} *</label>
+                                        <input type="email" name="email"  #email="ngModel" [(ngModel)]="loginUser.email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" required>
+                                    </div>
+                                    <div class="field-error" *ngIf="email.errors">
+                                        <p class="field-error" *ngIf="email['errors']['required'] && isFormSubmit">{{'error.email.required' | translate}} </p>
+                                        <p class="field-error" *ngIf="email['errors']['pattern'] && isFormSubmit">{{'error.email.invalid' | translate}} </p>
+                                    </div>
+                                    <div class="input-wrap <ma></ma>rgin-0">
+                                        <label >{{'siteLabels.password' | translate}} *</label>
+                                        <input type="password" name="password" #password = "ngModel" [(ngModel)]="loginUser.password" required />
+                                        <!-- <a href="#" class="show-pwd">Show</a> -->
+                                    </div>
+                                    <div class="field-error" *ngIf="password.errors">
+                                        <p class="field-error" *ngIf="password['errors']['required'] && isFormSubmit">{{'error.password.required' | translate}} </p>
+                                    </div>
+                                    <div class="forget"><a href="javascript:void(0)">{{'login.forgetPassword' | translate}} ?</a></div>
+                                    <a href="javascript:void(0)" class="signin-btn btn" (click)="validateLogin(loginForm.valid)">{{'login.loginBtn' | translate}}</a>
+                                    <div class="no-acc"><span>{{'checkout.accountMsg' | translate}}</span></div>
+                                    <a id="signUp" href="javascript:void(0)" class="signup-btn btn">{{'register.signUpBtn' | translate}}</a>
+                                 </div>
+                                <!-- <div class="signup-details">
+                                    <h4 class="required-fld">* required field</h4>
+                                    <div class="input-wrap">
+                                        <label >First name*</label>
+                                        <input type="text" name="name" value="" placeholder="Jonathan"/>
+                                    </div>
+                                    <div class="input-wrap">
+                                        <label >Last name*</label>
+                                        <input type="text" name="name" value="" placeholder="Doe"/>
+                                    </div>
+                                    <div class="input-wrap">
+                                        <label >Please enter a valid email address.</label>
+                                        <input type="email" name="name" value="" placeholder="jonathan#gmail.com"/>
+                                    </div>
+                                    <div class="input-wrap margin-0">
+                                        <label >Password*</label>
+                                        <input type="password" name="name" value="" />
+                                        <a href="#" class="show-pwd">Show</a>
+                                    </div>
+                                    <div class="terms">By clicking Sign Up, you acknowledge you have read
+                                        and agreed to our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</div>
+                                    <a href="#" class="signin-btn btn">Sign Up</a>
+                                    <div class="chkout-form">
+                                          <label class="checkbox-wrp">Email me about Rollbacks, special pricing, hot new items, gifts ideas and more.
+                                            <input checked="checked" type="checkbox">
+                                            <span class="tickmark"></span> 
+                                        </label>
+                                    </div>
+                                    <div class="no-acc"><span>Already have an account?</span></div>
+                                    <a id="signIn" href="#" class="signup-btn btn">Sign In</a>
+                                </div> -->
+                            </div>
+                            <div class="without-login">
+                                <h4>{{'checkout.noAccount' | translate}}</h4>
+                                <div class="txt">{{'checkout.continueWithoutAccount' | translate}}</div>
+                                <button class="yellow-btn">
+                                    {{'checkout.continue' | translate}}
+                                </button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <order-info *ngIf="basketResponseRecvd" [currentLanguageData] = "currentLanguageData"  [getcartData]="cartdata"></order-info>
+           
+            </div>
+        </div>
+    </div>
+    <!--Content Area End-->
+
+    <!--Footer Section Start-->
+    <!-- <footer class="footer checkout-footer">
+        <div class="checkout-container">
+            
+            <div class="partners clearfix">
+                <div class="wraps cards">
+                    <ul class="clearfix">
+                        <li><a href="#!"><img src="assets/images/card1.jpg" alt="" /></a></li>
+                        <li><a href="#!"><img src="assets/images/card3.jpg" alt="" /></a></li>
+                        <li><a href="#!"><img src="assets/images/card4.jpg" alt="" /></a></li>
+                        <li><a href="#!"><img src="assets/images/card5.jpg" alt="" /></a></li>
+                        <li><a href="#!"><img src="assets/images/card6.jpg" alt="" /></a></li>
+                        <li><a href="#!"><img src="assets/images/card7.jpg" alt="" /></a></li>
+                    </ul>
+                </div>
+                <div class="wraps copyrt">Superklick © 2017 - 2050 Superklick, Inc. All rights reserved.</div>
+                <div class="wraps verified">
+                    <ul class="clearfix">
+                        <li><a href="#!"><img src="assets/images/verify1.jpg" alt="" /></a></li>
+                        <li><a href="#!"><img src="assets/images/verify2.jpg" alt="" /></a></li>
+                        <li><a href="#!"><img src="assets/images/verify3.jpg" alt="" /></a></li>
+                        <li><a href="#!"><img src="assets/images/verify4.jpg" alt="" /></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer> -->
+    <!--Footer Section End-->
+
+</div>

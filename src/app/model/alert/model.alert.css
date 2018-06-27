@@ -1,0 +1,90 @@
+.overlay {
+	background-attachment: scroll;
+	background-clip: border-box;
+	background-color: rgba(0,0,0,.9);
+	background-image: none;
+	background-origin: padding-box;
+	background-position: 0 0;
+	background-repeat: repeat;
+	background-size: auto auto;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 99999;
+	
+}
+.overlay.model-alert{
+    display: none;
+}
+
+/********* popup *********/
+.model-popup-block{
+    width: 500px;
+    position: relative;
+    background-color: #fff;
+    z-index: 999;
+    border-radius: 6px;
+    margin: 100px auto;
+  
+    -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+    box-shadow: 0 3px 9px rgba(0,0,0,.5);
+    animation:zoom .6s ease;
+    -webkit-animation:zoom .6s ease;
+
+
+}
+.popup-message span{
+      text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    display: inline-block;
+	font-size: 21px;
+}
+.model-popup-block .popup-field{
+padding:25px;
+border-bottom:1px solid #c0c0c0;
+font-size:20px;
+}
+.model-popup-block .close-cross{
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    position: absolute;
+    right: -25px;
+    top: 14px;
+}
+.model-close{
+  text-align: left;
+      font-size: 21px;
+}
+.model-close .pop-close-btn{
+         text-decoration: none;
+    color: #000000;
+        padding: 5px 13px 8px;
+    border: 1px solid #c0c0c0;
+    border-radius: 4px;
+  
+}
+.popup-header h2{
+  margin:0;padding:0;
+  color:#000000;
+}
+.model-popup-block .fa-times{
+     
+    color: #c0c0c0;
+}
+.close-cross .fa{
+    font-size: 15px;
+
+}
+h2{
+    text-transform: capitalize;
+}
+@media all and (min-width:0) and (max-width: 767px) {
+    .model-popup-block{
+        width: 300px;
+    }
+}

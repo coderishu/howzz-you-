@@ -1,0 +1,72 @@
+	
+	 <!-- <h4>{{'detail.attribute_name.customerReview' | translate}}</h4> -->
+	 <div>
+	   <div class="rate-reviews clearfix">
+		   <div class="total">
+			 <div class="avg" *ngIf="productRatingReview['average_rate']>0"><span>{{productRatingReview['average_rate']}}</span><strong>{{'userreview.outof' | translate}} {{globalDataService.maxRating}}</strong></div>
+			 <!-- <customer-review   (getRatingReview) = "getRatingReview($event)" [userLoginDetail] = "userDetail" [globalDataService] = "globalDataService"  [httpService] = "httpService" [baseUrl] = "baseUrl" [currentLanguageData] = "this.currentLanguageData" [productId] = "productId"></customer-review> -->
+			  <ul class="rate clearfix">
+					<custum-bar-rating *ngIf="productRatingReview['average_rate']==0" [isEdit] = "false" [ratingCount] = "0" [max] = "5"></custum-bar-rating>
+					<custum-bar-rating *ngIf="productRatingReview['average_rate']>0" [isEdit] = "false" [ratingCount] = "productRatingReview['average_rate']" [max] = "globalDataService['maxRating']"></custum-bar-rating>
+				 
+			 </ul>  
+			 <div class="all"><a href="javascript:void(0)">{{'detail.attribute_name.seeallreviews' | translate}}</a></div>
+		 </div>
+		 <div class="status">
+			 <div class="wraps clearfix">
+				 <span class="rate">5 <i class="icon-star"></i></span>
+				 <span class="range"><strong class="stg" [style.width] = "(productRatingReview['5']/totalRatingCount)*100 + '%'"></strong></span>
+				 <span class="count">{{productRatingReview['5']}}</span>
+			 </div>
+			 <div class="wraps clearfix">
+				 <span class="rate">4 <i class="icon-star"></i></span>
+				 <span class="range"><strong class="stg" [style.width] = "(productRatingReview['4']/totalRatingCount)*100 + '%'"></strong></span>
+				 <span class="count">{{productRatingReview['4']}}</span>
+			 </div>
+			 <div class="wraps clearfix">
+				 <span class="rate">3 <i class="icon-star"></i></span>
+				 <span class="range"><strong class="stg" [style.width] = "(productRatingReview['3']/totalRatingCount)*100 + '%'"></strong></span>
+				 <span class="count">{{productRatingReview['3']}}</span>
+			 </div>
+			 <div class="wraps clearfix">
+				 <span class="rate">2 <i class="icon-star"></i></span>
+				 <span class="range"><strong class="stg" [style.width] = "(productRatingReview['2']/totalRatingCount)*100 + '%'"></strong></span>
+				 <span class="count">{{productRatingReview['2']}}</span>
+			 </div>
+			 <div class="wraps clearfix">
+				 <span class="rate">1 <i class="icon-star"></i></span>
+				 <span class="range"><strong class="stg" [style.width] = "(productRatingReview['1']/totalRatingCount)*100 + '%'"></strong></span>
+				 <span class="count">{{productRatingReview['1']}}</span>
+			 </div>
+		 </div>
+		 <div class="write">
+			 <a href="javascript:void(0)" class="btn blue-btn" *ngIf="isReviewEnable" (click)="rateProduct(productId)" >{{'detail.attribute_name.writeReview' | translate}}</a>
+		 </div>
+	 </div>
+	 <div class="product-comment" *ngIf = "productReview && !noRecord">
+		 <div class="comment-review" *ngFor = "let reviewItem of productReview | sortFilter:sortReview">
+			 <div class="wraps clearfix">
+				 <a href="#" class="name">{{reviewItem.nick_name}}</a>
+				 <a href="" class="date">{{reviewItem.createdAt | dateFilter}}</a>
+			 </div>
+			 <div class="clearfix">
+				 <div class="product-rvw">
+					 <h4>{{reviewItem.title}}</h4>
+					 <ul class="rate clearfix">
+						<custum-bar-rating [isEdit] = "false" [ratingCount] = "reviewItem['summary_rating']/globalDataService['ratioOfRating']" [max] = "globalDataService['maxRating']"></custum-bar-rating>
+					</ul>
+					 <p class="comment"> {{reviewItem.review}}</p>
+				 </div>
+				 <div class="helpful-rvw">
+					 <h5>{{'detail.attribute_name.reviewmsg' | translate}}</h5>
+					 
+					 <div class="likes"><a href="javascript:void(0)" (click) = "toggleLikes(reviewItem['_id'],1)"><i class="icon-pos"></i>{{reviewItem.like}}</a> <a href="javascript:void(0)" (click) = "toggleLikes(reviewItem['_id'],0)"><i class="icon-neg"></i>{{reviewItem.dislike}}</a></div>
+				 </div>
+			 </div>
+		 </div>
+		 
+	 </div>
+	 <div class="noRecordFound" *ngIf = "noRecord"><h4 style="text-align:center">{{'detail.attribute_name.noreview'|translate}}</h4> </div>
+	</div>
+	 <ngx-flash-messages></ngx-flash-messages> 
+					

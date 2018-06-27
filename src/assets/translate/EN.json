@@ -1,0 +1,627 @@
+{
+	"languages": [
+		{
+			"label": "English",
+			"code": "en"
+		},
+		{
+			"label": "French",
+			"code": "fr"
+		},
+		{
+			"label": "Arabic",
+			"code": "ar"
+		}
+	],
+	"dashBoard": {
+		"menuItem": {
+			"dashboard": "DashBoard",
+			"account": "Account",
+			"orders": "Orders",
+			"wishlist": "WishList",
+			"reviews": "Reviews",
+			"notification": "Notification",
+			"addresses": "Addresses",
+			"recently_view":"Recently Viewed",
+			"gift_card":"Gift Card",
+			"refund":"Refunded"
+		}
+	},
+	
+	"gift_card":{
+		"add_gift_card":"VIEW GIFT CARD",
+		"gift_card_number":"Gift Card Number",
+		"sn":"S.N",
+		"reciever":"Receiver",
+		"order_id":"OdId",
+		"used_amount":"Used-Amount",
+		"date":"Date",
+		"buy_gift_card":"Buy a Gift Card",
+		"recepient_mail":"Recipient email",
+		"confirm_recepient_mail":"Confirm recipient email",
+		"choose_an_amount":"Choose an amount",
+		"gifters_name":"Recipient Name",
+		"gift_name":"Gift Name",
+		"write_message":"Write message",
+		"please_note":"PLEASE NOTE",
+		"gift_cant_return":"The Gift Card cannot be cancelled, refunded or returned",
+		"once_purchased":"Once purchased, the recipient email cannot be changed",
+		"debitcard_issued":"Debit Cards issued outside India cannot be used to purchase  Gift Cards",
+		"credit":"Credit"
+	  },
+	"header":{
+		"creditcards" : "credits cards",
+		"discountMsg" : "10% Additional Cashback on",
+		"livenow" : "Live Now",
+		"departments" : "Departments",
+		"cart" : "Cart",
+		"login":"Login",
+		"my_account":"My Account",
+		"sellwithus":"Sell with Us",
+		"trackorder":"Track Order",
+		"wishlist":"Wishlist",
+		"order":"Order",
+		"logout":"logout"
+	 },
+	"userdashboard": {
+		"recentOrder": "Recent Orders",
+		"addtocart": "Add To Cart",
+		"cancellation": "Cancellation Request",
+		"product_detail": "Product Details",
+		"qty": "Qty",
+		"subtotal": "Subtotal",
+		"reason": "Reason",
+		"selectReason": "Select Reason",
+		"comment": "Comment",
+		"cancelorder": "Cancel Order",
+		"seller": "Seller",
+		"orderedon": "Ordered On",
+		"color": "Color",
+		"size": "Size",
+		"canceldate": "Cancel Date",
+		"deliveryby": "Delivery expected by",
+		"writereview": "Write review",
+		"reorder": "Reorder",
+		"vieworder": "view Order",
+		"refund": "Refund",
+		"trackorder": "Track Order",
+		"address": "Address",
+		"phone": "Phone",
+		"yourorderdeliv": "Your Order has been Delivered.",
+		"yourordercancell": "Your Order has been Cancelled",
+		"yourorderplaced": "Your Order has been placed.",
+		"refundstat": "Refund Status",
+		"viewdetails": "View Details",
+		"no_order": "No Record Available!",
+		"mywishlist": "My Wishlist",
+		"no_product": "No WishList Data Available!"
+	},
+	"cart":{
+		"change" : "CHANGE",
+		"days":"Days",
+		"seller":"Seller",
+		"mycart":"MY CART",
+		"price_details":"price details",
+		"itemdetails" : "See items details",
+		"amount_payable":"Amount Payable",
+		"yourtotalsaving":"Your Total Savings on this order",
+		"checkout":"Checkout",
+		"daysreplacement":"Days Replacement Policy",
+		"wishlist":"Move To Wishlist",
+		"off":"OFF",
+		"items":"items",
+		"to":"to",
+		"dilveryin":"Delivery in",
+		"deliverycharges":"Delivery charges",
+		"price":"Price",
+		"free":"Free",
+		"remove":"Remove",
+		"edit": "Edit",
+		"continueshopping":"Continue Shopping"
+		}, 
+		
+	"notificationpage": {
+		"notifications": "Notifications",
+		"clearall": "Clear all"
+	},
+	"useraddress": {
+		"billingadd":"billing address",
+		"myaddress": "My Addresses",
+		"addnewaddress": "Add New Address",
+		"shippingaddress": "Shipping Address",
+		"shippingdetails": "Shipping Details",
+		"noaddresssaved": "No Address saved!",
+		"contactinfo": "Contact Information",
+		"firstname": "First Name",
+		"lastname": "Last Name",
+	   "fullname" : "Full Name",
+		"email": "Email address",
+		"telephone": "Telephone",
+		"zip_postal": "Zip/Postal Code",
+		"flat_house": "Flat/House No./Floor/Building",
+		"colony": "Colony/Street/Localty",
+		"landmark": "Landmark",
+	    "city": "City",
+		"country": "Country",
+		"please_select": "Please select",
+		"state_province": "State/Province",
+		"pincode":"Pincode",
+		"select_state": "Please select state",
+		"billingaddress": "Use as my default billing address",
+		"shipping": "Use as my default shipping address",
+		"billing" : "Billing Address",
+		"shipToSameAdd" : "Ship to the same address", 
+		"shipToDiffAdd" : "Ship to Different Address",
+	    "save": "Save",
+		"cancel": "Cancel",
+		"selectCountry" : "Please select country",
+		"selectState" :"Please select state",
+		"newAddress" : "New Address"
+	},
+	"payment":{
+		"shippingMethod" : "shipping method",
+		"moreInfo_onShopping" : "See more info on shipping",
+		"paymentMethod" : "Payment Method",
+		"credit_card" : "Credit Card",
+		"expiration_date" : "Expiration Date",
+		"cvv":"cvv",
+		"whatthis" : "What is this",
+		"debit_card" :"Debit Card",
+		"creditcardno" : "Credit Card Number",
+		"MM_YYYY" : "MM/YYYY",
+		"cv_number"  : "Card Verification Number",
+		"debitcardno"  : "Debit Card Number",
+		"gift_card":"Gift Card",
+		"gift_card_number":"Gift Card Number",
+		"pin":"PIN",
+		"submit":"SUBMIT",
+		"apply_amount":"Apply Amount",
+		"amount_card_amount":"Apply Amount Should be equal or less than from total gift card amount",
+		"apply":"Apply",
+		"giftAmountErrorMsg" :"Applied Amount should be equal to total cart amount"
+	},
+	"userorderdetails":{
+		"reviewyourorder" : "review your order",
+		"applycouponcode" : "Apply Coupon Code",
+		"subtotal":"Subtotal",
+		"gift_voucher":"Gift",
+		"shipping" : "Shipping",
+		"discount" : "Discount",
+		"grandtotal" : "Grand Total",
+		"placeorder" : "place order",
+		"estimateTax" :"Estimate Tax",
+		"shippingTax" : "Shipping Tax",
+		"delivery_charges" : "Delivery Charges",
+		"free" : "Free",
+		"apply" : "Apply",
+		"myorder" : "My Orders",
+		"viewby" : "view by",
+		"status" : "Status",
+		"resendGiftBtn":"Resend Gift Card",
+		"searchOrders" : "Search all orders"
+
+	},
+	"checkout" : {
+	  "continueWithoutAccount" : "Continue to checkout without an account.",
+	  "noAccount" : "No account? No problem.",
+	  "accountMsg" : "Don’t have an account?",
+	  "notAvailable": "Some product are not available in this address, Please delete those products",
+	  "qty" : "Qty",
+	  "enterpayment" : "Enter payment method",
+	  "entershipping" : "Enter shipping address",
+	  "shippingoptions" : "Shipping options",
+	  "continue" : "Continue",
+	  "arriveby" : "Arrive by",
+	  "continueshopping":"continue shopping",
+	  "expresscheckout":"Express Checkout",
+	  "completepurchase":"Please enter your details below to complete your purchase ..."
+	},
+	"orderconfirmation" :{
+		"orderdetails" : "order details",
+		"orderid" : "Order ID",
+		"item" : "item",
+		"orderdate" : "Order Date",
+		"address" : "address",
+		"manageorder" : "manage order",
+		"through" : "through",
+		"thanksmsg": "<strong class='thnk'>Thank you for your order!</strong><p>Your order has been placed and is being processed when the item(s) are shipped, you will receive an email with the details.</p><p>You can track this order through <a href='/account/orders' class='my_odrs'>My Orders</a> page.</p>",
+		"deliveryexpectedby" : "Delivery expected by",
+		"mostpopular" : "Most Popular",
+		"failed":"<strong class='thnk'>Your Order Has Been Cancelled!</strong><p>Try again with full enthusiasm</p>"
+		
+
+	},
+	"userreview": {
+		"outof"  : "out of",
+		"productreview": "Product Reviews",
+		"ratings": "Ratings",
+		"postedon": "Posted on",
+		"edit": "Edit",
+		"remove": "Remove",
+		"noreviewdata": "No review Data available!"
+		
+	},
+	"userrating": {
+		"title": "Title",
+		"review": "Review",
+		"rating" : "Rating"
+	},
+	"login": {
+		"signInmessage" : "Sign in to your account",
+		"loginHeading": "Login",
+		"heading": "Enter your email address & password to login your account",
+		"forgetPassword": "Forgot Password",
+		"loginBtn": "Sign In",
+		"orlogin": "Or login with",
+		"newTo": "New to Mall of Morocco",
+		"remember": "Remember me",
+		"register": "register here",
+		"loginPageMsg" : "<p>By clicking Sign Up, you acknowledge you have read and agreed to our <a href='javascript:void(0)'>Terms of Use</a> and <a href='javascript:void(0)'>Privacy Policy.</a></p>"
+	},
+	"register": {
+		"createAccountMsg" : "Create your account",
+		"registerHeading": "registration",
+		"heading": "Enter your details to create your account",
+		"signUpBtn": "Sign Up",
+		"allreadyAcoount": "Already have a account",
+		"loginHere": "login here",
+		"registerMsg" : "Email me about Rollbacks, special pricing, hot new items, gifts ideas and more."
+	},
+	"forget": {
+		"forgetHeading": "forget password",
+		"heading": "Enter your email address"
+	},
+	"detail": {
+		"attribute_name": {
+			"days" : "days",
+			"in" : "in",
+			"delivered" : "delivered",
+			"usually" : "Usually",
+			"payments" : "Payments",
+			"highlights" : "Highlights",
+			"qantity":"Quantity",
+			"reviewmsg" : "Was this review helpful?",
+			"seeallreviews" : "see all reviews",
+			"aboutItem" : "About Item",
+			"quality" : "Quality",
+			"sizechart" : "Size Chart",
+			"selectSize" : "Choose Size",
+			"description": "Description",
+			"productInformation": "product information",
+			"freeShipping": "Free Shipping",
+			"similarProduct": "Similar Products",
+			"customerReview": "Customer Reviews",
+			"averageRating": "Average rating based on",
+			"rating": "ratings",
+			"rateProduct": "Rate this product",
+			"of": "of",
+			"reviews": "Reviews",
+			"sortBy": "Sort by",
+			"by": "by",
+			"specification": "Specifications",
+			"readMore": "Read More",
+			"deliveryCode": "Enter Deliver Pincode",
+			"checkBtn": "check",
+			"viewMore": "View More",
+			"writeReview": "Write A Review",
+			"select": "Select",
+			"delivery": "Delivery",
+			"checkpincode": "Enter pincode for exact delivery dates/charges",
+			"moreOffers": "More offers",
+			"details": "Details",
+			"noreview" : "No Review Data"
+		}
+	},
+	"category":{
+		"attribute_name": {
+			"nosubcategory":"No Data Available in this Category"
+		}
+	},
+	"productlist": {
+		"attribute_name": {
+			"searchmsg" : "what you looking for?",
+			"filter" : "FILTERS",
+			"categories": "Categories",
+			"brand": "Brand",
+			"price": "Price",
+			"apply": "Apply",
+			"to": "To",
+			"clearAll": "Clear all",
+			"SortBy": "Sort By",
+			"NoProduct": "No Product Found in this category!",
+			"searchresults":"Search Results",
+			"resultsfor" : "results for"
+		}
+	},
+	"sortingArray": [
+		{
+			"key": "Popularity",
+			"value": "popularity"
+		},
+		{
+			"key": "Low to High",
+			"value": "low_to_high"
+		},
+		{
+			"key": "High to Low",
+			"value": "high_to_low"
+		},
+		{
+			"key": "Newest",
+			"value": "newest"
+		}
+	],
+	"recentlyviewArr": [
+	  {
+			 "key":"Low to High",
+		      "value":"low_to_high"
+	    },
+		{
+			"key":"High to Low",
+			"value":"high_to_low"
+		},
+		{
+			"key":"Newest",
+			"value":"newest"
+		}
+    ],
+	"accountSectionSelectionArr":[
+		{"key":"I'd like to","value":""},
+		{"key":"View Order Details","value":"vieworder"},
+		{"key":"Cancel","value":"cancel"},
+		{"key":"Return this item","value":"refund"}
+	],
+	"refundPageSelectionArr":[
+		{"key":"I'd like to","value":""},
+		{"key":"View Details","value":"viewdetail"}
+	],
+	"detailPageSortingArray":[
+		{"key":"Most Helpful","value":"recent"},
+		{"key":"By Ascending","value":"asce"},
+		{"key":"By Descending","value":"desc"}
+	
+	],
+	"orderSectionSearchingArr":[
+		{"key":"Past 30 Days","value":"day_30"},
+		{"key":"Past 60 Days","value":"day_60"},
+		{"key":"2018","value":"year_2018"},
+		{"key":"2017","value":"year_2017"},
+		{"key":"2016","value":"year_2016"},
+		{"key":"2015","value":"year_2015"}
+	],
+	"recentlyviewed":{
+		"nodata" :"No Product recently viewed by you"
+	},
+	"btns": {
+		"facebook": "Facebook",
+		"google": "Google",
+		"submit": "Submit",
+		"addTocart": "Add to Cart",
+		"backtologin" : "Back To Login",
+		"goTocart":"Go To Cart"
+	},
+	"siteLabels": {
+		"choose_quantity" : "Choose Quantity",
+	    "off" : "off",
+		"flat" : "Flat",
+		"viewall": "view all",
+		 "items" : "Items",
+		"sortby" : "Sort By",
+		"favourite": "Favourite",
+		"accountInfo": "Account Information",
+		"emailad": "Email address",
+		"email": "Email",
+		"password": "Password",
+		"firstName": "First name",
+		"lastName": "Last name",
+		"phone": "Phone",
+		"changePassword": "Change Password",
+		"currentPassword": "Current Password",
+		"newPassword": "New Password",
+		"confirmNewPassword": "Confirm New Password",
+		"username" : "Username",
+		"fullname" : "Full Name",
+		"save": "Save",
+		"you" : "You",
+		"DOB" :"Date Of Birth",
+		"country": "Country",
+		"state_province": "State/Province",
+		"city": "City",
+		"total" : "Total",
+		"dispatchto" : "dispatch to",
+		"estdelivery" : "Estdelivery",
+		"invoice" : "invoice",
+		"requestinvoice" : "Request invoice",
+		"printableinvoice" : "Printable Invoice",
+		"refundproceeddate" : "Refund Proceed Date",
+		"search":"search",
+		"products" : "Products",
+		"product" : "Product",
+		"leaveFeedback" : "Leave Feedback",
+		"Buyagain" : "Buy it again",
+		"amount"  : "Amount",
+		"orderstatus" : "Order Status",
+		"Orderid" : "Order ID",
+		"needhelp" : "Need Help",
+		"refundcompleted" : "Refund completed",
+		"messages" : "Messages",
+		"dateisnotmentioned" : "Date is not mentioned",
+		"totalamount" : "Total Amount",
+		"share" : "Share",
+		"edit": "Edit",
+		"remove":"Remove",
+		"setdefault" : "set as default",
+		"trackingCode" : "Tracking Code"
+
+		
+		
+	},
+	"globalText":{
+	 "new":"new"
+	},
+	"error": {
+		"email": {
+			"required": "Email is required",
+			"invalid": "Invalid email",
+			"mismatched":"Mismatched Email"
+		},
+		"password": {
+			"required": "Password is required",
+			"minLength": "Password min length is 8 character",
+			"maxLength": "Password max length is 12 character"
+		},
+		"current_password": {
+			"required": "current_password is required",
+			"minLength": "current_password min length is 8 character",
+			"maxLength": "current_password max length is 12 character"
+		},
+		"confirm_password": {
+			"required": "confirm password is required",
+			"minLength": "confirm password min length is 8 character",
+			"maxLength": "confirm password max length is 12 character"
+		},
+		"firstName": {
+			"required": "first Name is required",
+			"invalidName": "Invalid first name"
+		},
+		"lastName": {
+			"required": "last Name is required",
+			"invalidName": "Invalid last name"
+		},
+		"address":{
+			"required": "Address is required"
+		},
+		"flatno": {
+			"required": "flatno is required"
+		},
+		"phone": {
+			"required": "phone number is required",
+			"minLength": "phone number length should be 10 to 12 character",
+			"invalid" : "Use only Number"
+		},
+		"street": {
+			"required": "street is required"
+		},
+		"city": {
+			"required": "city is required"
+		},
+		"country": {
+			"required": "country is required"
+		},
+		"state": {
+			"required": "state is required"
+		},
+		"pinCode": {
+			"required": "PinCode is required",
+			"invalid": "Invalid pin"
+		},
+		"fname": {
+			"required": "Name is required"
+		},
+		"couponcode":{
+			"required": "Coupon Code is required"
+		},
+		"reason":{
+			"required": "Reason is required"
+		},
+		"tracking_code":{
+			"required" : "Tracking Code is required"
+		 },
+		 "comment" : {
+			 "required" : "Comment is required"
+		 },
+
+		 "giftCode" : {
+			"required" : "Gift Code is required"
+		},
+		"pin" : {
+			"required" : "Pin is required"
+		},
+
+		 "search":"key word not available"
+	},
+	"popUp": {
+		"alert": {
+			"message": "message",
+			"close": "close"
+		}
+	},
+	"footer" : {
+		"newsletter" : "Newsletter",
+		"subscribemsg" : "To know best deals Subscribe Now",
+		"subscribe" : "subscribe",
+		"address" :"Address",
+		"contactinfo": "Contact Information",
+		"wishlists" : "Wish Lists",
+		"accountsettings" : "Account Settings",
+		"accountsummary" : "Account Summary",
+		"myorder" : "My Orders",
+		"loginRegister" : "Log In / Register"
+	},
+	"trackOrder" : {
+		"trackOrder" : "Track Order",
+		"heading": "Enter your email address & Tracking Code to track your order"
+	   },
+	   "ordercancel":{
+		"serial_no":"S No.",
+		"order_id":"Order Id",
+		"product_name":"Product Name",
+		"status":"Status",
+		"date":"Date",
+		"refund_id":"Refund Id",
+		"image":"Image",
+		"processing":"Processing",
+		"delivered":"Delivered",
+		"refund_order":"Refunded Order",
+		"noproduct":"No Product Found",
+		"view":"View"
+	   },
+	   "viewrefund":{
+		   "vendor_id":"Vendor Id",
+		   "refund_id":"Refund Id",
+		   "name":"Product Name",
+		   "date":"Date",
+		   "qantity":"Quantity",
+		   "reason":"Reason",
+		   "status":"Status",
+		   "amount":"Amount",
+		   "rrm":"RETURN REQUEST MESSAGES",
+		   "messages":"Messages",
+		   "request_details":"Request Details",
+		   "vendor_return_address":"Vendor Return Address",
+		   "firstname":"FirstName",
+		   "city":"City",
+		   "country":"Country",
+		   "post_code":"Post Code",
+		   "phone":"Phone",
+		   "searchMsg" : "You can search here by Refund Id ...."
+	   },
+	   "pageTitle":{
+		   "cart":"My Cart",
+		   "checkout":"Checkout",
+		   "orderConfirm":"Order Confirmation",
+		   "orderCancel":"Order Cancel",
+		   "account":{
+			   "dashboard":"My DashBoard",
+			   "profile":"My Profile",
+			   "orders":"My Orders",
+			   "orderViewDetail":"Order View Detail",
+			   "address":"Saved Address",
+			   "wishlist":"My Wishlist",
+			   "view":"Recently View",
+			   "notification":"My Notifications",
+			   "recentView":"Recently View Product",
+			   "review":"Reviews",
+			   "giftcard":"My Gift Cards",
+			   "refunded":"Refunded Status",
+			   "newAddress":"Add New Addresses",
+			   "editRating":"Edit Rating",
+			   "editAddress":"Edit Addresses",
+			   "rating":"My Rating",
+			   "orderRefund":"Refund",
+			   "refundView":"Refund View"
+
+		   }
+		    
+	   }
+}

@@ -1,0 +1,77 @@
+<ng-progress [color]="color" ></ng-progress>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>Welcome to Super-Klick</title>
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="assets/css/flexslider.css"/>
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css"/>
+		<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.flexslider-min.js"></script>
+		<script type="text/javascript" src="assets/js/site.js"></script>
+	</head>
+	<body> -->
+		<!--Page Wrapper Start-->
+		<!-- <div class="wrapper">
+			<header class="header3">
+				<a href="index.html"> <img src="assets/images/logo3.png" alt=""/> </a>
+			</header> -->
+			<div class="content">     
+				<div class="sign-wrap login">
+					<div class="container">
+						<h1>{{'login.signInmessage' | translate}}</h1>
+						<div class="signup-form ">
+							<form #loginForm="ngForm">
+								<div class="login-wrp">
+									<div>
+										<label> {{'siteLabels.emailad' | translate}} *</label>
+										<input type="text" name="email"  #email="ngModel" [(ngModel)]="loginUser.email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" required>
+									</div>
+									<div class="field-error" *ngIf="email.errors">
+                                        <p class="field-error" *ngIf="email['errors']['required'] && isFormSubmit">{{'error.email.required' | translate}} </p>
+                                        <p class="field-error" *ngIf="email['errors']['pattern'] && isFormSubmit">{{'error.email.invalid' | translate}} </p>
+                                    </div>
+									<div class="">
+										<label> {{'siteLabels.password' | translate}} *</label>
+										<div class="pass-wrap">
+											<input type="password" name="password" #password = "ngModel" [(ngModel)]="loginUser.password" required />
+											<!-- <small>show</small> -->
+											<span> {{'login.forgetPassword' | translate}}?</span>
+										</div>
+									</div>
+									<div class="field-error" *ngIf="password.errors">
+                                        <p class="field-error" *ngIf="password['errors']['required'] && isFormSubmit">{{'error.password.required' | translate}} </p>
+                                    </div>
+									
+									
+									<div class="" [innerHTML]= "'login.loginPageMsg' | translate">
+
+										<!-- <p>By clicking Sign Up, you acknowledge you have read
+										   and agreed to our <a href="javascript:void(0)">Terms of Use</a> and <a href="javascript:void(0)">Privacy Policy.</a>
+										</p> -->
+									</div>
+									
+									<div class="apply-now">
+										<a href="javascript:void(0)" (click)="validateLogin(loginForm.valid)" class="btn blue-txt"> {{'login.loginBtn' | translate}} </a>
+									</div>
+									<div class="">
+										<div class="dont-ac">
+											<span> {{'checkout.noAccount' | translate}}</span>
+											<i>&nbsp;</i>
+										</div>
+									</div>   
+									<div class="apply-now">
+										<a href="sign-up.html" class="btn blank-btn"> {{'register.signUpBtn' | translate}} </a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+

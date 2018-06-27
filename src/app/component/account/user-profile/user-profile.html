@@ -1,0 +1,221 @@
+<!--Content Section Start-->
+<ng-progress [color]="color" ></ng-progress>
+
+				
+					<div class="cols--group">		
+						<div class="panel__body">
+							<div class="box box--white box--space">
+								<div class="box__head">
+									<h5>{{'siteLabels.accountInfo'|translate }}</h5>
+								</div>
+								<div class="box__body">									
+									<div class="grids--profile">
+										<!-- <form #profileForm = "ngForm"> -->
+											<div class="grid__left" *ngIf="userDataRec">
+												<div class="row">
+													<div>
+														<div class="preview preview--profile">
+															<div class="avtar avtar--large">
+															<figure>
+																	<!-- <img [src]="image_url" alt="Nature" onerror="this.src = 'assets/images/upld.png';"> -->
+																<!-- <img *ngIf="image_url" [src]="image_url" alt="Nature" onerror="this.src = 'assets/images/upld.png';"> 
+																 *ngIf="userData.user_image"-->
+																<img  [src]="imagepath+userData.user_image"  alt="Nature" title="nature" onerror="this.src = 'assets/images/upld.png';">
+															  </figure>
+															<a  class="upld-pen" id="image" name="image" (change)="getFile($event)"></a>
+															<input class="upld-input" type="file" id="image" name="image" (change)="getFile($event)" >
+															</div>
+																<form id="frmProfile">																				
+																	<input id="update_profile_img" title=""  name="update_profile_img" value="Update Profile Picture" type="hidden">
+																</form>
+														   </div>
+													</div>
+												</div>
+												<div class="row">
+												<div class="col-md-12">
+														<form  #profileForm = "ngForm" class="form">
+															<div class="row">
+																<div class="col-md-6">
+																	<div class="field-set row">
+																		<div class="caption-wraper col-md-3">
+																			<label class="field_label lbl-lh"> {{'siteLabels.firstName'|translate}}</label>
+																		</div>
+																		<div class="field-wraper col-md-9">
+																		   <div class="field_cover">
+																			<input type="text" name="firstName" #firstName ="ngModel" [(ngModel)]="userData.fname"   class="acc-inpt" required/>
+																			<div class="field-error" *ngIf = "firstName.errors">
+																				<p class="field-error" *ngIf = "firstName['errors']['required'] && isFormSubmit">{{'error.firstName.required' | translate}} </p>
+																			 </div>
+																		<!-- <input title="Customer Name"  name="user_name" value="" type="text"> -->
+																	     </div>
+																	  </div>
+																	</div>
+																</div>
+															
+																<div class="col-md-6">
+																	<div class="field-set row">
+																		<div class="caption-wraper col-md-3">
+																			<label class="field_label lbl-lh">{{'siteLabels.lastName'|translate}}</label>
+																		</div>
+																		<div class="field-wraper col-md-9">
+																			<div class="field_cover">
+																					<input type="text" name="lastName" #lastName ="ngModel" [(ngModel)]="userData.lname"   class="acc-inpt" required/>
+																					<div class="field-error" *ngIf = "lastName.errors">
+																						<p class="field-error" *ngIf = "lastName['errors']['required'] && isFormSubmit">{{'error.lastName.required' | translate}} </p>
+																					 </div>
+																				<!-- <input title="Customer Name"  name="user_name" value="" type="text"> -->
+																			</div>
+																		</div>
+																		
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-6">
+																	<div class="field-set row">
+																		<div class="caption-wraper col-md-3">
+																			<label class="field_label lbl-lh">{{'siteLabels.email'|translate}}<span class="spn_must_field">*</span></label>
+																		</div>
+																		<div class="field-wraper col-md-9">
+																			<div class="field_cover">
+																				<input type="email" name="ds__email" [(ngModel)]="user.email" id="ds__email"  class="acc-inpt" [disabled]="user.email"/>
+																			</div>
+																		</div>
+																	</div>
+																</div>												
+															
+																<div class="col-md-6">
+																	<div class="field-set row">
+																		<div class="caption-wraper col-md-3">
+																			<label class="field_label lbl-lh">{{'siteLabels.DOB'|translate}}</label>
+																		</div>
+																		<div class="field-wraper col-md-9">
+																			<div class="field_cover">
+																				 <!-- <input disabled="disabled" title="Date Of Birth"  data-fatdateformat="yy-mm-dd"  value="" class="acc-inpt" type="text">  -->
+																				 <input class="acc-inpt" style="float:none" type="text"  ngx-mydatepicker name="dob"
+																				[(ngModel)]="userData.dob" [options]="myOptions" #dp="ngx-mydatepicker" (click)="dp.toggleCalendar()"/> 
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-6">
+																	<div class="field-set row">
+																		<div class="caption-wraper col-md-3">
+																			<label class="field_label lbl-lh">{{'siteLabels.phone'|translate}}<span class="spn_must_field">*</span></label>
+																		</div>
+																		<div class="field-wraper col-md-9">
+																			<div class="field_cover">
+																				<input class="acc-inpt" type="text" name="phone" #phone ="ngModel" [(ngModel)]="userData.phone" onkeypress='return (event.which > 47 && event.which <= 57) || event.which == 8 || event.which == 46'  maxlength="10" required>
+																				<div class="field-error" *ngIf = "phone.errors">
+																					<p class="field-error" *ngIf = "phone['errors']['required'] && isFormSubmit">{{'error.phone.required'|translate}} </p>
+																					<!-- <p class="field-error" *ngIf = "phone['errors']['pattern'] && isFormSubmit">{{'error.phone.invalid' | translate}} </p> -->
+																				 </div>
+																			</div>
+																			
+																		</div>
+																	</div>
+																</div>
+															
+																<div class="col-md-6">
+																	<div class="field-set row">
+																		<div class="caption-wraper col-md-3">
+																			<label class="field_label lbl-lh">{{'siteLabels.country'|translate}}<span class="spn_must_field">*</span></label>
+																		</div>
+																		<div class="field-wraper col-md-9">
+																			<div class="field_cover">
+																					<select *ngIf="countryData.length>0" #country="ngModel" name="country" [(ngModel)]="userData.country" id="country" (change) = "getStateList($event)" required>
+																							<option value = "">{{'useraddress.please_select' | translate}}</option>
+																							<option *ngFor="let countr of countryData" [value]="countr._id">{{countr.translation_data[0].name?countr.translation_data[0].name:countr.name}}</option>
+																						</select>
+																						<div class="field-error" *ngIf="!countrySelected">
+																							<p class="field-error" *ngIf="!countrySelected && isFormSubmit">
+																								{{'error.country.required' | translate}}
+																							</p>
+																						</div>
+																						<i class="fa fa-caret-down"></i>
+																				<!-- <select class="acc-inpt" id="user_country_id"  title="Country" >
+																						<option value="">Select</option>
+																				</select> -->
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-6">
+																	<div class="field-set row">
+																		<div class="caption-wraper col-md-3">
+																			<label class="field_label lbl-lh">{{'siteLabels.state_province'|translate}}<span class="spn_must_field">*</span></label>
+																		</div>
+																		<div class="field-wraper col-md-9">
+																			<div class="field_cover">
+																					<select #state="ngModel" name="state" [(ngModel)]="userData.state" id="state" required>
+																							<option value="">{{'useraddress.select_state' | translate}}</option>
+																							<option *ngFor="let eachstate of stateData" [value]="eachstate._id">{{eachstate.translation_data[0].name?eachstate.translation_data[0].name:eachstate.name}}</option>
+							
+																						</select>
+																						<div class="field-error" *ngIf = "userData.state==''">
+																							<p class="field-error" *ngIf = "userData.state=='' && isFormSubmit">
+																								{{'error.state.required' | translate}}
+																							</p>
+																						</div>
+																						<i class="fa fa-caret-down"></i>
+																				<!-- <select id="user_state_id" title="State" class="acc-inpt" name="user_state_id">
+																						<option value="">Select</option>
+																				</select> -->
+																			</div>
+																		</div>
+																	</div>
+																</div>															
+																<div class="col-md-6">
+																	<div class="field-set row">
+																		<div class="caption-wraper col-md-3">
+																			<label class="field_label lbl-lh">{{'siteLabels.city'|translate}}<span class="spn_must_field">*</span></label>
+																		</div>
+																		<div class="field-wraper col-md-9">
+																			<div class="field_cover">
+																				<input class="acc-inpt" title="City" #city ="ngModel" [(ngModel)]="userData.city" name="city"  type="text" required>
+																				<div class="field-error" *ngIf = "city.errors">
+																					<p class="field-error" *ngIf = "city['errors']['required'] && isFormSubmit">{{'error.city.required' | translate}} </p>
+																				 </div>
+																				 
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>																																
+															<div class="row">
+																<div class="col-md-4 col-centered">
+																	<div class="field-set">
+																		<div class="caption-wraper">
+																			<label class="field_label"></label>
+																		</div>
+																		<div class="field-wraper">
+																			<div class="field_cover">
+																				<!-- <input title="" name="btn_submit info-btn" value="Submit" type="submit" style="width:100%;"> -->
+																				<button style="width: 100%; text-transform: capitalize;" (click)=onSubmit(profileForm.valid);>
+																						{{'siteLabels.save' | translate}} 
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</form>														
+													</div>
+												</div>
+											</div>
+										<!-- </form> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+				<ngx-flash-messages></ngx-flash-messages> 
+	
+
+<!--Content Section End-->
+

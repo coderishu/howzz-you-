@@ -1,0 +1,90 @@
+<!--Content Section Start-->
+<ng-progress [color]="color" ></ng-progress>
+<div class="cols--group">
+    <div class="panel__body">
+    <div class="box box--white box--space">
+      <div class="box__head box__head--large">
+        <div class="ordr_page_head_wrap">
+          <div class="row odr-head clearfix">
+            <div class="col-md-4 col-xs-12 col-sm-3">
+              <h5>{{'ordercancel.refund_order' | translate}}</h5>
+            </div>
+            <div class="col-md-8 col-xs-12 col-sm-9">
+              <form action="" (ngSubmit) = "searchApply()">
+                  <div class="input-group">
+                      <input id="search_key" type="text" name="search" [ngModel] = "search" class="form-control" placeholder="{{'viewrefund.searchMsg' | translate}}" aria-describedby="basic-addon2">
+                      <span class="input-group-addon" (click)="searchApply()">{{'siteLabels.search' | translate}}</span>
+                  </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+    	<!-- Row start -->
+                 <div class="ordr-wrp row" *ngIf="orderdata.length>0 && orderDataReceived">
+                        <div class="col-md-12" *ngFor="let ordering of orderdata" >
+                           <div class="row dtl-wrp">
+                                <div class="odr-dtl-head">
+                                    <table class="ordr-table">
+                                        <tr>
+                                            <th>{{'ordercancel.date'| translate}}</th>
+                                             <th>{{'siteLabels.total' | translate}}</th> 
+                                             <th>{{'ordercancel.refund_id'|translate}}</th>
+                                             <th>{{'ordercancel.order_id'|translate}}</th>
+                                             <th>{{'ordercancel.status'|translate}}</th>
+                                            
+
+                                        </tr>
+                                        <tr>
+                                            <td>{{ordering.createdAt|dateFilter}}</td>
+                                             <td>{{currencyconvertservice.currentCurrencyData['position']=='left' ? currencyconvertservice.currentCurrencyData['sign']:''}}{{ordering.total_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</td>
+                                             <td>{{ordering.refundid}}</td>
+                                             <td>{{ordering.odid}}</td>
+                                             <td class="ta_r">{{ordering.refund_status}}</td>
+                                         </tr>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                           
+                            <div class="product-row clearfix">  
+                                <div class="row mid-row">
+                                        <div class="col-md-2 col-sm-3">
+                                            <figure class="prdct-imge">
+                                                <a href="javascript:void(0)" title="{{ordering.name}}" [routerLink]= "ordering.url_data.urlData">
+                                                    <img [src]="orderDetail['thumb_path']+ordering.image" class="refund-image">
+                                                </a>
+                                            </figure>
+
+                                        </div>
+                                        <div class="col-md-7 col-sm-5">
+                                                <a href="javascript:void(0)" title="{{ordering.name}}"><h4>{{ordering.name}}</h4></a>
+                                               <strong class="prdt-price">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{ordering.total_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}  </strong>
+                                               <p class="prdt-clr" *ngFor = "let variantItem of ordering.url_data.associate_data">
+                                                    <span>{{variantItem.key}}: </span>
+                                                    <span>{{variantItem.value}} </span>
+                                                </p>
+                                        </div>
+                                        
+                                         <div class="col-md-3 col-sm-4">
+                                            <div class="fedbck-wrp">
+                                                <div class="slt-wrp">
+                                                    <select title="" (change)="navigateToOptionChange($event,ordering)">
+                                                            <option [value]="option.value" *ngFor = "let option of 'refundPageSelectionArr'| translate">{{option.key}}</option>
+                                                            <!-- <option value="viewdetail">View Detail</option> -->
+                                                        </select>
+                                                        <i class="drop-arrow" ><img src="assets/images/select-arrow.png" /> </i>
+                                                <!-- <a href="javascript:void(0)" [routerLink]="['/account/view-refund',ordering.refund_id]" class="btn lve-btn">{{'ordercancel.view'|translate}}</a> -->
+                                                </div>
+                                            </div>
+                                       </div> 
+                                    </div>
+                              </div>
+                        </div>
+                  </div> 
+            </div>
+
+    <ngx-flash-messages></ngx-flash-messages>
+  </div>
+</div>

@@ -1,0 +1,239 @@
+<!--Content Section Start-->
+<ng-progress [color]="color" ></ng-progress>
+
+
+<div class="cols--group">
+	<div class="panel__body">
+		<div class="box box--white box--space">
+			<div class="box__head">
+				<h5>{{'viewrefund.request_details'|translate}}</h5>
+			</div>
+			<div class="vendor_detail" *ngIf = "orderdata">
+				<div class="row clearfix">
+				<div class="col-md-4">
+					<div class="field-set row">
+						<div class="caption-wraper col-md-4 col-xs-12">
+							<label class="field_label">{{'viewrefund.firstname'|translate}}</label>
+						</div>
+						<div class="field-wraper col-md-8 col-xs-12">
+							
+							<label class="field_label">{{orderdata['product']['vendor_address']['fname']}}</label>
+						</div>
+
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="field-set row">
+						<div class="caption-wraper col-md-4 col-xs-12">
+							<label class="field_label">{{'viewrefund.city'|translate}}</label>
+						</div>
+						<div class="field-wraper col-md-8 col-xs-12">
+							<label class="field_label">{{orderdata['product']['vendor_address']['city']}}</label>
+							
+						</div>
+
+					</div>
+				</div>
+				<div class="col-md-4">
+				<div class="field-set row">
+					<div class="caption-wraper col-md-4 col-xs-12">
+						<label class="field_label">{{'viewrefund.phone'|translate}}</label>
+					</div>
+					<div class="field-wraper col-md-8 col-xs-12">
+						<label class="field_label">{{orderdata['product']['vendor_address']['phone']}}</label>
+						
+				 	</div>
+				</div>
+			</div>
+			</div>
+				<div class="row clearfix">
+				<div class="col-md-4">
+					<div class="field-set row">
+						<div class="caption-wraper col-md-4 col-xs-12">
+							<label class="field_label">{{'viewrefund.country'|translate}}</label>
+						</div>
+						<div class="field-wraper col-md-8 col-xs-12">
+							<label class="field_label">{{orderdata['product']['vendor_address']['country']}}</label>
+							
+						</div>
+	                </div>
+				</div>
+				<div class="col-md-4">
+					<div class="field-set row">
+						<div class="caption-wraper col-md-4 col-xs-12">
+							<label class="field_label">{{'viewrefund.post_code'|translate}}</label>
+						</div>
+						<div class="field-wraper col-md-8 col-xs-12">
+							<label class="field_label">{{orderdata['product']['vendor_address']['postcode']}}</label>
+							
+						</div>
+	
+					</div>
+				</div>
+			</div>
+				<div class="row clearfix">
+			
+		</div>
+			</div>
+<div class="box__head box__head--large mb-20">
+		<div class="ordr-wrp row" *ngIf="orderDataReceived && orderdata">
+				<div class="col-md-12">
+				   <div class="row dtl-wrp">
+						<div class="odr-dtl-head">
+							<table class="ordr-table">
+								<tr>
+										
+										<th>{{'viewrefund.reason'|translate}}</th>
+										<!-- <th>{{'viewrefund.vendor_id'|translate}}</th> -->
+										<th>{{'viewrefund.refund_id'|translate}}</th>
+										<th>{{'viewrefund.qantity'|translate}}</th>
+										<!-- <th>{{'viewrefund.name'|translate}}</th> -->
+										<th>{{'viewrefund.date'| translate}}</th>
+	
+										<th>{{'viewrefund.status'|translate}}</th>
+										<!-- <th>{{'viewrefund.amount'|translate}}</th> -->
+
+								</tr>
+								<tr>
+										
+										<td>{{orderdata['reason']}}</td>
+										<!-- <td>{{orderdata['vendor_id']}}</td> -->
+										<td>{{orderdata['refid']}}</td>
+										<td>{{orderdata['quantity']}}</td>
+										<!-- <td>{{orderdata['product']['name']}}</td> -->
+										<td>{{orderdata['product']['createdAt'] | dateFilter}}</td>
+	
+										<td class="ta_r">{{orderdata['product']['refund_status']}}</td>
+										<!-- <td><span *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'"> {{currencyconvertservice.currentCurrencyData['sign']}} {{(orderdata['product']['unit_special_price']*orderdata['product']['quantity'])*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}</span>
+											<span *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{(orderdata['product']['unit_special_price']*orderdata['product']['quantity'])*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}} {{currencyconvertservice.currentCurrencyData['sign']}}</span>
+										</td> -->
+								 </tr>
+							</table>
+
+						</div>
+
+					</div>
+				   
+					<div class="product-row clearfix">
+						<div class="row mid-row">
+								<div class="col-md-2 col-sm-3">
+									 <figure class="prdct-imge">
+										<a href="javascript:void(0)" title="{{orderdata['product']['name']}}">
+											<img [src]="orderDetail['thumb_path']+orderdata['product']['image']" class="refund-image">
+										</a>
+									</figure>
+
+								</div>
+								<div class="col-md-7 col-sm-5">
+										<a href="javascript:void(0)" title="{{orderdata['product']['name']}}"><h4>{{orderdata['product']['name']}}</h4></a>
+                                 <strong class="prdt-price">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{orderdata['product']['unit_special_price']*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}  </strong>
+								</div>
+								<!-- <div class="col-md-3 col-sm-4">
+									<div class="fedbck-wrp">
+										<a href="javascript:void(0)" [routerLink]="['/account/view-refund',ordering.refund_id]" class="btn lve-btn">{{'ordercancel.view'|translate}}</a>
+									</div>
+							   </div>  -->
+							</div>
+					  </div>
+				</div>
+		  </div>
+	<!-- <div class="ordr-wrp row">
+		<div class="col-md-12">
+			
+			<div class="row dtl-wrp">
+				<div class="odr-dtl-head account_refund_table_wrp">
+						<table class="ordr-table account_refund_table" *ngIf="orderDataReceived && orderdata">
+							<tr>
+								  <th>{{'viewrefund.qantity'|translate}}</th>
+									<th>{{'viewrefund.reason'|translate}}</th>
+									<th>{{'viewrefund.vendor_id'|translate}}</th>
+									<th>{{'viewrefund.refund_id'|translate}}</th>
+									<th>{{'viewrefund.name'|translate}}</th>
+									<th>{{'viewrefund.createdAt'| translate}}</th>
+
+									<th>{{'viewrefund.status'|translate}}</th>
+									<th>{{'viewrefund.amount'|translate}}</th>
+							</tr>
+							<tr>
+									<td>{{orderdata['quantity']}}</td>
+									<td>{{orderdata['reason']}}</td>
+									<td>{{orderdata['vendor_id']}}</td>
+									<td>{{orderdata['refid']}}</td>
+									<td>{{orderdata['product']['name']}}</td>
+									<td>{{orderdata['product']['createdAt'] | dateFilter}}</td>
+
+									<td>{{orderdata['product']['refund_status']}}</td>
+									<td><span *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'"> {{currencyconvertservice.currentCurrencyData['sign']}} {{(orderdata['product']['unit_special_price']*orderdata['product']['quantity'])*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}</span>
+			                            <span *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{(orderdata['product']['unit_special_price']*orderdata['product']['quantity'])*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}} {{currencyconvertservice.currentCurrencyData['sign']}}</span>
+									</td>
+
+							</tr>
+					</table>
+
+				</div>
+			</div>
+
+		
+
+
+		</div>
+
+	</div> -->
+ </div>     
+ <div class="communication">
+			<h5>{{'viewrefund.rrm'|translate}}</h5>
+
+			<div class="mesg-box" *ngIf="orderdata">
+							<div class="row" *ngIf="orderdata.refunded_status > 0">
+									<div class="col-md-12 seller-conv-wrp">
+											<div class="msg-panel-head" *ngIf="orderdata.conversation.length > 0">
+													<h5>{{'viewrefund.messages'|translate}}</h5>
+											</div>
+											<div class="com-wrp" *ngIf="orderdata.conversation.length > 0">
+													<div class="conv-box">
+															<div class="row admin-conv clearfix" *ngFor = "let comment of orderdata.conversation">
+																	<div class="col-md-2 col-xs-12 admin-img">
+
+																			<img class="conv-image" [src]="comment.image" alt="commentimage" title="comment image" onerror="this.src = 'assets/images/estimate.png';">
+																	</div>
+																	<div class="col-md-10 col-xs-12">
+																			<div class="cstomer-nme">
+																					<p class="messenger-nme">
+																									{{comment.user_name}}
+																					</p>
+																					<p class="messenge-date">
+																									({{comment.createdAt | dateFilter}})
+																					</p>
+																			</div>
+																			<p class="messenger-content">
+																							{{comment.comment}}
+																			</p>
+																	</div>
+															</div>
+
+													</div>
+											</div>
+											<div *ngIf="orderdata.refunded_status < 2">
+												<form #conversationForm = "ngForm" *ngIf="orderdata.refunded_status == 1">
+														<div class="frm-wrp">
+																<div class="conv-inpt">
+																		<label><span>{{'userdashboard.comment' | translate}}</span> :</label>
+																		<textarea name="comment" #comment="ngModel" [(ngModel)] = "userComment" required></textarea>
+																		<div *ngIf = "comment.errors">
+																			<p class="field-error" *ngIf = "comment['errors']['required'] && isFormSubmit">{{'error.comment.required' | translate}} </p>
+																		</div>
+																</div>
+														</div>
+														<button class="btn btn-rounded submit-button" (click) = "addConversation(conversationForm.valid)" type="submit">{{'btns.submit' | translate}}</button>
+												</form>
+											</div>
+									</div>
+							</div>
+						 </div>
+	</div>
+	<div class="no-avlbl" style="text-align:center" *ngIf="!orderDataReceived && orderdata">
+			<h4>{{'ordercancel.noproduct'|translate}}</h4>
+	</div>
+		</div>
+	</div>
+</div>

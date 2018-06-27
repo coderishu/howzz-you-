@@ -1,0 +1,237 @@
+<ng-progress [color]="color" ></ng-progress>
+<!-- TRACK ORDER POPUP START-->
+	<!-- <div class="login-block" id ="track-order">
+		<div class="user-register">
+			<div class="row no-outer-space">
+				<div class="col-sm-6 col-sm-push-6 no-space">
+					<figure class="login-image-wrap"><img src="assets/images/login-banner.png" alt="banner image" title="banner image"></figure>
+				</div>
+				<div class="col-sm-6 col-sm-pull-6 no-space">
+
+					<div class="login-info">
+						<h2>{{'header.trackorders' | translate}}</h2>
+						<span class="login-title">{{'trackOrder.heading' | translate}}
+
+							</span>
+						<form class="login-form" #trackOrderForm="ngForm">
+							<div class="form-group">
+								<label class="form-label"> {{'siteLabels.email' | translate}} </label>
+							 	<input type="email" name="email" class="form-control " #email="ngModel" [(ngModel)]="trackOrder.email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" required />
+							   <div class="field-error" *ngIf="email.errors">
+									<p class="field-error" *ngIf="email['errors']['required'] && isFormSubmit">{{'error.email.required' | translate}} </p>
+									<p class="field-error" *ngIf="email['errors']['pattern'] && isFormSubmit">{{'error.email.invalid' | translate}} </p>
+								</div>
+							</div>
+							<div class="form-group">
+									<label class="form-label"> {{'siteLabels.trackingCode' | translate}} </label>
+									<input type="text" name="tracking_code" class="form-control "  #tracking_code="ngModel" [(ngModel)]="trackOrder.tracking_code"  required/>
+									<div class="field-error" *ngIf="tracking_code.errors">
+										<p class="field-error" *ngIf="tracking_code['errors']['required'] && isFormSubmit">{{'error.tracking_code.required' | translate}} </p>
+									</div>
+								</div>
+
+							<a class="register-link" href="javascript:void(0)" (click)="trackMyOrder(trackOrderForm.valid)">{{'header.trackorders' | translate}}</a>
+						</form>
+	                </div>
+				</div>
+	         </div>
+			<a href="javascript:void(0)" class="login-close-btn" (click)="closeTrackOrderModel()"><img src="assets/images/close-btn.png" alt="close" title="close" /></a>
+		</div>
+
+	</div> -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<form class="track_order_form" action="" method="post" #trackOrderForm="ngForm" (ngSubmit) = "trackMyOrder(trackOrderForm.valid)">
+				<div class="row m-b-20">
+					<div class="caption-wraper col-md-2">
+						<label for="" class="field_label">{{'siteLabels.trackingCode' | translate}} <span>*</span></label>
+					</div>
+					<div class="col-md-10">
+						<input type="text" name="tracking_code" value="" class="form-control" #tracking_code="ngModel" [(ngModel)]="trackOrder.tracking_code"  required>
+					<div class="field-error" *ngIf="tracking_code.errors">
+										<p class="field-error" *ngIf="tracking_code['errors']['required'] && isFormSubmit">{{'error.tracking_code.required' | translate}} </p>
+									</div>
+					</div>
+
+				</div>
+				<div class="row m-b-20">
+					<div class="col-md-2 caption-wraper">
+						<label for="" class="field_label"> {{'siteLabels.email' | translate}} <span>*</span></label>
+
+					</div>
+					<div class="col-md-10">
+						<input type="text" name="name" value="" class="form-control" #email="ngModel" [(ngModel)]="trackOrder.email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" required >
+					 <div class="field-error" *ngIf="email.errors">
+									<p class="field-error" *ngIf="email['errors']['required'] && isFormSubmit">{{'error.email.required' | translate}} </p>
+									<p class="field-error" *ngIf="email['errors']['pattern'] && isFormSubmit">{{'error.email.invalid' | translate}} </p>
+								</div>
+					</div>
+
+				</div>
+				<div class="row m-b-20">
+					<div class="col-md-2">
+
+					</div>
+					<div class="col-md-10">
+						<button class="crt-btn trck-btn no-border" (click)="closeTrackOrderModel()"> {{'header.trackorders' | translate}}</button>
+					</div>
+				</div>
+
+					</form>
+			</div>
+
+		</div>
+	</div>
+<!-- TRACK ORDER POPUP END -->
+
+			<div class="container">
+
+					<div class="cols--group" *ngIf="isOrderDetail">
+
+						<div class="panel__body">
+							<div class="box box--white box--space">
+								<div class="box__head clearfix">
+									<h5>{{'userdashboard.vieworder' | translate}}</h5>
+								</div>
+								<div class="box__body">
+								<!-- rfnd wrp -->
+								<div class="rfnd-wrp" >
+										<div class="row">
+											<div class="row rfnd-dtl">
+												<div class="col-sm-5">
+													<h5>{{'siteLabels.orderstatus' | translate}}</h5>
+													<span class="rfnd-stus">{{'siteLabels.Orderid' | translate}}: {{productData.odid}}</span>
+													<span class="rfnd-stus"> {{'orderconfirmation.orderdate' | translate}}: {{productData.order_data.order_date|dateFilter}}</span>
+													<span class="rfnd-stus" *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">{{'siteLabels.totalamount' | translate}} : {{currencyconvertservice.currentCurrencyData['sign']}} {{productData.grand_total_special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}} through {{productData.payment_type}}</span>
+													<span class="rfnd-stus" *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{'siteLabels.totalamount' | translate}} : {{productData.grand_total_special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}} {{currencyconvertservice.currentCurrencyData['sign']}}  through {{productData.payment_type}}</span>
+												</div>
+												<div class="col-sm-4" *ngIf="productData.address_detail">
+													<h5>{{'userdashboard.address' | translate}}</h5>
+													<div class="address">
+														<b>{{productData.address_detail.fname}} {{productData.address_detail.lname}}</b><br>{{productData.address_detail.street}},{{productData.address_detail.city}},
+														{{productData.address_detail.state}}, {{productData.address_detail.country}} <br>
+														<b>{{'siteLabels.phone'| translate}}</b>: {{productData.address_detail.phone}}<br>
+													</div>
+												</div>
+												<div class=" hlp-wrp col-sm-3">
+													<h5>{{'siteLabels.needhelp' | translate}}</h5>
+
+													<a href="javascript:void(0);"   (click) = "productData.order_data.gift_card == 0 && getInvoice(productData.order_id)"><span class="req-invice" [class.disabled] = "productData.order_data.gift_card == 1" *ngIf = "productData.order_data.order_status == 'Delivered'">{{'siteLabels.requestinvoice' | translate}}</span></a>
+													<span class="phone-icon req-invice help"><i class="fa fa-phone"></i><a href="javascript:void(0)">{{storeSystemData.STORE_CONTACT_NUMBER}}</a></span>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="rfnd-fnl-staus clearfix" *ngIf="productData['order_data']">
+												<div class="col-sm-5 clearfix" >
+													<div class="prdct-img">
+														<a href="javascript:void(0)" (click)="makeURL(productData.order_data.urldata.urlData,productData.order_data.urldata.queryParams)">
+														<img  [src]="productData.order_data.gift_card == 1?'assets/images/gift.jpg':productData.thumb_path+productData.order_data.image" alt="Nature" title="nature" onerror="this.src = 'assets/images/estimate.png';"></a>
+													</div>
+													<div class="prdct-dtl">
+														<a href="javascript:void(0)" (click)="makeURL(productData.order_data.urldata.urlData,productData.order_data.urldata.queryParams)">
+														<strong>{{productData.order_data.name}}</strong>
+															<span style="display: block;" class="product-variant" *ngFor = "let variantItem of productData.order_data.urldata.associate_data">
+															{{variantItem.key}}: {{variantItem.value}}
+														</span>
+														</a>
+														<span class="view-seller"> {{'cart.seller'|translate}}:{{productData.order_data.vendor_detail.f_name}} {{productData.order_data.vendor_detail.l_name}}</span>
+													</div>
+												</div>
+												<div class="col-sm-7 miles ds__track-order__status" *ngIf="productData.order_data.gift_card == 0 && trackOrderDetail">
+													<ul class="clearfix">
+														<li [class.ds__track-order__completed]="each.status && each.name!='Cancelled'" [class.ds__track-order__cancel]="each.name=='Cancelled' && each.status" [class.ds__track-order__refund]="each.name=='Refunded' && each.status"
+														 *ngFor="let each of trackOrderDetail.deliver_status">
+															<span>{{each.name}}</span>
+															<i class="ds__status__dot"></i>
+														</li>
+													</ul>
+													<span *ngIf="productData.order_data.refund_detail" class="ds__order-place" [class.cncl-clr] = "productData.order_data.cancel_status>'0' || productData.order_data.refund_detail.refunded_status>'0'" [class.rec-clr]="productData.order_data.delivered && productData.order_data.cancel_status=='0' && !productData.order_data.refund_status">
+														{{(productData.order_data.cancel_status>'0' || productData.order_data.refund_detail.refunded_status>'0'|| productData.order_data.order_status == 'Delivered')?productData.order_data.msg:('userdashboard.deliveryby' | translate)}} :  {{productData.order_data.cancel_status=='0'&& productData.order_data.delivered==false?(productData.order_data.order_date|convertEstimateDate :productData.order_data.delivery_date_to):productData.order_data.cancel_status>'0' && productData.order_data.refund_detail.refunded_status == '0'?(productData.order_data.cancel_date|dateFilter):productData.order_data.refund_detail.refunded_status>'0'?(productData.order_data.refund_detail.data.refund_create_date|dateFilter):(productData.order_data.order_status_date|dateFilter)}}
+											          </span>
+												</div>
+												<div class="col-sm-7 miles ds__track-order__status fedbck-wrp" *ngIf="productData.order_data.gift_card == 1" (click) = "resendGiftCardEmail()">
+													<div class="col-sm-6"> </div>
+													<div class="col-sm-6">
+													<a class="btn lve-btn" href="javascript:void(0)">{{'userorderdetails.resendGiftBtn' | translate}}</a>
+													</div>
+												</div>
+
+
+
+											</div>
+
+										</div>
+										<div class="row" *ngIf = "productData.order_data.refund_detail.refunded_status == 2">
+											<div class="rfnd-wrn">
+												<p>
+													<strong>{{'siteLabels.refundcompleted' | translate}} :</strong><span class="rfnd-price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">{{currencyconvertservice.currentCurrencyData['sign']}}{{productData.order_data.special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}</span>
+													<span class="rfnd-price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{productData.order_data.special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</span>
+
+													{{productData.order_data.refund_detail.data.price_text}}
+												</p>
+											</div>
+										</div>
+										<div class="row vew-wrp">
+											<div class="odr-dte odr-dte-view col-md-9" *ngIf = "productData.order_data">
+												<span>{{'userdashboard.orderedon' | translate}}</span>
+												<span>{{productData.order_data.order_date | dateFilter}}</span>
+											</div>
+											<div class="cntct col-md-3">
+												<span>{{'siteLabels.total' | translate}}: </span>
+												<span *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'" class="rfnd-price">{{currencyconvertservice.currentCurrencyData['sign']}}{{productData.grand_total_special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}} </span>
+											    <span *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'" class="rfnd-price">{{productData.grand_total_special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}  </span>
+											</div>
+										</div>
+									</div>
+								<!-- rfnd wrp -->
+
+								<div class="mesg-box" *ngIf = "productData.order_data">
+										<div class="row" *ngIf = "productData.order_data.refund_detail.refunded_status > 0">
+											<div class="col-md-12 seller-conv-wrp">
+												<div class="msg-panel-head" *ngIf = "productData.order_data.refund_detail.data_communication.length > 0">
+													<h5>{{'siteLabels.messages' | translate}}</h5>
+												</div>
+												<div class="com-wrp" *ngIf = "productData.order_data.refund_detail.data_communication.length > 0">
+													<div class="conv-box">
+														<div class="row admin-conv" *ngFor = "let comment of productData.order_data.refund_detail.data_communication">
+															<div class="col-md-2 col-xs-12 admin-img">
+																<!-- <img class="conv-image" src="assets/images/dummy.jpg" alt="admin photo"> -->
+																<img class="conv-image" [src]="comment.image" alt="commentimage" title="comment image" onerror="this.src = 'assets/images/estimate.png';">
+															</div>
+															<div class="col-md-10 col-xs-12">
+																<div class="cstomer-nme">
+																	<p class="messenger-nme">
+																		{{comment.from}}
+																	</p>
+																	<p class="messenge-date">
+																		({{comment.createdAt | dateFilter}})
+																	</p>
+																</div>
+																<p class="messenger-content">
+																	{{comment.comment}}
+																</p>
+															</div>
+														</div>
+
+													</div>
+												</div>
+												<form #conversationForm = "ngForm" *ngIf = "productData.order_data.refund_detail.refunded_status == 1">
+													<div class="frm-wrp">
+														<div class="conv-inpt">
+															<label><span>{{'userdashboard.comment' | translate}}</span> :</label>
+															<textarea name="comment" [(ngModel)] = "userComment" (keyDown) = "conversOnKeyPress($event)" ></textarea>
+														</div>
+													</div>
+													<button class="btn btn-rounded submit-button" (click) = "addConversation()" type="submit">{{'btns.submit' | translate}}</button>
+												</form>
+											</div>
+										</div>
+				   					</div>
+						<!-- message-box end -->
+  								</div>
+							</div>
+						</div>
+					</div>
+			</div>

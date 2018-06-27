@@ -1,0 +1,160 @@
+<!--Content Area Start-->
+<ng-progress [color]="color"></ng-progress>
+<div class="content category-content" (click) = "hideErrorMessage()">
+	<div class="container">
+		<div class="row clearfix pt-20" *ngIf="!emptyCart && basketResponseRecvd">
+			<div class="col-md-8 cart-wrp">
+				<div class="cart-head clearfix">
+					<span class="item-count">{{'cart.mycart'| translate}}({{cartdetailservice.cartdatacount}})</span>
+					<div class="pincode-wrap">
+						<form #pinForm="ngForm" (ngSubmit)="checkPincode(pinForm.valid)">
+							<i class="fa fa-map-marker" aria-hidden="true"></i>
+							<input type="text" placeholder="{{'detail.attribute_name.deliveryCode' | translate}}" name="pincode" #pincode="ngModel" required
+							 pattern="^\d{2,10}$" [(ngModel)]="pinNo" />
+							<button>{{'cart.change' | translate}}</button>
+							<p class="" [class.field-error] = "!isProductAvailable" [class.product-availabler] = "isProductAvailable" *ngIf="!pincode.errors && isPinSubmit">
+								{{productAvailableMessage}}
+							</p>
+							
+							<div class="field-error" *ngIf="pincode.errors">
+								<p class="field-error" *ngIf="pincode['errors']['required'] && isPinSubmit">
+									{{'error.pinCode.required' | translate}}
+								</p>
+								<p class="field-error" *ngIf="pincode['errors']['pattern'] && isPinSubmit">
+									{{'error.pinCode.invalid' | translate}}
+								</p>
+							</div>
+						</form>
+					</div>
+
+					<!-- <form #pinForm="ngForm">
+							<input type="text" placeholder="{{'detail.attribute_name.deliveryCode' | translate}}"  name = "pincode" #pincode = "ngModel" required pattern = "^\d{2,10}$" [(ngModel)] = "pinNo" />
+							<span><i class="icon-loc"></i></span>
+							<button class="check" (click) = "checkPincode(pinForm.valid)">{{'detail.attribute_name.checkBtn' | translate}}</button>
+						</form> -->
+				</div>
+				<div class="prodt-detail" *ngFor="let cart of cartdata.cart_data">
+					<div class="row detail-wrap clearfix">
+						<div class="col-md-2 prdt-img">
+							<figure class="shopping-figure">
+								<a href="javascript:void(0)" [routerLink]="cart.urldata.urlData" title="{{cart.name}}"> <img [src]="imagepath+cart.image" alt="{{cart.name}}" title="{{cart.name}}" onerror="this.src = 'assets/images/estimate.png';"
+									/> </a>
+							</figure>
+						</div>
+						<div class="col-md-10">
+							<div class="row prdct-descript clearfix">
+								<div class="col-md-8 attr-wrp">
+									<h4><a href="javascript:void(0)" title="{{cart.name}}" [routerLink]="cart.urldata.urlData">{{cart.name}}</a></h4>
+									<p *ngFor="let productAtrr of cart.urldata.associate_data">
+										<span class="prdt-attr">{{productAtrr.key}}:</span>
+										<span class="prdt-attr">{{productAtrr.value}}</span>
+									</p>
+									<p>
+										<span class="prdt-attr">{{'cart.seller' | translate}}: </span>
+										<span class="prdt-attr">{{cart.vendor_name}}</span>
+									</p>
+									<span class="price-wrp"> 
+										<span *ngIf="currencyconvertservice.currentCurrencyData['position']=='left' && cart.special_price!='' && cart.special_price!=0" class="old-price">{{currencyconvertservice.currentCurrencyData['sign']}}{{cart.special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}</span>
+									<span *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'&& cart.special_price!='' && cart.special_price!=0"
+									 class="old-price">{{cart.special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}/-</span>
+									<!-- <span class="old-price">$250/-</span> --><strong *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'" class="actual-price del-price">{{currencyconvertservice.currentCurrencyData['sign']}}{{cart.price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}} </strong>									<strong *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'" class="actual-price">{{cart.price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}} </strong>									<strong class="discount-rate" *ngIf="cart.special_price<cart.price"> ({{((cart.price-cart.special_price)*100/cart.price) | round}}% {{'cart.off' | translate}})</strong>									</span>
+								</div>
+								<div class="col-md-4 clearfix">
+									<div class="exp-del-date">
+										<p class="del-date">
+											{{'cart.dilveryin' | translate}} {{cart.delivery_date_from!=""?cart.delivery_date_from:storeSettings.STORE.ORDER.from_days}}
+											{{'cart.to' | translate}} {{cart.delivery_date_to!=""?cart.delivery_date_to:storeSettings.STORE.ORDER.to_days}}
+											{{'cart.days'|translate}}:<strong *ngIf="cart.dilevery_charge==0">{{'cart.free'| translate}}</strong>
+											<span *ngIf="cart.dilevery_charge != 0 && currencyconvertservice.currentCurrencyData['position']=='left'"> {{currencyconvertservice.currentCurrencyData['sign']}}</span>
+											<span
+											 *ngIf="cart.dilevery_charge != 0 ">{{cart.dilevery_charge!= "" && cart.dilevery_charge > 0 ?cart.dilevery_charge:storeSettings.STORE.ORDER.delivery_price
+												*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}</span><span *ngIf="cart.dilevery_charge != 0 && currencyconvertservice.currentCurrencyData['position']=='right'"> {{currencyconvertservice.currentCurrencyData['sign']}}</span>
+										</p>
+										<!--  -->
+										<p class="replce-date" *ngIf="refund_days">
+											{{refund_days}} {{'cart.daysreplacement'| translate}}
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-8">
+									<div class="input-group plus-minus-input">
+										<div class="input-group-button">
+											<button type="button" class="button hollow circle" data-quantity="minus" data-field="quantity" (click)="increaseQuantity(cart.quantity,cart.cart_id,'decrease')">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											</button>
+										</div>
+										<input class="input-group-field" name="quantity" disabled="" type="text" value={{cart.quantity}}>
+										<div class="input-group-button">
+											<button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity" (click)="increaseQuantity(cart.quantity,cart.cart_id,'increase')">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="attr-nav">
+										<a class="wshl" href="javascript:void(0)" (click)="moveToWishlist(cart)">{{'cart.wishlist' | translate}}</a>
+										<a class="rmv" href="javascript:void(0)" (click)="removeProduct(cart.cart_id)">{{'cart.remove' | translate}}</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="cart-btn clearfix">
+					<a href="javascript:void(0)" title="" [routerLink]="['']" class="cont-shopping crt-btn"> {{'cart.continueshopping' | translate}} </a>
+					<a href="javascript:void(0)" (click)="navigateToCheckout()" class="chck-out crt-btn"> {{'cart.checkout'|translate}} </a>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="invoice-box">
+					<div class="invoice-head">
+						<strong>{{'cart.price_details'| translate}}</strong>
+					</div>
+					<ul class="invice-breakup clearfix">
+						<li *ngFor="let cart of cartdata.cart_data">
+							<p class="clearfix" style="margin-bottom:10px;">
+								<span>{{'cart.price' | translate}} ({{cart.quantity}}{{'cart.items' | translate}})</span>
+								<strong *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">{{currencyconvertservice.currentCurrencyData['sign']}}{{cart.special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}} </strong>
+								<strong *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{cart.special_price*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}} </strong>
+							</p>
+							<p class="clearfix" style="margin-bottom:10px;">
+								<span>{{'cart.deliverycharges' | translate}}</span>
+								<strong *ngIf="cart.dilevery_charge==0">{{'cart.free'|translate}} </strong>
+								<strong *ngIf="currencyconvertservice.currentCurrencyData['position']=='left' && cart.dilevery_charge>0">{{currencyconvertservice.currentCurrencyData['sign']}}{{cart.dilevery_charge*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}} </strong>
+								<strong *ngIf="currencyconvertservice.currentCurrencyData['position']=='right' && cart.dilevery_charge>0">{{cart.dilevery_charge*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}} </strong>
+							</p>
+							<p class="clearfix" *ngIf="cart.special_price_tax>0">
+								<span>{{'userorderdetails.estimateTax' | translate}}</span>
+								<strong>+ {{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{cart.special_price_tax*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}} </strong>
+							</p>
+							<p class="clearfix" *ngIf="cart.shiping_tax>0">
+								<span>{{'userorderdetails.shippingTax' | translate}}</span>
+								<strong>+ {{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{cart.shiping_tax*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}} </strong>
+							</p>
+						</li>
+					</ul>
+					<div class="total clearfix">
+						<span class="amt-total">{{'cart.amount_payable' | translate}} &nbsp; </span>
+						<strong *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'" class="amt-total costt">{{currencyconvertservice.currentCurrencyData['sign']}}{{cartdata.grand_total*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}} </strong>
+						<strong *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'" class="amt-total costt">{{cartdata.grand_total*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}} </strong>
+					</div>
+					<div class="saving-box">
+						<p class="saving-amt">
+							{{'cart.yourtotalsaving' | translate}}:<span *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'"> {{currencyconvertservice.currentCurrencyData['sign']}}</span>{{totalSaving}}
+							<span *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{currencyconvertservice.currentCurrencyData['sign']}}</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="emptyCart && basketResponseRecvd">
+			<h4 class="error-empty">{{errormsg}}</h4>
+		</div>
+
+	</div>
+	<ngx-flash-messages></ngx-flash-messages>
+</div>

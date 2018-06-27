@@ -1,0 +1,39 @@
+<!--Content Area Start-->
+<ng-progress [color]="color" ></ng-progress>
+<div class="content" *ngIf="!emptyCart && basketResponseRecvd">
+	<div class="checkout-container clearfix">
+		<div class="checkout-wrapper">
+			<!-- <form action="#" method="post"> -->
+				 
+				 <div  class="chkout-shipping clearfix">
+					<div class="ship-wrap">
+						<h4><span class="num">1</span>{{'checkout.entershipping'|translate}}</h4>
+					     <address (isAddressExist)="isAddressExist($event)" (isFirstChanged)="isFirstChanged($event)" (needToloadCartDetails)="loadCartDetailsOnChange($event)" [isFirst]="isFirst" [continueButtonStatus]="continueButtonStatus" [currentLanguageData] = "currentLanguageData" [user]="user" [userExist]="userExist" *ngIf = "currentSection['address'] == paymentinfoservice.displaySection"></address>
+						 <a href="javascript:void(0)" class="chkout-edit" *ngIf = "currentSection['address'] != paymentinfoservice.displaySection" (click)="editButton($event,currentSection['address'])">{{'cart.edit'|translate}}</a>
+					</div>
+				</div> 
+				<div  class="chkout-shipping clearfix">
+					<div class="ship-wrap">
+			 			<h4><span class="num">2</span> {{'checkout.shippingoptions'|translate}}</h4>
+						<shipping [isAddressAvailable]="isAddressAvailable" [continueButtonStatus]="continueButtonStatus" (needToloadCartDetails)="loadCartDetailsOnChange($event)" [currentLanguageData] = "currentLanguageData" [getcartData]="cartdata" *ngIf = "currentSection['shipping'] == paymentinfoservice.displaySection" ></shipping>
+					    <a href="javascript:void(0)" class="chkout-edit" *ngIf = "((currentSection['shipping'] != paymentinfoservice.displaySection) && (currentSection['address'] != paymentinfoservice.displaySection) && continueButtonStatus['msg'] == '' && !isFirst)" (click)="editButton($event,currentSection['shipping'])">{{'cart.edit'|translate}}</a>	
+					</div>
+				</div>
+				
+				<div class="chkout-shipping clearfix">
+					<div class="ship-wrap">
+						<h4><span class="num">3</span>{{'checkout.enterpayment'|translate}}</h4>
+					     <payment [continueButtonStatus]="continueButtonStatus" [currentLanguageData] = "currentLanguageData" [grandTotal]="grandTotal" [getcartData]="cartdata"  *ngIf = "currentSection['payment'] == paymentinfoservice.displaySection" (needToloadCartDetails) = "loadCartDetailsOnChange($event)"></payment>
+						<!-- <a href="#!" class="chkout-edit">{{'cart.edit'|translate}}</a> -->
+					</div>
+
+				</div>
+			<!-- </form> -->
+			<order-detail [isAddressAvailable]="isAddressAvailable" [isFirst]="isFirst" [continueButtonStatus]="continueButtonStatus" (needToloadCartDetails)="loadCartDetailsOnChange($event)" [currentLanguageData] = "currentLanguageData"  [getcartData]="cartdata"></order-detail>
+			
+		</div>
+	</div>
+</div>
+<div *ngIf="emptyCart && basketResponseRecvd"><h4 class="error-empty">{{errormsg}}</h4></div>
+<!--Content Area End-->
+

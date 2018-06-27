@@ -1,0 +1,37 @@
+
+<div class="box box--list">
+	<h6 class="my_ac">{{'header.my_account' | translate}}</h6>
+
+	<ul class="links--vertical">
+		 <li  [class.ds__tab__active]="currentUrl== 'account/dashboard'" [routerLink]="['/account/dashboard']">
+	  		 <a href="javascript:void(0)" ><i class="fa fa-home"></i>{{'dashBoard.menuItem.dashboard'|translate}}</a>
+		</li>
+		<li [class.ds__tab__active]="currentUrl== 'account/orders'||currentUrl=='order-view'" [routerLink]="['/account/orders']">
+			<a href="javascript:void(0)"><i class="fa fa-first-order"> </i>{{'dashBoard.menuItem.orders'|translate}}</a>
+		</li>
+		<li [class.ds__tab__active]="currentUrl== 'account/profile'" [routerLink]="['/account/profile']">
+			<a href="javascript:void(0)"><i class="fa fa-user"> </i>{{'dashBoard.menuItem.account'|translate}}</a>
+		</li>
+		<li [class.ds__tab__active]="currentUrl== 'account/addresses' || currentUrl== 'account/editaddress' || currentUrl== 'account/newaddress'" [routerLink]="['/account/addresses']">
+			<a  href="javascript:void(0)" [routerLink]="['/account/addresses']"><i class="fa fa-address-book"> </i>{{'dashBoard.menuItem.addresses'|translate}}</a>
+		</li>
+		<li [class.ds__tab__active]="currentUrl== 'account/wishlist'" [routerLink]="['/account/wishlist']">
+			<a  href="javascript:void(0)"><i class="fa fa-heart"> </i>{{'dashBoard.menuItem.wishlist'|translate}}</a>
+		</li>
+		<li *ngIf="storeData && storeData['STORE']['recent_view']['enable']== 1" [class.ds__tab__active]="currentUrl== 'account/recently-view'" [routerLink]="['/account/recently-view']">
+			<a href="javascript:void(0)" ><i class="fa fa-eye"></i>{{'dashBoard.menuItem.recently_view' | translate}}</a>
+		</li>
+		<li [class.ds__tab__active]="currentUrl== 'account/notifications'" [routerLink]="['/account/notifications']">
+			<a href="javascript:void(0)" ><i class="fa fa-bell-o"> </i>{{'notificationpage.notifications' | translate}} </a>
+		</li>
+		<li [class.ds__tab__active]="currentUrl== 'account/review'" [routerLink]="['/account/review']">
+			<a href="javascript:void(0)" ><i class="fa fa-commenting-o"> </i>{{'dashBoard.menuItem.reviews' | translate}} </a>
+		</li>
+		<li [class.ds__tab__active]="currentUrl== 'account/gift-card'" [routerLink]="['/account/gift-card']">
+			<a href="javascript:void(0)" ><i class="fa fa-gift"></i>{{'dashBoard.menuItem.gift_card' | translate}}</a>
+		</li>
+		<li [class.ds__tab__active]="currentUrl== 'account/order-refund'" [routerLink]="['/account/order-refund']">
+			<a href="javascript:void(0)" ><i class="fa fa-retweet"></i>{{'dashBoard.menuItem.refund' | translate}}</a>
+		</li>
+	</ul>
+</div>

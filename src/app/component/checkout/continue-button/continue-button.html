@@ -1,0 +1,14 @@
+ <!-- {{addressEdit}}//////{{addressExist}}  -->
+ <div *ngIf="addressExist && !addressEdit && paymentinfoservice.displaySection=='ADDRESS'" class="chckout-btn-wrap mb-20 clearfix">
+	<button  type="submit"  class="chckout-sbmt-btn" (click)="showHideSections($event,nextSection)">
+		{{'checkout.continue'|translate}}
+	</button>
+	<ngx-flash-messages></ngx-flash-messages> 
+ </div>
+<div *ngIf="paymentinfoservice.displaySection!='ADDRESS'" class="chckout-btn-wrap clearfix">
+	<button  type="submit"  class="chckout-sbmt-btn" (click)="showHideSections($event,nextSection)">
+		{{'checkout.continue'|translate}}
+	</button>
+	<ngx-flash-messages></ngx-flash-messages> 
+</div>
+<!--[disabled]="continueButtonStatus['status']"-->

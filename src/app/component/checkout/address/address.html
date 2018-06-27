@@ -1,0 +1,295 @@
+
+		<div class="chkout-shipping clearfix" style="display: block;">	
+			<div class="">
+			<div class="chkout-form chkout-frm-wrp">
+				<div class="saved-addrs" *ngIf="addressDetail.length>0">
+					<h5>{{'useraddress.shippingdetails'|translate}}  </h5>
+					<div class="addrs-wrap clearfix">
+						
+						<div class="addrs-cards" *ngFor="let address of addressDetail;let itemIndex = index">
+							<strong>					
+								<input type="radio" class="flr" id="option{{itemIndex}}" name="option"  [checked]="address.id==orderservice.defaultAdress"
+									[value]="address.id" (change)="addressChecked(address.id)">
+								
+								<label for="option{{itemIndex}}">
+									<strong>{{address.fname}} {{address.lname}}</strong>
+									<span>{{address.street}} {{address.city}}</span>
+									<span>{{address.state}} {{address.country}}</span>
+									<span>{{address.postcode}}</span>
+								</label>
+					<div class="shipping-btn pull-right">
+						<a href="javascript:void(0)" class="remove-btn" (click)="removeAddress(address.id)">X {{'cart.remove'|translate}}</a>
+						<a href="javascript:void(0)" class="edit-btn pl-10" (click)="getAddressbyID(address.id)" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'cart.edit'|translate}}</a>
+					</div>
+							</strong>
+						</div>
+						
+					</div>
+					
+				
+				<div class="new-addrs">					
+					<strong>
+						<input type="radio" id="rd7" name="rds" (change)="showShipping()" />
+						<label for="rd7">{{'useraddress.addnewaddress'|translate}}</label>
+					 </strong>
+				</div>
+				</div>
+				<div class="new-user" >
+						<div class="" *ngIf="showShippingForm">
+					<div class="chkout-required">
+						{{'useraddress.shippingaddress'|translate}}
+					</div>
+					
+					 <form id="billing-form" #addressForm = "ngForm">
+			 
+					<input type="hidden"  name="isValidForm" value="{{addressForm.valid}}" id="isValidForm">
+					
+					<ul class="clearfix" >
+						<li>
+							<label>{{'useraddress.firstname'|translate}}*</label>
+							<input   id="f-name-shipping" class="" type="text" #fname = "ngModel" name="fname" [(ngModel)]="addressFormData.fname" required>
+						<div class="field-error" *ngIf = "fname.errors">
+							<p class="field-error" *ngIf = "fname['errors']['required'] && isFormSubmit">{{'error.firstName.required' | translate}} </p>
+						 </div>
+						
+						</li>
+						<li>
+							<label>{{'useraddress.lastname'|translate}}</label>
+							<input type="text" id="email-shipping" class=""  #lname = "ngModel" name="lname" [(ngModel)]="addressFormData.lname"   required>
+							<div class="field-error" *ngIf = "lname.errors">
+								<p class="field-error" *ngIf = "lname['errors']['required'] && isFormSubmit">{{'error.lastName.required' | translate}} </p>
+							 </div>
+						</li>
+															
+						<li>
+							<label>{{'useraddress.telephone'|translate}}</label>
+							<input type="text" id="phone-shipping" class=""  #phone = "ngModel" name="phone" [(ngModel)]="addressFormData.phone"  onkeypress='return (event.which > 47 && event.which <= 57) || event.which == 8 || event.which == 46' required>
+						<div class="field-error" *ngIf = "phone.errors">
+							<span class="field-error" *ngIf = "phone['errors']['required'] && isFormSubmit">{{'error.phone.required' | translate}} </span>
+							
+						 </div>
+						</li>
+						<li>
+							<label>{{'useraddress.flat_house'|translate}}</label>
+							<input type="text" id="address-large-shipping" class="billing-form-input" name="flatno" #flatno="ngModel" [(ngModel)]="addressFormData.flatno" required>
+						<div class="field-error" *ngIf = "flatno.errors">
+							<p class="field-error" *ngIf = "flatno['errors']['required'] && isFormSubmit">{{'error.flatno.required' | translate}} </p>
+						 </div>
+						</li>
+					
+						<li>
+							<label>{{'useraddress.colony'|translate}}</label>
+							<input type="text" id="city-shipping" class=""  name="street" [(ngModel)]="addressFormData.street" >
+				
+						</li>
+						<li>
+							<label>{{'useraddress.landmark'|translate}}</label>
+							   <input type="text"id="city-shipping" class="" name="landmark" [(ngModel)]="addressFormData.landmark">
+					
+						</li>
+															
+						<li>
+							<label>{{'useraddress.city'|translate}}</label>
+							<input type="text" id="city-shipping" class="" name="city" #city="ngModel" [(ngModel)]="addressFormData.city" required>
+						<div class="field-error" *ngIf = "city.errors">
+							<p class="field-error" *ngIf = "city['errors']['required'] && isFormSubmit">{{'error.city.required' | translate}} </p>
+						 </div>
+						
+						</li>
+						<li>
+							<label>{{'useraddress.country'|translate}}</label>
+							<select *ngIf="countryData.length>0" class="shipping-form-input" #country="ngModel" name="country" [(ngModel)]="addressFormData.country" id="country" (change) = "getStateList($event,0,'shipping')" required>
+						<option  value="">{{'useraddress.selectCountry'|translate}} </option>
+						<option *ngFor="let countr of countryData" [value]="countr._id">{{countr.translation_data[0].name?countr.translation_data[0].name:countr.name}}</option>
+						</select>
+						<div class="field-error" *ngIf="addressFormData.country == '' && isFormSubmit">
+								<p class="field-error">{{'error.country.required' | translate}}</p>
+					     </div>
+						</li>
+						<li><label for="state-shipping">{{'useraddress.state_province'|translate}}</label>
+							<select  class="shipping-form-input" #state="ngModel" name="state" [(ngModel)]="addressFormData.state" id="state" required>
+												 <option  value="">{{'useraddress.selectState'|translate}}</option>
+												 <option *ngFor="let eachstate of stateData" [value]="eachstate._id">{{eachstate.translation_data[0].name?eachstate.translation_data[0].name:eachstate.name}}</option>
+											   </select>
+							 <div class="field-error" *ngIf = "addressFormData.state == '' && isFormSubmit">
+											 <p class="field-error">{{'error.state.required' | translate}} </p>
+							</div>
+						</li>
+						
+						<li>
+							<label>{{'useraddress.pincode'|translate}}</label>
+							 <input type="text" id="pincode-shipping" class="shipping-form-input" name="pinCode" #pinCode="ngModel" [(ngModel)]="addressFormData.postcode" required>
+						<div class="field-error" *ngIf = "pinCode.errors">
+							<p class="field-error" *ngIf = "pinCode['errors']['required'] && isFormSubmit">{{'error.pinCode.required' | translate}} </p>
+						 </div>
+					
+						</li>
+						<li>
+							<label class="checkbox-wrp">Email me about hot items, great savings, and more.
+							<input type="checkbox" checked="checked">
+							<span class="tickmark"></span> </label>
+						</li>
+						
+						 
+					</ul>
+					<div class="billing-add">
+													<div>
+														<h5>Billing Address</h5>
+														<label class="checkbox-wrp">Same as shipping
+															<input type="checkbox" checked="checked">
+															<span class="tickmark"></span> </label>
+														<!-- <span class="add">201 EI Camino Real
+															San Bruno, CA 94066</span> -->
+													</div>
+												</div>
+					
+					
+					 <!-- <div class="address-change clearfix" *ngIf="showRadioButton && showShippingForm">				 									 
+										<div class="col-md-6 left-add">
+											<input id="different-address" name="addresstype" [checked]="showonlyShipping" type="radio" (click) = "billingAddress()">
+											<label for="different-address"> {{'useraddress.shipToSameAdd'|translate}}  </label>
+										   </div>
+								 
+							 
+							 
+										<div class="col-md-6 right-add" >
+											<input id="billing-address" name="addresstype" [checked]="showBillingForm" type="radio" (click) = "billingAddress()">
+											<label for="billing-address">{{'useraddress.shipToDiffAdd'|translate}} </label>
+										</div>
+								 
+							 
+						</div>  --> 
+						
+					
+					
+					
+					<div class="cncel-btn clearfix">
+						<button class="cancel-btn btn" type="button" (click) = "CancelAddressForm()">
+								{{'useraddress.cancel'|translate}}
+						</button>
+						<button *ngIf="!showBillingForm" type="button"  class="save-btn btn" (click) = "saveAddress(addressForm.valid,false)">
+							{{'useraddress.save'|translate}}
+						</button>
+						
+						 
+							
+					</div>
+											
+					
+				 
+				 
+		    <!-- <div *ngIf="showBillingForm" >
+		    	<div class="chkout-required" >
+		    		{{'useraddress.billingadd'|translate}}
+		    	</div>
+		    	            
+		    <ul class="clearfix" > 	
+		    	<li>
+		    		<label for="f-name-shipping">{{'useraddress.fullname'|translate}} </label> 
+		    		<input   id="f-name-shipping" class="shipping-form-input" type="text" #bfname = "ngModel" name="bfname" [(ngModel)]="addressFormData.bfname" required>
+		    		<div class="field-error" *ngIf = "bfname.errors">
+		    		<p class="field-error" *ngIf = "bfname['errors']['required'] && isFormSubmit">{{'error.fname.required' | translate}} </p>
+		    		</div>
+		    	</li>
+		    				  
+		    				<li>
+		    				 	 <label for="email-shipping">{{'useraddress.email'|translate}}</label>
+		    				 	<input type="email" id="email-shipping" class="shipping-form-input"  #bemail = "ngModel" name="bemail" [(ngModel)]="addressFormData.bemail"  pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" required>
+		    				 	<div class="field-error" *ngIf = "bemail.errors">
+		    				 	<span class="field-error" *ngIf = "bemail['errors']['required'] && isFormSubmit">{{'error.email.required' | translate}} </span>
+		    				 	<p class="field-error" *ngIf = "bemail['errors']['pattern'] && isFormSubmit">{{'error.email.invalid' | translate}} </p>
+		    				 	</div>
+		    				 </li>
+		    				 
+		    				 <li>
+		    				 	<label for="phone-shipping">{{'useraddress.telephone'|translate}}</label>
+		    				 	<input type="text" id="phone-shipping" class="shipping-form-input"  #bphone = "ngModel" name="bphone" [(ngModel)]="addressFormData.bphone"  pattern="^[0-9]+$" required>
+		    				 	<div class="field-error" *ngIf = "bphone.errors">
+		    				 	<span class="field-error" *ngIf = "bphone['errors']['required'] && isFormSubmit">{{'error.phone.required' | translate}} </span>
+		    				 	<p class="field-error" *ngIf = "bphone['errors']['pattern'] && isFormSubmit">{{'error.phone.invalid' | translate}} </p>
+		    				 	 </div>
+		    				 </li>
+		    				 
+		    				 <li>
+		    				 	<label for="address-shipping">{{'useraddress.flat_house'|translate}}</label>
+		    				 	<input type="text" id="address-large-shipping" class="billing-form-input" name="bflatno" #bflatno="ngModel" [(ngModel)]="addressFormData.bflatno" required>
+		    				 	<div class="field-error" *ngIf = "bflatno.errors">
+		    				 					 <p class="field-error" *ngIf = "bflatno['errors']['required'] && isFormSubmit">{{'error.flatno.required' | translate}} </p>
+		    				 	 </div>
+		    				 </li>
+		    				  
+		    				 <li> <label for="city-shipping">{{'useraddress.colony'|translate}}</label>
+		    				  	  <input type="text" id="city-shipping" class="shipping-form-input" name="bstreet" [(ngModel)]="addressFormData.bstreet" >
+		    				  </li>
+		    				  
+		    				  <li><label for="city-shipping">{{'useraddress.landmark'|translate}}</label>
+		    				  	<input type="text"id="city-shipping" class="shipping-form-input" name="blandmark" [(ngModel)]="addressFormData.blandmark">
+		    				  </li>
+		    				  
+		    				 <li>
+		    				 	<label for="city-shipping">{{'useraddress.city'|translate}}</label>
+		    				 	<input type="text" id="city-shipping" class="shipping-form-input" name="bcity" #bcity="ngModel" [(ngModel)]="addressFormData.bcity" required>
+		    				 	<div class="field-error" *ngIf = "bcity.errors">
+		    				 					 <p class="field-error" *ngIf = "bcity['errors']['required'] && isFormSubmit">{{'error.city.required' | translate}} </p>
+		    				 	 </div>
+		    				 </li>
+		    				  
+		    				 <li>
+		    				 	<label for="country-shipping">{{'useraddress.country'|translate}}</label>
+		    				 	<select *ngIf="countryData.length>0" class="shipping-form-input" #bcountry="ngModel" name="bcountry" [(ngModel)]="addressFormData.bcountry" id="country" (change) = "getStateList($event,0,'billing')" required>
+		    				 	<option  value="">{{'useraddress.selectCountry'|translate}} </option>
+		    				 	<option *ngFor="let countr of countryData" [value]="countr.id">{{countr.name}}</option>
+		    				 	</select>
+		    				 	<div class="field-error" *ngIf="addressFormData.bcountry == '' && isFormSubmit">
+		    				 						 <p class="field-error">{{'error.country.required' | translate}}</p>
+		    				 	 </div>
+		    				 </li>
+		    				  
+		    				 <li><label for="state-shipping">{{'useraddress.state_province'|translate}}</label>
+		    				 	<select  class="shipping-form-input" #bstate="ngModel" name="bstate" [(ngModel)]="addressFormData.bstate" id="state" required>
+		    				 						 <option  value="">{{'useraddress.selectState'|translate}}</option>
+		    				 						 <option *ngFor="let eachstate of bstateData" [value]="eachstate.id">{{eachstate.name}}</option>
+		    				 					   </select>
+		    				 	 <div class="field-error" *ngIf = "addressFormData.bstate == '' && isFormSubmit">
+		    				 					 <p class="field-error">{{'error.state.required' | translate}} </p>
+		    				 	</div>
+		    				 </li>
+		    				 
+							 <li>
+								<label>{{'useraddress.pincode'|translate}}</label>
+								 <input type="text" id="pincode-shipping" class="shipping-form-input" name="bpinCode" #bpinCode="ngModel" [(ngModel)]="addressFormData.bpostcode" required>
+							<div class="field-error" *ngIf = "bpinCode.errors">
+								<p class="field-error" *ngIf = "bpinCode['errors']['required'] && isFormSubmit">{{'error.pinCode.required' | translate}} </p>
+							 </div>
+						
+							</li>
+		    					</ul>
+		    			<div class="col-sm-12 cncel-btn">
+					
+					<button class="cancel-btn btn" type="button" (click) = "hideBillingForm($event)">
+								{{'useraddress.cancel'|translate}}
+						</button>
+					<button type="button"  class="save-btn btn"  (click) = "saveAddress(addressForm.valid,true)">
+						{{'useraddress.save'|translate}}
+				  </button>
+				  
+			  </div>		
+		    					
+		    		</div> -->
+				 
+			 
+			
+			 
+				
+			
+			</form>
+			</div>
+		</div>
+		<continue-button [addressEditflag]="addressEditflag" [isAddressAvailable]="isAddressAvailable" (isFirstChangeValue)="isFirstChangeValue($event)" [nextSection]="nextSection" [isFirst]="isFirst" [continueButtonStatus]="continueButtonStatus" class="chckout-btn-wrap pb-20"></continue-button>
+	</div>			
+
+			</div>
+		</div>
+
+  
+							

@@ -1,0 +1,52 @@
+<ng-progress [color]="color" ></ng-progress>
+<div class="login-block">
+	<div class="user-register">
+		
+		<div class="row no-outer-space">
+			<div class="col-sm-6 col-sm-push-6 no-space">
+				<figure class="login-image-wrap"><img src="assets/images/login-banner.png" alt="banner image" title="banner image"></figure>
+			</div>
+			<div class="col-sm-6 col-sm-pull-6 no-space">
+					<div class="alert" [class.alert-success]="titleStatus" [class.alert-danger]="titleStatus==false" *ngIf="title">
+							<!-- <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a> -->
+							<strong>{{title}}</strong>
+						  </div>
+				<div class="login-info">
+					<!--<h1 *ngIf = "isMessage" class="server-message">Already Exit </h1>-->
+					<h2>{{'forget.forgetHeading' | translate}}</h2>
+					<span class="login-title">{{'forget.heading' | translate}}
+						<!--<span>to login your account</span></span>-->
+                        </span>
+					<form class="login-form" #forgetForm="ngForm">   
+						<div class="form-group">
+							<label class="form-label"> {{'siteLabels.email' | translate}} </label>
+							<input type="email" name="email" class="form-control " required #email="ngModel" [(ngModel)]="user.email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+							/>
+							<div class="field-error" *ngIf="email.errors">
+								<p class="field-error" *ngIf="email['errors']['required'] && isFormSubmit">{{'error.email.required' | translate}} </p>
+								<p class="field-error" *ngIf="email['errors']['pattern'] && isFormSubmit">{{'error.email.invalid' | translate}} </p>
+							</div>
+						</div>
+						
+						<a class="register-link" href="javascript:void(0)" (click)="submit(forgetForm.valid)">{{'btns.submit' | translate}}</a>
+						<a class="register-link" href="javascript:void(0)" (click) = "openLoginPopup()" >{{'btns.backtologin' | translate}}</a>
+					</form>
+
+					
+					<!--<div class="login-options-block">
+						<span>{{'login.orlogin' | translate}}</span>
+						<div class="login-button-wrap">
+							<a href="javascript:void(0)" (click)="socialLogin('facebook')" class="login-source-btn login-fb-btn"><i class="icon-login-fb"></i> {{'btns.facebook' | translate}}</a>
+							<a href="javascript:void(0)" (click)="socialLogin('google')" class="login-source-btn login-google-btn"><i class="icon-login-google"></i> {{'btns.google' | translate}}</a>
+						</div>
+					</div>
+					<span class="new-user"> <span>{{'login.newTo' | translate}}?</span> <a href="javascript:void(0)" (click)="openRegisterModel($event)"
+					 class="register-btn">{{'login.register' | translate}}</a> </span>-->
+				</div>
+
+			</div>
+
+		</div>
+		<a href="javascript:void(0)" class="login-close-btn" (click)="hideFogetPopUp()"><img src="assets/images/close-btn.png" alt="" title="" /></a>
+	</div>
+</div>

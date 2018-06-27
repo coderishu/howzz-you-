@@ -1,0 +1,179 @@
+<ng-progress [color]="color" ></ng-progress>
+<share-Model [productDetail] = "productDetail"> </share-Model>
+<!--Content Area Start-->
+<div class="content" (click) = "hideErrorMessage()"> 
+<div class="product-detail-page" *ngIf="productDetail['brand_data']">
+	<div class="product-dtail-sec">
+		<div class="container">
+			<h2 class="desk-view">{{productDetail['brand_data']['translation_data'][0]['name']?productDetail['brand_data']['translation_data'][0]['name']:productDetail.brand_data['name']}}</h2>
+			<div class="detail-wrap clearfix">
+				<div class="product-view">
+					<div class="review clearfix desk-view">
+						<div class="rate">
+								<ul class="rating clearfix">
+								 <!--<custum-bar-rating *ngIf = "noReview"  [isEdit] = "false" [ratingCount] = "0" [max] = "5"></custum-bar-rating>-->
+								 <custum-bar-rating  [isEdit] = "false" [ratingCount] = "productDetail['brand_data']['rating']" [max] = "globalDataService['maxRating']"></custum-bar-rating>
+							    <li class="review"><a href="javascript:void(0)"> {{productDetail['brand_data']['rating']}} </a></li>
+							   <li class="write-review"><a href="javascript:void(0)" (click)="rateProduct(productDetail['brand_data']['_id'])">{{'detail.attribute_name.writeReview' | translate}}</a></li>
+							  
+							</ul>
+						</div>
+						<a href="javascript:void(0);" (click) = "openSharePopUp()" class="share"><i class="icon-share"></i> {{'siteLabels.share' | translate}}</a>
+					</div>
+					  <image-zooming *ngIf = "isZoom" [productDetail] = "productDetail"></image-zooming>
+					 <!-- <div class="views clearfix" dir="rtl">
+
+						<div class="large-veiw">
+							<img src="assets/images/large-img.jpg" alt="" />
+						</div>
+
+						<ul>
+							<li><a href="#"><img src="assets/images/view1.jpg" alt="" /></a></li>
+							<li><a href="#"><img src="assets/images/view2.jpg" alt="" /></a></li>
+							<li><a href="#"><img src="assets/images/view3.jpg" alt="" /></a></li>
+							<li><a href="#"><img src="assets/images/view4.jpg" alt="" /></a></li>
+							<li><a href="#"><img src="assets/images/view5.jpg" alt="" /></a></li>
+						</ul>
+					</div>  -->
+					<div class="review clearfix mob-view">
+						<div class="rate">
+								<ul class="rating clearfix">
+										<custum-bar-rating *ngIf = "noReview"  [isEdit] = "false" [ratingCount] = "0" [max] = "5"></custum-bar-rating>
+										<custum-bar-rating *ngIf = "!noReview && isCustumerReviewEnable" [isEdit] = "false" [ratingCount] = "ratingReviewData['average_rate']" [max] = "globalDataService['maxRating']"></custum-bar-rating>
+							    <li class="review"><a href="javascript:void(0)"> {{ratingReviewData['total_count']}}  {{'detail.attribute_name.reviews' | translate}}</a></li>
+							   <li class="write-review"><a href="javascript:void(0)">{{'detail.attribute_name.writeReview' | translate}}</a></li>
+							</ul>
+
+						</div>
+						<a href="javascript:void(0);" class="share"><i class="icon-share"></i> {{'siteLabels.share' | translate}}</a>
+					</div>
+					<h2 class="mob-view">{{productDetail['brand_data']['translation_data'][0]['name']?productDetail['brand_data']['translation_data'][0]['name']:productDetail.brand_data['name'] | stringsort}}</h2>
+				</div>
+				<div class="description">
+					<div class="price">
+						<strong *ngIf = "currentLanguageData">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{productDetail['brand_data']['default_attribute']['special_price']*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</strong>
+						<span  *ngIf = "currentLanguageData" class="reduce">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{productDetail['brand_data']['default_attribute']['price']*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</span>
+					</div>
+					<p  class="overview">
+						 {{productDetail['brand_data']['translation_data'][0]['description']?(productDetail['brand_data']['translation_data'][0]['description'] | readMore :isReadeMore:productDesReadMoreLength):(productDetail['brand_data']['name']['description'] | readMore:isReadeMore:productDesReadMoreLength)}} <a href="javascript:void(0)" *ngIf = "isReadeMore" (click) = "readeMore()" > read more </a>
+					</p>
+					
+					<div class="location">
+						<h5>{{'detail.attribute_name.delivery' | translate}} :</h5>
+						<div class="clearfix">
+							<div class="area" (click) = "preventParent($event)">
+								 <form #pinForm="ngForm" (ngSubmit) = "checkPincode(pinForm.valid)">
+								<input type="text" placeholder="{{'detail.attribute_name.deliveryCode' | translate}}"  name = "pincode" #pincode = "ngModel" required pattern = "^\d{2,10}$" [(ngModel)] = "pinNo" />
+								<span><i class="icon-loc"></i></span>
+								<button class="check">{{'detail.attribute_name.checkBtn' | translate}}</button>
+								<!-- <button class="check">Check</button> -->
+								</form>
+								 <div class="field-error" *ngIf="pincode.errors">
+								<p class="field-error" *ngIf="pincode['errors']['required'] && isPinSubmit">
+									{{'error.pinCode.required' | translate}}
+								</p>
+								<p class="field-error" *ngIf="pincode['errors']['pattern'] && isPinSubmit">
+									{{'error.pinCode.invalid' | translate}}
+								</p>
+						 </div>
+							</div>
+							<div class="detail" *ngIf = "!productAvailableMessage">
+								<div class="time-info"  *ngIf="productDetail['brand_data']['delivery_from_day'] && productDetail['brand_data']['delivery_to_day']">{{'detail.attribute_name.usually'|translate}} {{'detail.attribute_name.delivered'|translate}} {{'detail.attribute_name.in'|translate}} {{productDetail['brand_data']['delivery_from_day']}} - {{productDetail['brand_data']['delivery_to_day']}} {{'detail.attribute_name.days'|translate}} <a class="help" href="#">?</a></div>
+								<div class="caption">{{'detail.attribute_name.checkpincode'|translate}}</div>
+							</div>
+							<p class="detail" [class.product-available] = "isProductAvailable" [class.field-error] = "!isProductAvailable" *ngIf = "productAvailableMessage">
+									{{productAvailableMessage}}
+							</p>
+							
+						 
+						</div>
+						 
+						
+					</div>
+					<div *ngIf="productDetail.brand_data.default_attr.length > 0">
+                       <product-attribute [queryFilterParams] = "queryFilterParams" [productDetail] = "productDetail" (changeAttributeVal) = "changeAttributeVal($event)"></product-attribute>
+					</div>
+					 
+					<div class="quantity" *ngIf=" productDetail['brand_data']['quantity'] && productQuantityArr.length > 0">
+						<h5>{{'detail.attribute_name.qantity' | translate}} :</h5>
+						<div class="add-to">
+							
+							<select class="select-dropdwn select-drop" name="quantity" (change) = "saveQuantity($event)">
+								<option *ngFor="let eachQuality of productQuantityArr" [value]="eachQuality" [attr.type] = "'text212121'">{{eachQuality}}</option>
+							</select>
+						    <button *ngIf="!gotocart" type="submit" class="yellow-btn" (click) = "addInToCart(productDetail)">
+								<i class="icon-cart"></i> {{'btns.addTocart' | translate}}
+							</button>
+							<button  [routerLink] = "['/cart']" *ngIf="gotocart" type="submit" class="yellow-btn">
+									<i class="icon-cart"></i> {{'btns.goTocart' | translate}}
+							</button>
+						</div>
+					</div>
+					<div class="pay-cards">
+						<ul class="clearfix">
+							<li class="txt"><span>{{'detail.attribute_name.payments' | translate}} :</span></li>
+							<li><a href="#!"><img src="assets/images/card1.jpg" alt="" /></a></li>
+							<li><a href="#!"><img src="assets/images/card2.jpg" alt="" /></a></li>
+							<li><a href="#!"><img src="assets/images/card3.jpg" alt="" /></a></li>
+							<li><a href="#!"><img src="assets/images/card4.jpg" alt="" /></a></li>
+							<li><a href="#!"><img src="assets/images/card5.jpg" alt="" /></a></li>
+							<li><a href="#!"><img src="assets/images/card6.jpg" alt="" /></a></li>
+							<li><a href="#!"><img src="assets/images/card7.jpg" alt="" /></a></li>
+							<li><a href="#!"><img src="assets/images/card8.jpg" alt="" /></a></li>
+						</ul>
+					</div>
+					<div class="high-light">
+						<h5>{{'detail.attribute_name.highlights' | translate}}</h5>
+						<div [innerHTML]= "productDetail['brand_data']['translation_data'][0]['hightlights']?productDetail['brand_data']['translation_data'][0]['hightlights']:''"></div>
+						
+						<!-- <ul>
+				 			<li>20 L : Great for a family of 3</li>
+							<li>Convection : Can be used for baking along with grilling, reheating, defrosting and cooking</li>
+							<li>Touch Key Pad (Membrane) is sensitive to touch and easy to clean</li>
+							<li>Child Lock : Ensures complete safety especially for homes with small children</li>
+							<li>Starter Kit : Containers that can be used with Microwave</li>
+						</ul> -->
+					</div>
+					<form>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<similar-product *ngIf = "isEnableSimilarProduct" [currentLanguageData] = "currentLanguageData" [isRtl] = "isRtl" [productId] = "productId" [storeSetting] =  "storeSettings" ></similar-product>
+	<div class="product-desc-list">
+		<div class="container"> 
+			<ul class="tabs">
+				<li class="tab-link" [class.current] = "selectedSection == 'specification'" data-tab="tab-1" (click)="ProductExplanation('specification')"><a href="javascript:void(0)">{{'detail.attribute_name.specification' | translate}}</a> </li>
+				<li class="tab-link" [class.current] = "selectedSection == 'aboutItem'" data-tab="tab-2" (click)="ProductExplanation('aboutItem')"><a href="javascript:void(0)">{{'detail.attribute_name.aboutItem' | translate}}</a></li>
+				<li class="tab-link" [class.current] = "selectedSection == 'review'"  data-tab="tab-3" (click)="ProductExplanation('review')"><a href="javascript:void(0)">{{'detail.attribute_name.customerReview' | translate}}</a></li>
+			</ul>
+
+			<div id="tab-1" [style.display] = "selectedSection == 'specification'?'block':'none'" *ngIf="productDetail['brand_data']" class="tab-content current spacification" >
+				<div *ngFor = "let productDes of  productDetail['brand_data']['custom_attribute'];let ItemOuterIndex = index" >
+				<!-- <h4>{{productDes.group_name}}</h4> -->
+				<ul>
+					<li *ngFor = "let item of getCustumAttributeViewData(productDes.group_data,productDes.isReadMore)"  class="clearfix">
+						<div *ngIf = "item.display_status == 1 && item.attribute_value!=null" class="items">{{item.attribute_label}}</div>
+						<div *ngIf = "item.display_status == 1 && item.attribute_value!=null" class="details" [innerHTML] = "item.attribute_value | htmlSafe"></div>
+					</li>
+				</ul>
+				<a href="javascript:void(0)" class="readmore" *ngIf = "productDes.isReadMore == false && productDes.group_data.length > readMoreLength" (click) = "productDes.isReadMore = !productDes.isReadMore" >{{'detail.attribute_name.readMore' | translate}}... {{status}} </a>
+				</div>
+			</div>
+			<div id="tab-2" [style.display] = "selectedSection == 'aboutItem'?'block':'none'"  class="tab-content about-item">
+				<div [innerHTML] = "productDetail['brand_data']['translation_data'][0]['description']!='' ? (productDetail['brand_data']['translation_data'][0]['description'] | htmlSafe):(productDetail['brand_data']['description'] | htmlSafe)"></div>
+			</div>
+			<div id="tab-3" [style.display] = "selectedSection == 'review'?'block':'none'" class="tab-content item-reviews">
+					<customer-review   (getRatingReview) = "getRatingReview($event)" [userLoginDetail] = "userDetail" [globalDataService] = "globalDataService"  [httpService] = "httpService" [baseUrl] = "baseUrl" [currentLanguageData] = "this.currentLanguageData" [productId] = "productId" [storeSettings]="storeSettings"></customer-review>
+				</div>
+		</div> 
+	</div>
+	<ngx-flash-messages></ngx-flash-messages>
+</div>
+</div>
+<!--Content Area End-->
+	
+
+

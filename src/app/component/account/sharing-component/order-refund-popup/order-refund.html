@@ -1,0 +1,74 @@
+<!--- refund popup start-->
+<div id="refund-popup" class="modal fade cancel-wrap">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<a  class="close cancel-close" data-dismiss="modal">
+					&times;
+				</a>
+				<h4 class="modal-title">{{'userdashboard.refund'| translate}}</h4>
+			</div>
+			<div class="popup-body">
+				
+				
+				<form class="cancel-form refund" #RefundProductForm = "ngForm">
+					<ul class="clearfix">
+						<li class="clearfix">
+							<label>{{'siteLabels.choose_quantity' | translate}}<span>*</span></label>							
+							<div class="cancel-reson-wrap">
+								<i class="fa fa-angle-down"></i>
+								<select name="quantity" [(ngModel)] = "refundOrderSubmitData.quantity" (change) = "changeRefundProductQuantity($event)"> 
+									<option value="{{quantity}}" *ngFor = "let quantity of refundQuantity">{{quantity}}</option>
+								</select>
+								<!-- <div class="field-error" *ngIf = "!cancelProduct.reason_id">
+								<p class="field-error" *ngIf = "!cancelProduct.reason_id && isFormSubmit">{{'error.reason.required' | translate}} </p>
+							 </div>	 -->							
+							</div>
+						</li>
+						<li class="clearfix">
+							<label>Upload file</label>
+							<div class="cancel-reson-wrap">
+								<!-- <input type="file" id="image" name="file" (change)="getFile($event)" > -->
+								<input class="upld-fle" type="file" id="image" name="image" (change)="getFile($event)" >
+							</div>
+						</li>
+						<li class="clearfix">
+							<label>{{'userdashboard.reason'| translate}} <span>*</span></label>							
+							<div *ngIf="cancelReasonData" class="cancel-reson-wrap">
+								<i class="fa fa-angle-down"></i>
+								<select name="reason" [class.error] = "isFormSubmit && refundOrderSubmitData.reason == ''"  [(ngModel)] = "refundOrderSubmitData.reason"> 
+									<option value="">Select</option>
+									<option *ngFor = "let reason of cancelReasonData" value="{{reason.id}}">{{reason.title}}</option>
+	   
+								</select>
+								<div class="field-error" *ngIf = "isFormSubmit && refundOrderSubmitData.reason == ''">
+									   <p class="field-error">{{'error.reason.required' | translate}} </p>
+									</div>							
+							</div>
+						</li>
+						<li class=" clearfix">
+							<label >{{'userdashboard.comment'| translate}}</label>
+							<div class="cancel-reson-wrap">
+								<textarea name="reason_desc" [(ngModel)] = "refundOrderSubmitData.refund_comment" #refundComment = "ngModel"></textarea>
+								
+							</div>
+							<!-- <div class="cancel-reson-wrap">
+								<textarea  name="comment" [(ngModel)] = "refund.comment" #comment = "ngModel" required></textarea>								
+							</div> -->
+						</li>
+						
+					
+					</ul>
+					<div class="cancel-popup-btn clearfix">
+						<button  type="button" (click) = "submitRefundRequest(RefundProductForm.valid)" >
+							{{'userdashboard.refund'| translate}}
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!--- refund popup end-->

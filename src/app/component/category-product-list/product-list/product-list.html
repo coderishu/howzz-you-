@@ -1,0 +1,165 @@
+<div class="content">
+	<div class="container clearfix">
+		<div class="filters-sec">
+			<h6>{{'productlist.attribute_name.filter' | translate}} <a class="close-btn-sec"></a></h6>
+			<!-- <form action="#" method="post"> -->
+				  <!-- <div class="filter-catgry" *ngIf="filter_options_category.length>0">
+					  <h5>{{'productlist.attribute_name.categories' | translate}}</h5>
+					  <ul class="accessories">
+						  <li *ngFor="let cat of filter_options_category">
+							  <a href="javascript:void(0)" class="head-access">{{cat.name}}</a>
+							 </li>
+					  </ul>
+					</div> -->
+					<div class="filter-catgry" *ngIf="filter_options_category.length>0">
+						<h5>{{'productlist.attribute_name.categories' | translate}}</h5>
+							<ul class="accessories">
+								<li *ngFor="let cat of filter_options_category; let outerIndex = index;">
+									<a href="javascript:void(0);" class="head-access" [class.open]="slideToggleRef[cat.name] == cat.name" (click)="categoryShow($event,cat.name)" >{{cat.name}}</a>
+									<ul class="sub-access" [style.display] = "slideToggleRef[cat.name] == cat.name?'block':'none'">
+										<li class="inner" *ngFor="let instance of cat.category" [class.active-on]="instance.category.length > 0">
+											<a [routerLink]="[instance.slug]" id="downward">{{instance.name}}</a>
+											<ul class="inner-access" *ngIf = "instance.category.length > 0">
+												<li *ngFor="let innerinstance of instance.category"><a [routerLink]="[innerinstance.slug]">{{innerinstance.name}}</a></li>
+											</ul>
+										</li>
+										<!-- <li><a href="#!">Windows Phones</a></li> -->
+										
+									</ul>
+								</li>
+							</ul>
+						
+					</div>
+					<div class="filter-catgry" *ngIf="filter_options_brands.length>0">
+					  <h5>{{'productlist.attribute_name.brand'| translate}}</h5>
+					  <ul class="accessories">
+						  <li *ngFor="let single_brand of filter_options_brands">
+							  <a href="javascript:void(0)" class="head-access">{{single_brand.name}}</a>
+							</li>
+					  </ul>
+					</div>
+				 <div class="filter-price" *ngIf="minprice!=null &&  minprice > 0 && maxprice!=null && maxprice > 0" >
+
+					  <div class="price-head clearfix">
+						  <h5>{{'productlist.attribute_name.price'| translate}}</h5>
+						  <a *ngIf="rangeApplied" class="load-more" href="javascript:void(0)" (click)="clearsearch('price')">{{'productlist.attribute_name.clearAll'|translate}}</a>
+					  </div>
+						<div id="slider-range"></div>
+						
+					  <select class="select-dropdwn" id="amount_min" [ngModel]="minprice" (change)="priceValueChange($event,'min')">
+            	<option *ngFor="let singleVal of priceArr | limitTo:(priceArr.length-1); let arrIndex = index;" [value]= "singleVal">{{singleVal}}</option>
+            </select>
+		          
+				   	<select class="select-dropdwn" id="amount_max" *ngIf="maxprice"   [ngModel]="maxprice" (change)="priceValueChange($event,'max')">
+		            <option *ngFor="let singleVal of priceArr; let arrIndexing = index; let lastIndex = last;" [value]="singleVal" [selected]="maxprice == singleVal">{{singleVal}}</option>
+				     </select>
+				  </div>
+				  <div class="accord-wrap" *ngIf="filter_options_Attributes.length > 0">  
+					  <ul class="ac-list">
+					  <li class="expanded"  *ngFor = "let attr of filter_options_Attributes; let outerIndex = index;  trackBy:trackByIndex">
+								<!-- | search : filterSearchkey -->
+							<a href="javascript:void(0);" [class.open]="slideToggleRef[attr.atribute_code] == attr.atribute_code" (click)="expandFilterOption($event,outerIndex,attr.atribute_label,attr.atribute_code)" id="attr_{{outerIndex}}" >{{attr.atribute_label}} </a>
+						<ul class="sub-menu"  id="childAttr_{{outerIndex}}" [style.display] = "slideToggleRef[attr.atribute_code] == attr.atribute_code?'block':'none'">
+						  <li>
+							   <div class="search-prodt">
+									<form>
+								     <input type="text" name="search{{outerIndex}}" [(ngModel)]="filter_options_Attributes[outerIndex][atribute_code]"  placeholder="{{'productlist.attribute_name.searchmsg' | translate}}"/>
+								 
+									   <button class="icon-submt"></button>
+							   	</form>
+								</div> 
+								<a href="javascript:void(0)" *ngIf="attr.check_count>0" class="load-more" (click)="clearsearch(attr.atribute_code)">{{'productlist.attribute_name.clearAll'|translate}}</a>
+							</li>
+							<li class="serarch_not_avail" *ngIf = "(attr.atvalue | search:filter_options_Attributes[outerIndex][atribute_code]).length == 0">
+								{{'error.search' | translate}}
+								  </li>
+							
+						  <li *ngFor="let atval of attr.atvalue | search:filter_options_Attributes[outerIndex][atribute_code]; let innerIndex = index">
+								 <div *ngIf="innerIndex<limittoproductshow" >
+										<div class="select-prodt">
+											<input type="checkbox" id="attrbute{{outerIndex}}{{innerIndex}}" name="chk" [checked]="atval.checked" [disabled]="attr.show && atval.product_count==0" (change)="filterApply(atval.id,attr.atribute_code,$event)" >
+											<label for="attrbute{{outerIndex}}{{innerIndex}}">{{atval.attval}} ({{atval.product_count}})</label>
+										</div>
+								 </div>
+								  <div *ngIf="innerIndex>=limittoproductshow" class={{attr.atribute_code}} [style.display] = "AttrJson[attr.atribute_code]=='true'?'block':'none'">
+										<div class="select-prodt">
+											<input type="checkbox" id="attrbute{{outerIndex}}{{innerIndex}}" name="chk" [checked]="atval.checked" [disabled]="attr.show && atval.product_count==0" (change)="filterApply(atval.id,attr.atribute_code,$event)" >
+											<label for="attrbute{{outerIndex}}{{innerIndex}}">{{atval.attval}} ({{atval.product_count}})</label>
+											</div>
+								 </div> 
+						 </li>
+						  <li class="load-more">
+								<a title="more" href="javascript:void(0)" *ngIf="filterSearch =='' && attr.atvalue.length > limittoproductshow" id={{attr.atribute_code}} (click)="openAttribute(attr.atribute_code,outerIndex)">Load more</a>
+								<!-- <a title="more" href="javascript:void(0)" *ngIf="attr.atvalue.length>limittoproductshow" id={{attr.atribute_code}} (click)="openAttribute(attr.atribute_code)" class="product-more">View More</a> -->
+						  </li>
+						</ul>
+					  </li>
+					</ul>
+				  </div>
+			<!-- </form>    -->
+		</div>
+		<!-- *ngIf = "!isProductNotExists && isAPIDataRcvd" -->
+		<div class="view-categories" *ngIf="!isProductNotExists && isAPIDataRcvd">
+			<div class="category-banner" *ngIf="categoryProduct.category_name.category_image">
+				<img [src]="categoryProduct.cat_basic_path+categoryProduct.category_name.category_image" alt="" />
+			</div>
+			<div class="product-sec prod-category">
+				<div class="product-head clearfix">
+					<!-- <h4>Mobiles > Accessories</h4> -->
+					<ul class="filter-nav">
+						<li>{{'productlist.attribute_name.SortBy'| translate}}:</li>
+              <li [class.active]="indx<1" *ngFor="let singleSort of 'sortingArray' | translate; let indx = index;"><a href="javascript:void(0)" (click)="searchkeychange($event,singleSort.value)">{{ singleSort.key}}</a></li>
+			    </ul>
+				</div>
+				<div class="product-slide clearfix" *ngIf = "!isProductNotExists && isAPIDataRcvd">
+					<div class="pro-item" *ngFor = "let productItem of ( !lazyLoader ? (productData | paginate: { itemsPerPage: perPage, currentPage: pageNo ,totalItems: total}): productData) | productlistsort:sortingOrder">
+						<a href="javascript:void(0);" [title]="productItem['translation_data'][0]['name']!=''?productItem['translation_data'][0]['name']:productItem['name']['name']" [routerLink] = "productItem.urlDataParams"  (click) = "showProductDetail(productItem)">
+						<figure>
+							<img  alt="{{productItem['translation_data'][0]['name']!=''?productItem['translation_data'][0]['name']:productItem['name']['name']}}" [title]="productItem['translation_data'][0]['name']!=''?productItem['translation_data'][0]['name']:productItem['name']['name']" onerror="this.src = 'assets/images/default.png';" [src]="categoryProduct['basic_path']+productItem['default_image']">
+						</figure>
+						<div class="product-dtails">
+						  <div class="price" *ngIf = "currentLanguageData"><a href="javascript:void(0)">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{productItem['special_price']*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</a></div>
+							<div class="reduce-price" *ngIf = "currentLanguageData"><del>{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{productItem['price']*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</del> 
+								<span class="discount clr-green">{{'siteLabels.flat' | translate}} {{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}} {{productItem['price']-productItem['special_price']*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}} {{'siteLabels.off' | translate}}</span></div>
+						  <div class="product prdct-nme">{{(productItem['translation_data'][0]['name']!=''?productItem['translation_data'][0]['name']:productItem['name']['name']) | stringsort}}</div>
+							
+							<ul class="rating clearfix">
+								<custum-bar-rating  *ngIf="!productItem.rating" [isEdit] = "false" [ratingCount] = "0" [max] = "5"></custum-bar-rating>
+								<custum-bar-rating  *ngIf="productItem.rating" [isEdit] = "false" [ratingCount] = "productItem.rating" [max] = "globalDataService['maxRating']"></custum-bar-rating>
+							  
+						  </ul>
+						</div>
+						</a>
+					</div>
+					
+				</div>
+				<div class="pagination-sec clearfix" *ngIf="!lazyLoader && totalProductDataLength>0" >
+					<!-- <span  *ngIf="filterCountShow == 1" class="pagination-title">{{'siteLabels.items' | translate}} {{itemstart}} {{'productlist.attribute_name.to' | translate}} {{itemend}} {{'detail.attribute_name.of'|translate}} {{total}} {{'siteLabels.total' | translate}}</span> -->
+					<div class="pagination clearfix">
+						<pagination-controls (pageChange)="loadCategoryProduct($event)"
+						directionLinks="true"
+						previousLabel=""
+						nextLabel="" ></pagination-controls>
+					</div>
+				</div>
+			 <!-- <div class="pagination-sec" *ngIf="!lazyLoader && totalProductDataLength>0">
+				  <div class="pagination clearfix">
+					  <a href="#"><i class="icon-arrow-left"></i></a>
+					  <a href="#">1</a>
+					  <a class="active" href="#">2</a>
+					  <a href="#">3</a>
+					  <a href="#">4</a>
+					  <a href="#">5</a>
+					  <a href="#">6</a>
+					  <a href="#"><i class="icon-arrow-right"></i></a>
+				  </div>
+				</div>  -->
+			</div>
+		</div>
+		<div *ngIf="isProductNotExists && isAPIDataRcvd" style = "text-align:center">				
+			<i class="fa fa-exclamation-circle"></i>
+			<h2>{{errormsg !=''? errormsg : ('productlist.attribute_name.NoProduct'| translate) }}</h2>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,33 @@
+<div class="product-sec cash-back deals" *ngIf="similarProduct.length>0">
+		<div class="container">
+			<div class="product-head clearfix">
+				<h4>{{'detail.attribute_name.similarProduct' | translate}}</h4>
+				<a href="javascript:void(0);" class="btn blue-btn">{{'siteLabels.viewall' | translate}}</a>
+			</div>
+			<div class="product-slide owl-carousel" #similarProductViewChild>
+				<div class="item" *ngFor="let productItem of similarProduct">
+					<a href="javascript:void(0)" (click)="showProductDetail(productItem)" [title]="productItem.translation_data[0]['name']!=''?productItem.translation_data[0]['name']:productItem['name']"
+					[routerLink]="productItem.urlDataParams">
+					<figure>
+						<img [title]="productItem.translation_data[0]['name']!=''?productItem.translation_data[0]['name']:productItem['name']"
+						 [src]="similarProductData['original_path']+productItem['default_image'] | urlSanatize" 
+						 alt="{{productItem.translation_data[0]['name']!=''?productItem.translation_data[0]['name']:productItem['name']}}"/>
+					</figure>
+					<div class="product-dtails">
+					  <div class="price" *ngIf="currentLanguageData"><a href="javascript:void(0)">{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{productItem['product_data']['price']*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</a></div>
+						<div class="reduce-price" *ngIf="currentLanguageData"><del>{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{productItem['product_data']['special_price']*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}}</del> 
+							<span class="discount clr-green" *ngIf = "currentLanguageData">{{'siteLabels.flat' | translate}}{{currencyconvertservice.currentCurrencyData['position']=='left'?currencyconvertservice.currentCurrencyData['sign']:''}}{{productItem['product_data']['price']-productItem['product_data']['special_price']*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}{{currencyconvertservice.currentCurrencyData['position']=='right'?currencyconvertservice.currentCurrencyData['sign']:''}} {{'siteLabels.off' | translate}}</span></div>
+					  <div class="product">{{productItem.translation_data[0]['name']!=''?productItem.translation_data[0]['name']:productItem['name'] | stringsort }}</div>
+					  <ul class="rating clearfix">
+							<custum-bar-rating *ngIf="productItem.rating==0" [isEdit] = "false" [ratingCount] = "0" [max] = "5"></custum-bar-rating>
+							<custum-bar-rating *ngIf="productItem.rating > 0" [isEdit] = "false"  [ratingCount] = "productItem.rating" [max] = "globalDataService['maxRating']"></custum-bar-rating>
+						
+					  </ul>
+					</div>
+				</a>
+				</div>
+			</div>
+		</div>
+	</div> 
+
+

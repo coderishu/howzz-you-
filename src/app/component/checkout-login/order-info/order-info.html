@@ -1,0 +1,70 @@
+<div class="checkout-sub-total">
+     <div class="transactions" *ngIf="cartdata.cart_data.length>0">
+			<div class="wrap clearfix">
+				<div class="info">{{'siteLabels.total'|translate}}</div>
+				<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">{{currencyconvertservice.currentCurrencyData['sign']}}{{(cartdata.total_special_price?cartdata.total_special_price:cartdata.total_price)*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}</div>
+				<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{(cartdata.total_special_price?cartdata.total_special_price:cartdata.total_price)*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</div>
+			</div>
+			<div class="wrap clearfix">
+				<div class="info">{{'userorderdetails.delivery_charges'|translate}}</div>
+				<div class="price" *ngIf="cartdata.total_devilery_charge==0">{{'userorderdetails.free'|translate}}</div>
+				<div class="price" *ngIf="cartdata.total_devilery_charge>0 && currencyconvertservice.currentCurrencyData['position']=='left'">+ {{currencyconvertservice.currentCurrencyData['sign']}}{{cartdata.total_devilery_charge*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}</div>
+				<div class="price" *ngIf="cartdata.total_devilery_charge>0 && currencyconvertservice.currentCurrencyData['position']=='right'" >+ {{cartdata.total_devilery_charge*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</div>
+			</div>
+			<div class="wrap clearfix" *ngIf="cartdata.special_price_tax>0">
+				<div class="info" >{{'userorderdetails.estimateTax'|translate}}</div>
+				<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">+ {{currencyconvertservice.currentCurrencyData['sign']}}{{(cartdata.special_price_tax?cartdata.special_price_tax:cartdata.price_tax)*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}</div>
+				<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'" >+ {{(cartdata.special_price_tax?cartdata.special_price_tax:cartdata.price_tax)*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</div>
+			</div>
+			<div class="wrap clearfix" *ngIf="cartdata.shiping_tax>0">
+				<div class="info">{{'userorderdetails.shippingTax'|translate}}</div>
+				<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">+ {{currencyconvertservice.currentCurrencyData['sign']}}{{cartdata.shiping_tax*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}</div>
+				<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">+ {{cartdata.shiping_tax*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</div>
+			</div>
+			
+			<div class="wrap clearfix" *ngIf="cartdata.total_coupon>0">
+				<div class="info">{{'userorderdetails.applycouponcode'|translate}}({{cartdata.coupon_code}})</div>
+				<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">{{currencyconvertservice.currentCurrencyData['sign']}}{{cartdata.total_coupon*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}</div>
+				<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{cartdata.total_coupon*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</div>
+			</div>
+			
+			<div class="wrap clearfix" *ngIf="cartdata.gift_amount > 0">
+				<div class="info">{{'userorderdetails.gift_voucher'|translate}}</div>
+				<div class="price"*ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">-{{currencyconvertservice.currentCurrencyData['sign']}}{{cartdata.gift_amount*currencyconvertservice.currentCurrencyData['value']|fixedDecimal}}</div>
+				<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">-{{cartdata.total_coupon*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</div>
+			</div>
+
+		</div>
+		<div class="total clearfix" *ngIf="cartdata.cart_data.length>0">
+			<div class="info">{{'userorderdetails.grandtotal'|translate}}</div>
+			<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">{{currencyconvertservice.currentCurrencyData['sign']}}{{cartdata.grand_total*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}</div>
+			<div class="price"*ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{cartdata.grand_total*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</div>
+		</div>
+		<div class="items-dtails">
+			<a href="javascript:void(0)" class="items" (click)="showItems($event)">{{'cart.itemdetails'|translate}}</a>
+			<div class="wrapper chkout-items" style="display:block">					
+				<div *ngIf="cartdata.cart_data.length > 0" class="col-md-12">
+				<p class="nt-avlbl-msg" *ngIf="errormsg_not_available">{{'checkout.notAvailable'|translate}}</p>
+				<div class="wraps clearfix row" [class.not-avlbl] = "item.available == 0"  *ngFor="let item of cartdata.cart_data">
+					<figure class="shopping-figure col-md-4">
+						<a href="javascript:void(0)" title="{{item.name}}" [routerLink] = "item.urldata.urlData">
+							<img  [src]="imagepath+item.image"   alt="{{item.name}}" title="{{item.name}}" onerror="this.src = 'assets/images/gift.jpg';"/>
+						 </a>
+					</figure>
+					<a *ngIf="item.available == 0" href= "javascript:void(0)"  (click)="removeProduct(item.cart_id)"  class="cross" aria-hidden="true"></a>
+					
+					<div class="dtails col-md-8">
+						<div class="info">{{item.name}}</div>
+						<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='left'">{{currencyconvertservice.currentCurrencyData['sign']}}{{(item.special_price?item.special_price:item.price)*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}</div>
+						<div class="price" *ngIf="currencyconvertservice.currentCurrencyData['position']=='right'">{{(item.special_price?item.special_price:item.price)*currencyconvertservice.currentCurrencyData['value'] | fixedDecimal}}{{currencyconvertservice.currentCurrencyData['sign']}}</div>
+					<p href="javascript:void(0)" class="quantity">{{'checkout.qty'|translate}}: {{item.quantity}}</p> 
+					</div>
+						
+				</div>
+				
+			</div>
+			<div *ngIf="cartdata.cart_data.length==0">{{cartdata.msg}}</div>
+		</div>
+		</div>
+  </div>
+
